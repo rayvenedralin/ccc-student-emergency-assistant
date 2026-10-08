@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>CCC Student Emergency Assistant | Campus Safety Portal</title>
-  <meta name="description" content="City College Central mobile emergency assistance, live security dispatch, and incident triage portal.">
+  <meta name="description" content="City College of Calamba mobile emergency assistance, live security dispatch, and incident triage portal.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>">
 
   <!-- Google Fonts: Plus Jakarta Sans & Inter -->
@@ -15,9 +15,6 @@
   <!-- Material Symbols Outlined -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   
-  <!-- Leaflet Map CSS & JS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -284,12 +281,12 @@
         </button>
         <!-- Avatar & Identity on Home Screen -->
         <div id="headerProfileBlock" class="flex items-center gap-2.5 min-w-0">
-          <button onclick="openProfileModal()" class="w-9 h-9 rounded-full bg-gradient-to-tr from-ocean-teal to-blue-400 text-white font-display font-bold text-xs flex items-center justify-center ring-2 ring-white/30 tactile-btn flex-shrink-0">
-            <span>RV</span>
+          <button onclick="openProfileModal()" aria-label="Student Profile" class="w-9 h-9 rounded-full overflow-hidden border border-white/40 ring-1 ring-white/30 tactile-btn flex-shrink-0 shadow-sm">
+            <img src="rayven_headshot.png" alt="Rayven" class="w-full h-full object-cover">
           </button>
           <div class="flex flex-col min-w-0">
-            <span class="text-[10px] font-extrabold uppercase tracking-widest text-teal-300 truncate">CCC Emergency Assistant</span>
-            <span id="headerTitleText" class="font-display font-bold text-sm text-white leading-tight truncate">Hi, Rayven</span>
+            <span class="text-[9px] font-extrabold uppercase tracking-widest text-teal-300 truncate">City College of Calamba</span>
+            <span id="headerTitleText" class="font-display font-bold text-xs sm:text-sm text-white leading-tight truncate">CCC Student Emergency Assistant</span>
           </div>
         </div>
       </div>
@@ -342,7 +339,7 @@
                 <text x="50" y="53" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="900" fill="#FFFFFF">CCC</text>
               </svg>
             </div>
-            <span class="text-xs font-extrabold text-navy-dark uppercase tracking-widest font-display">City College Central</span>
+            <span class="text-xs font-extrabold text-navy-dark uppercase tracking-widest font-display">City College of Calamba</span>
             <h1 class="text-base font-bold text-slate-800 mt-0.5 font-display">Student Emergency & Safety Portal</h1>
             <div class="mt-1.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-200 text-slate-700 text-[11px] font-medium">
               <span class="material-symbols-outlined text-[13px] text-ocean-teal">verified_user</span>
@@ -431,14 +428,19 @@
       <section id="page-home" class="screen-page flex-col w-full min-h-full p-4 space-y-4 bg-slate-canvas">
         
         <!-- High Priority Banner: Urgent Crimson Red (#A61C1C) Hero Card -->
-        <section class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-crimson-urgent to-crimson-deep text-white shadow-sos-glow p-4 space-y-3 flex-shrink-0" style="flex-shrink: 0 !important; min-height: 165px !important;">
+        <section id="emergencyHeroBanner" class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-crimson-urgent to-crimson-deep text-white shadow-sos-glow p-4 space-y-3 flex-shrink-0 transition-all duration-300" style="flex-shrink: 0 !important; min-height: 165px !important;">
+          <!-- Close / Dismiss "X" Button -->
+          <button onclick="dismissEmergencyHeroBanner(event)" type="button" aria-label="Dismiss Emergency Banner" title="Dismiss" class="absolute top-3 right-3 z-20 w-7 h-7 rounded-full bg-black/25 hover:bg-black/40 active:scale-90 flex items-center justify-center text-white/90 hover:text-white transition-all tactile-btn cursor-pointer">
+            <span class="material-symbols-outlined text-base font-bold">close</span>
+          </button>
+
           <!-- Background SVG Watermark -->
           <svg class="absolute -right-8 -top-8 w-40 h-40 text-white opacity-10 pointer-events-none" fill="currentColor" viewBox="0 0 100 100">
             <circle cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-dasharray="8 6" stroke-width="4"></circle>
             <circle cx="50" cy="50" fill="currentColor" r="26"></circle>
           </svg>
 
-          <div class="relative z-10 space-y-1.5">
+          <div class="relative z-10 space-y-1.5 pr-7">
             <div class="flex items-center gap-1.5">
               <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
                 <span class="material-symbols-outlined text-sm">notification_important</span>
@@ -623,22 +625,41 @@
 
           <div class="flex items-center gap-2.5">
             <div class="w-9 h-9 rounded-xl bg-teal-50 text-ocean-teal flex items-center justify-center flex-shrink-0">
-              <span class="material-symbols-outlined text-xl">my_location</span>
+              <span class="material-symbols-outlined text-xl">pin_drop</span>
             </div>
             <div class="min-w-0">
-              <span class="text-[10px] uppercase font-bold text-slate-400 block">Triangulated Indoor Location</span>
-              <span class="text-xs font-bold text-slate-800 block truncate font-display">Science Complex, 3rd Floor East Wing</span>
+              <span class="text-[10px] uppercase font-bold text-slate-400 block">Triangulated Campus Location</span>
+              <span class="text-xs font-bold text-slate-800 block truncate font-display">City College of Calamba • Main Campus</span>
             </div>
           </div>
 
-          <!-- Interactive Live Campus GPS Map -->
+          <!-- Interactive Live Campus GPS Google Map -->
           <div class="w-full rounded-2xl overflow-hidden border border-border-subtle shadow-inner bg-slate-100 flex flex-col relative z-0">
-            <div id="emergencyLiveMap" class="w-full h-44 z-0 bg-slate-200"></div>
+            <div class="relative w-full h-48 bg-slate-200">
+              <iframe 
+                id="emergencyGoogleMapIframe"
+                title="City College of Calamba Google Map"
+                src="https://maps.google.com/maps?q=City+College+of+Calamba,+Old+Municipal+Site,+Burgos+St,+Calamba,+Laguna&t=&z=17&ie=UTF8&iwloc=&output=embed" 
+                class="w-full h-full border-0" 
+                loading="lazy" 
+                allowfullscreen 
+                referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+              <!-- Live Radar Ping Overlay -->
+              <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <div class="relative flex items-center justify-center">
+                  <div class="w-12 h-12 rounded-full bg-crimson-urgent/30 animate-ping absolute"></div>
+                  <div class="w-8 h-8 rounded-full bg-crimson-urgent border-2 border-white shadow-lg flex items-center justify-center z-10">
+                    <span class="text-white text-xs">🚨</span>
+                  </div>
+                </div>
+              </div>
+            </div>
             <!-- Overlay Info Bar -->
             <div class="px-3.5 py-2 bg-navy-dark text-white flex items-center justify-between text-[11px] font-semibold border-t border-slate-700">
               <div class="flex items-center gap-1.5 min-w-0">
                 <span class="w-2 h-2 rounded-full bg-crimson-urgent animate-ping flex-shrink-0"></span>
-                <span class="truncate">Live GPS: Science Complex (14.5995° N, 120.9842° E)</span>
+                <span class="truncate">Live GPS: City College of Calamba (14.2081° N, 121.1574° E)</span>
               </div>
               <button type="button" onclick="centerEmergencyMap()" class="px-2.5 py-1 rounded bg-ocean-teal hover:bg-teal-500 text-white font-bold text-[10px] flex items-center gap-0.5 flex-shrink-0 tactile-btn">
                 <span class="material-symbols-outlined text-[13px]">my_location</span>
@@ -675,7 +696,7 @@
           <!-- Building & Room -->
           <div class="space-y-1">
             <label for="sosRoomNumber" class="text-xs font-bold text-slate-700">Building & Room Number</label>
-            <input type="text" id="sosRoomNumber" value="Science Complex, Room 304"
+            <input type="text" id="sosRoomNumber" value="CCC Main Building, Room 304"
               class="w-full h-11 px-3 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-medium focus:outline-none focus:border-crimson-urgent focus:bg-white transition-all">
           </div>
 
@@ -1257,37 +1278,118 @@
   <div id="studentProfileModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
     <div class="bg-surface-card rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-border-subtle space-y-4">
       <div class="flex items-center justify-between pb-2 border-b border-slate-100">
-        <h3 class="text-xs font-bold text-slate-800 font-display">Student Emergency ID Card</h3>
-        <button onclick="closeProfileModal()" class="p-1 text-slate-400 hover:text-slate-600 tactile-btn">
+        <div class="flex items-center gap-1.5">
+          <span class="material-symbols-outlined text-ocean-teal text-lg">badge</span>
+          <h3 class="text-xs font-bold text-slate-800 font-display">Student Emergency ID Card</h3>
+        </div>
+        <button onclick="closeProfileModal()" aria-label="Close" class="p-1 text-slate-400 hover:text-slate-600 tactile-btn cursor-pointer">
           <span class="material-symbols-outlined text-lg">close</span>
         </button>
       </div>
 
-      <!-- Digital Student Card -->
-      <div class="rounded-2xl bg-gradient-to-br from-navy-dark to-navy-surface text-white p-4 shadow-md space-y-3 relative overflow-hidden">
-        <div class="flex items-start justify-between">
-          <div class="flex items-center gap-2.5">
-            <div class="w-12 h-12 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center font-display font-black text-lg">
-              RV
+      <!-- Modern Collegiate Student ID Card (Inspired by Image 4 & Official CCC Credentials) -->
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-white via-slate-50 to-blue-50/50 border border-slate-200/90 shadow-md">
+        <!-- Top Institutional Header Banner with Security Wave Accent -->
+        <div class="relative bg-gradient-to-r from-navy-dark via-navy-surface to-ocean-teal px-4 py-3 text-white">
+          <!-- Subtle Security Wave Background -->
+          <svg class="absolute inset-0 w-full h-full opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 200 60">
+            <path d="M0 20 Q 50 40 100 20 T 200 20 V 60 H 0 Z" fill="white" />
+            <path d="M0 35 Q 50 10 100 35 T 200 35" stroke="white" stroke-width="0.75" fill="none" />
+          </svg>
+
+          <div class="relative z-10 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-lg bg-white/20 p-1 flex items-center justify-center">
+                <svg viewBox="0 0 100 100" class="w-full h-full" fill="none">
+                  <path d="M50 8L15 24V50C15 72 30 90 50 95C70 90 85 72 85 50V24L50 8Z" fill="#1E73A8"/>
+                  <path d="M50 16L24 28V50C24 67 35 80 50 84C65 80 76 67 76 50V28L50 16Z" fill="#FFFFFF"/>
+                  <text x="50" y="55" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="900" fill="#000B30">CCC</text>
+                </svg>
+              </div>
+              <div class="leading-tight">
+                <span class="text-[9px] font-extrabold uppercase tracking-widest text-teal-300 block">Republic of the Philippines</span>
+                <span class="text-[11px] font-black uppercase tracking-wider text-white font-display">City College of Calamba</span>
+              </div>
             </div>
-            <div>
-              <span class="text-[10px] text-teal-300 uppercase tracking-widest block font-bold">City College Central</span>
-              <h4 class="text-sm font-bold text-white font-display">Rayven (Student)</h4>
-              <span class="text-[11px] text-slate-300 font-mono">ID: 2024-02013</span>
-            </div>
+            <span class="inline-flex items-center gap-1 text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>ACTIVE</span>
+            </span>
           </div>
-          <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Active</span>
         </div>
 
-        <div class="grid grid-cols-2 gap-2 text-[11px] pt-1 border-t border-white/10 text-slate-300">
-          <div><span class="text-slate-400 block text-[10px]">Blood Type:</span> <strong class="text-white">O+ Positive</strong></div>
-          <div><span class="text-slate-400 block text-[10px]">Emergency ICE:</span> <strong class="text-white">Parent (0917-882-192)</strong></div>
+        <!-- Student Photo & Credentials Body (Centered Style matching Image 4) -->
+        <div class="p-4 pt-5 flex flex-col items-center text-center space-y-3 relative">
+          <!-- Light Watermark Seal in Background -->
+          <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
+            <span class="material-symbols-outlined text-[180px]">school</span>
+          </div>
+
+          <!-- Centered Student Portrait with Dual Ring Frame -->
+          <div class="relative z-10">
+            <div class="w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-ocean-teal to-blue-400 shadow-md">
+              <img src="rayven_headshot.png" alt="Rayven BURATO" class="w-full h-full rounded-full object-cover bg-white">
+            </div>
+            <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center border-2 border-white shadow">
+              <span class="material-symbols-outlined text-xs font-bold">verified</span>
+            </div>
+          </div>
+
+          <!-- Student ID Number & Full Name (Clean format as shown in Image 4) -->
+          <div class="relative z-10 space-y-0.5">
+            <div class="text-sm font-black font-mono tracking-wider text-ocean-teal">2024-02013</div>
+            <h4 class="text-base font-extrabold text-slate-800 font-display tracking-tight">Rayven BURATO</h4>
+            <span class="text-[11px] font-medium text-slate-500 block">Undergraduate Student • Active Enrolled</span>
+          </div>
+
+          <!-- Emergency ICE Details (Blood type is completely removed as requested!) -->
+          <div class="relative z-10 w-full pt-2 pb-1 border-t border-slate-200/80">
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200/70 shadow-sm flex items-center justify-between text-left">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-teal-50 text-ocean-teal flex items-center justify-center flex-shrink-0">
+                  <span class="material-symbols-outlined text-base">contact_phone</span>
+                </div>
+                <div>
+                  <span class="text-[10px] uppercase font-bold text-slate-400 block">Emergency Contact (ICE)</span>
+                  <span class="text-xs font-bold text-slate-800">Parent / Guardian</span>
+                </div>
+              </div>
+              <a href="tel:0917882192" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-ocean-teal font-mono font-bold text-xs flex items-center gap-1 tactile-btn">
+                <span class="material-symbols-outlined text-xs">call</span>
+                <span>0917-882-192</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Institutional Barcode Accent -->
+          <div class="relative z-10 w-full pt-1 flex flex-col items-center opacity-70">
+            <div class="flex items-center gap-[3px] h-6 overflow-hidden">
+              <div class="w-1 h-full bg-slate-800"></div>
+              <div class="w-0.5 h-full bg-slate-800"></div>
+              <div class="w-1.5 h-full bg-slate-800"></div>
+              <div class="w-0.5 h-full bg-slate-800"></div>
+              <div class="w-2 h-full bg-slate-800"></div>
+              <div class="w-0.5 h-full bg-slate-800"></div>
+              <div class="w-1 h-full bg-slate-800"></div>
+              <div class="w-1.5 h-full bg-slate-800"></div>
+              <div class="w-0.5 h-full bg-slate-800"></div>
+              <div class="w-2 h-full bg-slate-800"></div>
+              <div class="w-1 h-full bg-slate-800"></div>
+              <div class="w-0.5 h-full bg-slate-800"></div>
+              <div class="w-1.5 h-full bg-slate-800"></div>
+              <div class="w-0.5 h-full bg-slate-800"></div>
+              <div class="w-2 h-full bg-slate-800"></div>
+              <div class="w-1 h-full bg-slate-800"></div>
+              <div class="w-0.5 h-full bg-slate-800"></div>
+            </div>
+            <span class="text-[9px] font-mono text-slate-400 tracking-widest mt-0.5">VALID SY 2024-2025 • CCC-CALAMBA</span>
+          </div>
         </div>
       </div>
 
-      <div class="space-y-2">
+      <div class="space-y-2 pt-1">
         <button onclick="handleSignOut()"
-          class="w-full h-10 rounded-full bg-red-50 hover:bg-red-100 text-crimson-urgent font-bold text-xs flex items-center justify-center gap-1.5 tactile-btn">
+          class="w-full h-10 rounded-full bg-red-50 hover:bg-red-100 text-crimson-urgent font-bold text-xs flex items-center justify-center gap-1.5 tactile-btn cursor-pointer">
           <span class="material-symbols-outlined text-base">logout</span>
           <span>Sign Out of Portal</span>
         </button>
@@ -1438,7 +1540,7 @@
       },
       'HOME': { 
         id: 'page-home', 
-        title: 'Hi, Rayven', 
+        title: 'CCC Student Emergency Assistant', 
         showHeader: true, 
         showBottomNav: true, 
         isHome: true,
@@ -1506,7 +1608,7 @@
         if (config.isHome) {
           headerBackBtn.classList.add('hidden');
           headerProfileBlock.classList.remove('hidden');
-          headerTitleText.innerText = 'Hi, Rayven';
+          headerTitleText.innerText = 'CCC Student Emergency Assistant';
         } else {
           headerBackBtn.classList.remove('hidden');
           headerProfileBlock.classList.add('hidden');
@@ -1550,8 +1652,7 @@
         if (params.category) selectSosCategory(params.category);
         setTimeout(() => {
           initEmergencyMap();
-          if (emergencyMapInstance) emergencyMapInstance.invalidateSize();
-        }, 150);
+        }, 100);
       }
       if (screenKey === 'REPORT_PROBLEM' && params.category) {
         selectReportCategory(params.category);
@@ -1991,67 +2092,46 @@
       showToast('Call ended.');
     }
 
-    // Interactive Leaflet Campus Map
-    let emergencyMapInstance = null;
-    let emergencyMapMarker = null;
+    // Dismiss Emergency Hero Banner (IMAGE 2)
+    function dismissEmergencyHeroBanner(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      playAudioTone('tap');
+      const banner = document.getElementById('emergencyHeroBanner');
+      if (banner) {
+        banner.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+        banner.style.opacity = '0';
+        banner.style.transform = 'scale(0.92) translateY(-10px)';
+        banner.style.maxHeight = '0px';
+        banner.style.padding = '0px';
+        banner.style.margin = '0px';
+        banner.style.overflow = 'hidden';
+        setTimeout(() => {
+          banner.classList.add('hidden');
+          showToast('Emergency assistance card dismissed.');
+        }, 320);
+      }
+    }
+
+    // Real Google Map Handlers (City College of Calamba)
+    const CCC_MAP_EMBED_URL = "https://maps.google.com/maps?q=City+College+of+Calamba,+Old+Municipal+Site,+Burgos+St,+Calamba,+Laguna&t=&z=17&ie=UTF8&iwloc=&output=embed";
 
     function initEmergencyMap() {
-      const container = document.getElementById('emergencyLiveMap');
-      if (!container || emergencyMapInstance || typeof L === 'undefined') return;
-
-      try {
-        const lat = 14.5995;
-        const lng = 120.9842;
-        emergencyMapInstance = L.map('emergencyLiveMap', {
-          center: [lat, lng],
-          zoom: 17,
-          zoomControl: true,
-          attributionControl: false
-        });
-
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-          maxZoom: 19
-        }).addTo(emergencyMapInstance);
-
-        // Pulsing SOS Geo Radius Circle
-        L.circle([lat, lng], {
-          color: '#A61C1C',
-          fillColor: '#A61C1C',
-          fillOpacity: 0.2,
-          radius: 35
-        }).addTo(emergencyMapInstance);
-
-        // Custom Crimson Location Pin
-        const pinIcon = L.divIcon({
-          className: 'custom-emergency-pin',
-          html: `
-            <div style="position:relative; width:36px; height:36px; display:flex; align-items:center; justify-content:center;">
-              <div style="position:absolute; width:36px; height:36px; border-radius:50%; background:rgba(166,28,28,0.35); animation:ping 1.5s cubic-bezier(0,0,0.2,1) infinite;"></div>
-              <div style="width:28px; height:28px; border-radius:50%; background:#A61C1C; border:3px solid white; box-shadow:0 3px 8px rgba(0,0,0,0.3); display:flex; align-items:center; justify-content:center;">
-                <span style="color:white; font-size:15px; font-weight:bold; line-height:1;">🚨</span>
-              </div>
-            </div>
-          `,
-          iconSize: [36, 36],
-          iconAnchor: [18, 18]
-        });
-
-        emergencyMapMarker = L.marker([lat, lng], { icon: pinIcon }).addTo(emergencyMapInstance);
-        emergencyMapMarker.bindPopup('<b>Science Complex • 3F East</b><br><span style="font-size:11px; color:#A61C1C;">Coordinates Locked</span>').openPopup();
-
-        setTimeout(() => {
-          if (emergencyMapInstance) emergencyMapInstance.invalidateSize();
-        }, 300);
-      } catch(err) {
-        console.error('Map init error:', err);
+      const iframe = document.getElementById('emergencyGoogleMapIframe');
+      if (iframe && (!iframe.src || iframe.src === 'about:blank')) {
+        iframe.src = CCC_MAP_EMBED_URL;
       }
     }
 
     function centerEmergencyMap() {
-      if (emergencyMapInstance) {
-        emergencyMapInstance.setView([14.5995, 120.9842], 17);
-        if (emergencyMapMarker) emergencyMapMarker.openPopup();
+      playAudioTone('tap');
+      const iframe = document.getElementById('emergencyGoogleMapIframe');
+      if (iframe) {
+        iframe.src = CCC_MAP_EMBED_URL;
       }
+      showToast('GPS Recentered to City College of Calamba.');
     }
 
     // Universal Mouse Drag & Wheel Horizontal Scroll Utility

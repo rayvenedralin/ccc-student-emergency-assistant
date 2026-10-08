@@ -1,7 +1,7 @@
 # CCC Student Emergency Assistant 🚨
 ### Mobile Web Application Prototype for Higher-Education Campus Safety
 
-A responsive, browser-based mobile web application prototype designed for **City College Central (CCC)** students, faculty, and campus security dispatch. Built with high-contrast emergency triage ergonomics, modern institutional design, and zero dependencies.
+A responsive, browser-based mobile web application prototype designed for **City College of Calamba (CCC)** students, faculty, and campus security dispatch. Built with high-contrast emergency triage ergonomics, modern institutional design, and zero dependencies.
 
 ---
 
