@@ -1,0 +1,295 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_tab" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "inverse-on-surface": "#eff1f4", "inverse-surface": "#2d3133", "on-primary-container": "#7782ac", "tertiary-container": "#001e31", "surface-container-highest": "#e0e3e6", "background": "#f7f9fc", "on-primary": "#ffffff", "on-secondary-fixed": "#410002", "secondary-container": "#fd5c52", "primary": "#000000", "on-surface-variant": "#45464e", "on-tertiary-fixed-variant": "#004b72", "surface": "#f7f9fc", "inverse-primary": "#bac5f2", "surface-container-low": "#f2f4f7", "error": "#ba1a1a", "on-background": "#191c1e", "secondary-fixed": "#ffdad6", "surface-container": "#eceef1", "on-error": "#ffffff", "primary-fixed": "#dbe1ff", "on-primary-fixed": "#0c193d", "outline": "#76767f", "surface-container-lowest": "#ffffff", "tertiary": "#000000", "error-container": "#ffdad6", "primary-fixed-dim": "#bac5f2", "on-tertiary-fixed": "#001e31", "on-secondary-fixed-variant": "#910810", "outline-variant": "#c6c6cf", "on-surface": "#191c1e", "on-tertiary-container": "#3e8ac0", "surface-dim": "#d8dadd", "secondary-fixed-dim": "#ffb4ab", "surface-container-high": "#e6e8eb", "on-error-container": "#93000a", "on-tertiary": "#ffffff", "primary-container": "#0c193d", "surface-variant": "#e0e3e6", "secondary": "#b42724", "on-secondary": "#ffffff", "surface-tint": "#515d84", "tertiary-fixed": "#cce5ff", "surface-bright": "#f7f9fc", "on-primary-fixed-variant": "#3a456b", "on-secondary-container": "#600005", "tertiary-fixed-dim": "#91ccff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "space-xs": "0.25rem", "gutter": "1rem", "space-md": "0.75rem", "space-xl": "1.5rem", "margin": "1rem", "space-lg": "1rem" }, fontFamily: { "label-sm": ["Inter"], "headline-sm": ["Inter"], "label-lg": ["Inter"], "label-urgent": ["Inter"], "display-urgent": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "headline-md": ["Inter"] }, fontSize: { "label-sm": ["12px", { lineHeight: "16px", letterSpacing: "0.02em", fontWeight: "500" }], "headline-sm": ["18px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "600" }], "label-lg": ["14px", { lineHeight: "18px", letterSpacing: "0.01em", fontWeight: "600" }], "label-urgent": ["13px", { lineHeight: "16px", letterSpacing: "0.06em", fontWeight: "800" }], "display-urgent": ["32px", { lineHeight: "38px", letterSpacing: "0.02em", fontWeight: "800" }], "body-md": ["14px", { lineHeight: "20px", letterSpacing: "0em", fontWeight: "400" }], "body-lg": ["16px", { lineHeight: "24px", letterSpacing: "0em", fontWeight: "400" }], "headline-lg": ["24px", { lineHeight: "30px", letterSpacing: "-0.01em", fontWeight: "700" }], "headline-md": ["20px", { lineHeight: "26px", letterSpacing: "0em", fontWeight: "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-primary-container text-on-primary shadow-[0_4px_12px_rgba(0,11,48,0.12)]"><div class="h-16 px-gutter flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="CCC Crest Emblem" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/AEtjO1Vr22b23SKuEt8a-nSh3CsiY7Bn3WpEW_8AVrZIs1lQGg0T_MJ9N3MwCstkI2yqcVufqi5xFYrvrpSSyVocpKmrKXwREX6R9k6XErvXDhGbRgUOxUDvvXXN0_kBVCabi4e5zkZxcxNGX8M1E-p7VzcryEUlJblGEpMHo9qvIH1BmGOlGZgiuDzVFsQgLz9FftamjRARC_2p63lM_yii1lU6_D3kMUV73uV7TW7mAjQn"><div class="flex flex-col min-w-0"><span class="font-label-urgent text-label-urgent uppercase text-secondary-fixed tracking-wider truncate">CCC Emergency Assistant</span><span class="font-headline-sm text-headline-sm text-on-primary font-bold truncate leading-tight">Requests</span></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Notifications" class="relative w-11 h-11 flex items-center justify-center rounded-lg text-on-primary hover:bg-white/10 active:bg-white/20 transition-colors"><span class="material-symbols-outlined text-2xl">notifications</span><span class="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-secondary ring-2 ring-primary-container"></span></button><button aria-label="Menu" class="w-11 h-11 flex items-center justify-center rounded-lg text-on-primary hover:bg-white/10 active:bg-white/20 transition-colors"><span class="material-symbols-outlined text-2xl">menu</span></button><div class="pl-space-xs flex items-center"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary-fixed-dim/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx0LgI3yfQGQ8YpP-qNUSWFkk0SyuGjTkUhtTQlUsrFC5XKPWtDZrAatspn-GF24iOQmLOc_zeLRGcubeQAUDb_Owg5-Olv1Q5SaOdidR_ANJ5CedFJVJhkras9E6a1tZWWYa6vNvLg1MHhSduyg0gdMSy7v-bIV0FYmVu9rCH480VDNuTI2F-9VJb8MMlajgrCh05QoYEHGLRU34GiJd7unJ2o1z1vXYaI2CRnEg"></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 px-gutter bg-surface flex-grow"><div class="flex flex-col w-full pb-8">
+<!-- Status Tracker Context & Overview Header -->
+<div class="flex items-center justify-between mt-2 mb-4">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-on-surface">My Submitted Reports</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Live incident response &amp; dispatch timeline</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-high shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">3 Total</span>
+</div>
+</div>
+<!-- Segmented Filter Pills -->
+<div class="flex items-center p-1 rounded-xl bg-surface-container-high mb-5 shadow-sm" role="tablist">
+<button aria-selected="true" class="flex-1 py-2 px-3 rounded-lg font-label-lg text-label-lg transition-all duration-200 bg-primary-container text-on-primary shadow-sm flex items-center justify-center gap-1.5" id="filter-all" onclick="filterReports('all')" role="tab">
+<span class="">All</span>
+<span class="px-1.5 py-0.5 rounded-full bg-on-primary/20 text-on-primary font-label-sm text-label-sm">3</span>
+</button>
+<button aria-selected="false" class="flex-1 py-2 px-3 rounded-lg font-label-lg text-label-lg transition-all duration-200 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5" id="filter-active" onclick="filterReports('active')" role="tab">
+<span class="">Active</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">2</span>
+</button>
+<button aria-selected="false" class="flex-1 py-2 px-3 rounded-lg font-label-lg text-label-lg transition-all duration-200 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5" id="filter-resolved" onclick="filterReports('resolved')" role="tab">
+<span class="">Resolved</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">1</span>
+</button>
+</div>
+<!-- Reports Container -->
+<div class="flex flex-col gap-4">
+<!-- Card 1: Lost ID Report -->
+<article class="report-card report-active flex flex-col p-4 rounded-xl bg-surface-container-lowest shadow-[0_4px_12px_rgba(0,11,48,0.08)] transition-transform active:scale-[0.99]">
+<!-- Header row: Title & Badge -->
+<div class="flex items-start justify-between gap-3 mb-2">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-primary-fixed-variant text-xl">badge</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Lost ID Report</h3>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">#TKT-2024-0982 • Today, 2:45 PM</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded-md bg-secondary-fixed text-on-secondary-fixed flex-shrink-0">
+<span class="material-symbols-outlined text-sm">schedule</span>
+<span class="font-label-urgent text-label-urgent">SUBMITTED</span>
+</div>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface mb-3.5">
+        Lost student physical card at Library Desk 14. Temporary campus pass issued.
+      </p>
+<!-- Stepper Progress Bar (Step 1 of 3) -->
+<div class="p-3 rounded-lg bg-surface-container-low mb-3.5">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Progress Status</span>
+<span class="font-label-sm text-label-sm text-on-primary-fixed-variant font-medium">Step 1 of 3</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden mb-2">
+<div class="h-full bg-secondary-container rounded-full w-1/3 transition-all duration-500"></div>
+</div>
+<div class="grid grid-cols-3 gap-1">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">Submitted</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">2:45 PM</span>
+</div>
+<div class="flex flex-col text-center">
+<span class="font-label-sm text-label-sm text-outline">Processing</span>
+<span class="font-label-sm text-label-sm text-outline-variant">Pending</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="font-label-sm text-label-sm text-outline">Ready</span>
+<span class="font-label-sm text-label-sm text-outline-variant">Pick-up</span>
+</div>
+</div>
+</div>
+<!-- Interactive Footer Actions -->
+<div class="flex items-center justify-end gap-2 pt-1">
+<button class="h-10 px-3.5 rounded-lg font-label-lg text-label-lg text-secondary hover:bg-secondary-fixed/40 transition-colors flex items-center gap-1.5" onclick="promptCancel('TKT-2024-0982')">
+<span class="material-symbols-outlined text-lg">cancel</span>
+<span class="">Cancel Request</span>
+</button>
+<button class="h-10 px-4 rounded-lg font-label-lg text-label-lg bg-primary-container text-on-primary hover:bg-primary-container/90 active:scale-95 transition-all flex items-center gap-1 shadow-sm">
+<span class="">View Details</span>
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Card 2: Facility Damage (Room 302) -->
+<article class="report-card report-active flex flex-col p-4 rounded-xl bg-surface-container-lowest shadow-[0_4px_12px_rgba(0,11,48,0.08)] transition-transform active:scale-[0.99]">
+<!-- Header row: Title & Badge -->
+<div class="flex items-start justify-between gap-3 mb-2">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-tertiary-container text-xl">handyman</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Facility Damage (Room 302)</h3>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">#TKT-2024-0941 • Yesterday, 11:20 AM</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded-md bg-tertiary-fixed text-on-tertiary-fixed flex-shrink-0">
+<span class="material-symbols-outlined text-sm">visibility</span>
+<span class="font-label-urgent text-label-urgent">UNDER REVIEW</span>
+</div>
+</div>
+<!-- Attached thumbnail preview & Description -->
+<div class="flex gap-3 items-start mb-3.5">
+<img class="w-16 h-16 rounded-lg object-cover flex-shrink-0 bg-surface-container-high" data-alt="A clean campus lecture hall overhead ceiling mount showing electrical conduit inspection tags, modern institutional architectural lighting, muted tones with high fidelity details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKu_0roGfbqnB7zpYy8rEpwYLloaR_WEcg8nNRgwOq1Sf6yeBtncvDt11HVMs9FILuCsFieJWAGlIds8nWblxk57vK64Hsa3v1tVsXCjY50xZnGkWEkVeI8JFrfx28ADlgy6qu525rP0pFc1RsoT9AuAuRtQOFW65I2Iyq71A3-7G30hbSYJh7d5SXIrT733W2w4gX3XCu-bp-95lhK3Sn50S5z6Mg5YjIvz-Gbos">
+<p class="font-body-md text-body-md text-on-surface">
+          Overhead projector power unit sparked and malfunctioned in lecture hall.
+        </p>
+</div>
+<!-- Stepper Progress Bar (Step 2 of 3) -->
+<div class="p-3 rounded-lg bg-surface-container-low mb-3.5">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-on-tertiary-container text-base">engineering</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Assigned: Tech J. Cruz</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-tertiary-container font-medium">Step 2 of 3</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden mb-2">
+<div class="h-full bg-on-tertiary-container rounded-full w-2/3 transition-all duration-500"></div>
+</div>
+<div class="grid grid-cols-3 gap-1">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Submitted</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Oct 14</span>
+</div>
+<div class="flex flex-col text-center">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">In Progress</span>
+<span class="font-label-sm text-label-sm text-on-tertiary-container">Dispatching</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="font-label-sm text-label-sm text-outline">Resolved</span>
+<span class="font-label-sm text-label-sm text-outline-variant">Pending</span>
+</div>
+</div>
+</div>
+<!-- Footer Button -->
+<div class="flex items-center justify-end pt-1">
+<button class="h-10 px-4 rounded-lg font-label-lg text-label-lg bg-primary-container text-on-primary hover:bg-primary-container/90 active:scale-95 transition-all flex items-center gap-1 shadow-sm">
+<span class="">View Details</span>
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Card 3: Medical First Aid Call -->
+<article class="report-card report-resolved flex flex-col p-4 rounded-xl bg-surface-container-lowest shadow-[0_4px_12px_rgba(0,11,48,0.08)] transition-transform active:scale-[0.99]">
+<!-- Header row: Title & Badge -->
+<div class="flex items-start justify-between gap-3 mb-2">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-xl">medical_services</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface truncate">Medical First Aid Call</h3>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-0.5">#TKT-2024-0890 • Oct 12, 4:15 PM</span>
+</div>
+<div class="flex items-center gap-1 px-2.5 py-1 rounded-md bg-surface-container-highest text-on-surface flex-shrink-0">
+<span class="material-symbols-outlined text-sm text-secondary">check_circle</span>
+<span class="font-label-urgent text-label-urgent">RESOLVED</span>
+</div>
+</div>
+<!-- Incident Location with subtle inline visual chip -->
+<div class="flex items-center gap-2 mb-2 px-2.5 py-1.5 rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-on-surface-variant text-base">pin_drop</span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium truncate">Campus Gymnasium • Court B</span>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface mb-3.5">
+        Minor ankle sprain at gymnasium court B. First aid applied by nurse on duty. Case closed safely.
+      </p>
+<!-- Stepper Progress Bar (Completed 3 of 3) -->
+<div class="p-3 rounded-lg bg-surface-container-low mb-3.5">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-on-surface-variant text-base">verified</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Case Dispatched &amp; Cleared</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">3 of 3 (Complete)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden mb-2">
+<div class="h-full bg-primary-container rounded-full w-full"></div>
+</div>
+<div class="grid grid-cols-3 gap-1">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Reported</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4:15 PM</span>
+</div>
+<div class="flex flex-col text-center">
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">Attended</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4:21 PM</span>
+</div>
+<div class="flex flex-col text-right">
+<span class="font-label-sm text-label-sm font-bold text-on-surface">Resolved</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4:48 PM</span>
+</div>
+</div>
+</div>
+<!-- Footer Button -->
+<div class="flex items-center justify-end pt-1">
+<button class="h-10 px-4 rounded-lg font-label-lg text-label-lg bg-surface-container-high text-on-surface hover:bg-surface-container-highest active:scale-95 transition-all flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-lg">receipt_long</span>
+<span class="">View Incident Summary</span>
+</button>
+</div>
+</article>
+</div>
+<!-- Empty state placeholder (hidden by default, shown when filters match nothing) -->
+<div class="hidden flex-col items-center justify-center p-8 rounded-xl bg-surface-container-lowest shadow-[0_4px_12px_rgba(0,11,48,0.08)] mt-2 text-center" id="empty-state">
+<div class="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center mb-3">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl">task_alt</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface">No reports in this view</span>
+<span class="font-body-md text-body-md text-on-surface-variant mt-1 max-w-xs">All emergency tickets in this category have been processed or moved.</span>
+</div>
+<!-- Campus Safety Dispatch Guarantee Banner -->
+<div class="mt-5 p-4 rounded-xl bg-surface-container-low shadow-sm flex items-start gap-3">
+<span class="material-symbols-outlined text-on-primary-fixed-variant text-2xl flex-shrink-0">shield</span>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-surface">Direct Dispatch Link</span>
+<span class="font-body-md text-body-md text-on-surface-variant">Reports are monitored 24/7 by CCC Public Safety Operations. If you face imminent danger, tap SOS immediately.</span>
+</div>
+</div>
+<!-- Floating "+ New Report" Action Button -->
+<div class="sticky bottom-20 mt-6 flex justify-end z-30 pointer-events-none">
+<button aria-label="Create New Report" class="pointer-events-auto h-12 px-5 rounded-full bg-primary-container text-on-primary shadow-[0_8px_24px_rgba(0,11,48,0.24)] hover:bg-primary-container/90 active:scale-95 transition-all flex items-center gap-2 group cursor-pointer" id="open-new-report-btn" onclick="window.location.href='#screen-4'">
+<span class="material-symbols-outlined text-2xl font-bold group-hover:rotate-90 transition-transform">add</span>
+<span class="font-label-lg text-label-lg font-bold tracking-wide">+ New Report</span>
+</button>
+</div>
+</div>
+<script>
+  function filterReports(type) {
+    const cards = document.querySelectorAll('.report-card');
+    const emptyState = document.getElementById('empty-state');
+    const btnAll = document.getElementById('filter-all');
+    const btnActive = document.getElementById('filter-active');
+    const btnResolved = document.getElementById('filter-resolved');
+
+    // Reset styles
+    const buttons = [btnAll, btnActive, btnResolved];
+    buttons.forEach(btn => {
+      btn.className = "flex-1 py-2 px-3 rounded-lg font-label-lg text-label-lg transition-all duration-200 text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1.5";
+      btn.setAttribute('aria-selected', 'false');
+    });
+
+    let visibleCount = 0;
+
+    if (type === 'all') {
+      btnAll.className = "flex-1 py-2 px-3 rounded-lg font-label-lg text-label-lg transition-all duration-200 bg-primary-container text-on-primary shadow-sm flex items-center justify-center gap-1.5";
+      btnAll.setAttribute('aria-selected', 'true');
+      cards.forEach(c => {
+        c.style.display = 'flex';
+        visibleCount++;
+      });
+    } else if (type === 'active') {
+      btnActive.className = "flex-1 py-2 px-3 rounded-lg font-label-lg text-label-lg transition-all duration-200 bg-primary-container text-on-primary shadow-sm flex items-center justify-center gap-1.5";
+      btnActive.setAttribute('aria-selected', 'true');
+      cards.forEach(c => {
+        if (c.classList.contains('report-active')) {
+          c.style.display = 'flex';
+          visibleCount++;
+        } else {
+          c.style.display = 'none';
+        }
+      });
+    } else if (type === 'resolved') {
+      btnResolved.className = "flex-1 py-2 px-3 rounded-lg font-label-lg text-label-lg transition-all duration-200 bg-primary-container text-on-primary shadow-sm flex items-center justify-center gap-1.5";
+      btnResolved.setAttribute('aria-selected', 'true');
+      cards.forEach(c => {
+        if (c.classList.contains('report-resolved')) {
+          c.style.display = 'flex';
+          visibleCount++;
+        } else {
+          c.style.display = 'none';
+        }
+      });
+    }
+
+    if (emptyState) {
+      emptyState.style.display = visibleCount === 0 ? 'flex' : 'none';
+    }
+  }
+
+  function promptCancel(ticketId) {
+    if (confirm("Are you sure you want to cancel ticket " + ticketId + "? This cannot be undone.")) {
+      alert("Ticket " + ticketId + " cancellation request submitted.");
+    }
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/95 backdrop-blur-xl shadow-[0_-4px_16px_rgba(0,11,48,0.06)]" data-active-classes="text-primary-container font-semibold"><div class="grid grid-cols-4 items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-h-[48px] py-1 text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer" data-path="home" href="#" onclick="window.location.href='#screen-2'"><span class="material-symbols-outlined text-2xl">home</span><span class="font-label-sm text-label-sm mt-0.5">Home</span></a><a class="flex flex-col items-center justify-center min-h-[48px] py-1 text-secondary hover:text-on-secondary-container transition-colors cursor-pointer" data-path="emergency-sos" href="#" onclick="window.location.href='#screen-3'"><span class="material-symbols-outlined text-2xl">shield_with_heart</span><span class="font-label-urgent text-label-urgent mt-0.5">SOS</span></a><a class="flex flex-col items-center justify-center min-h-[48px] py-1 text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer" data-path="directory" href="#" onclick="window.location.href='#screen-5'"><span class="material-symbols-outlined text-2xl">menu_book</span><span class="font-label-sm text-label-sm mt-0.5">Directory</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-h-[48px] py-1 transition-colors text-primary-container font-semibold cursor-pointer" data-path="requests" href="#" onclick="window.location.href='#screen-6'"><span class="material-symbols-outlined text-2xl">assignment_turned_in</span><span class="font-label-sm text-label-sm mt-0.5">Requests</span></a></div></nav>
+
+</body></html>
