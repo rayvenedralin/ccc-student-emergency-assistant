@@ -129,6 +129,25 @@
 <body class="flex flex-col items-center justify-center p-0 sm:p-4 antialiased select-none overflow-x-hidden">
 
   <!-- ==================================================== -->
+  <!-- FLOATING DESKTOP TOOLBAR (Clean Upper Corner, NEVER overlaps Phone) -->
+  <!-- ==================================================== -->
+  <aside class="desktop-only-controls fixed top-4 right-5 z-50 flex items-center gap-2.5 bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-full border border-white/15 shadow-2xl text-xs text-white">
+    <div class="flex items-center gap-2 pr-2 border-r border-slate-700">
+      <div class="w-2 h-2 rounded-full bg-emerald-safe animate-pulse"></div>
+      <span class="font-bold text-slate-200">CCC Safety Prototype</span>
+    </div>
+    
+    <button onclick="toggleDeviceFrameView()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 tactile-btn">
+      <span class="material-symbols-outlined text-sm">devices</span>
+      <span id="viewModeText">Expanded View</span>
+    </button>
+
+    <button onclick="toggleSoundVolume()" class="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 tactile-btn" title="Toggle Sound Cues">
+      <span id="soundIconSymbol" class="material-symbols-outlined text-sm">volume_up</span>
+    </button>
+  </aside>
+
+  <!-- ==================================================== -->
   <!-- PHONE CHASSIS (Centered iPhone Viewport on Desktop) -->
   <!-- ==================================================== -->
   <div id="phoneChassis" class="device-chassis bg-slate-canvas sm:rounded-[48px] sm:border-[9px] sm:border-[#1e2333] sm:shadow-phone flex flex-col overflow-hidden sm:ring-1 sm:ring-white/20">
@@ -146,8 +165,8 @@
       </div>
     </div>
 
-    <!-- iOS Status Bar (Always aligned, never clips or collides) -->
-    <div id="topStatusBar" class="w-full h-11 px-7 pt-2 flex items-center justify-between text-xs font-semibold z-40 bg-navy-dark text-white select-none transition-colors duration-200">
+    <!-- iOS Status Bar (Theme adapts: light on Login, dark on Auth pages) -->
+    <div id="topStatusBar" class="w-full h-11 px-7 pt-2 flex items-center justify-between text-xs font-semibold z-40 bg-slate-canvas text-navy-dark select-none transition-colors duration-200">
       <div id="liveClockDisplay" class="font-display font-bold text-[13px] tracking-tight">09:41</div>
       <div class="flex items-center gap-1.5">
         <span class="material-symbols-outlined text-[15px]">signal_cellular_alt</span>
@@ -159,9 +178,9 @@
     </div>
 
     <!-- ==================================================== -->
-    <!-- DOCKED UNIFIED APP HEADER (Except on Login)          -->
+    <!-- DOCKED UNIFIED APP HEADER (Hidden on Login!)         -->
     <!-- ==================================================== -->
-    <header id="mainAppHeader" class="w-full bg-navy-dark text-white px-4 py-2.5 shadow-md flex items-center justify-between z-30 select-none">
+    <header id="mainAppHeader" class="hidden w-full bg-navy-dark text-white px-4 py-2.5 shadow-md flex items-center justify-between z-30 select-none">
       <div class="flex items-center gap-2.5 min-w-0">
         <!-- Back Button (shown on sub-screens) -->
         <button id="headerBackBtn" onclick="navigateBack()" class="hidden w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 flex items-center justify-center text-white tactile-btn">
@@ -954,9 +973,9 @@
     </main>
 
     <!-- ==================================================== -->
-    <!-- PERMANENTLY DOCKED BOTTOM TAB BAR                    -->
+    <!-- DOCKED BOTTOM TAB BAR (Hidden on Login!)             -->
     <!-- ==================================================== -->
-    <nav id="permanentBottomNav" class="w-full bg-surface-card border-t border-border-subtle px-3 py-2 flex items-center justify-around z-30 shadow-tab select-none">
+    <nav id="permanentBottomNav" class="hidden w-full bg-surface-card border-t border-border-subtle px-3 py-2 flex items-center justify-around z-30 shadow-tab select-none">
       <button onclick="navigateTo('HOME')" class="tab-item-btn flex flex-col items-center gap-0.5 text-ocean-teal tactile-btn" data-screen="HOME">
         <span class="material-symbols-outlined text-xl">home</span>
         <span class="text-[10px] font-bold">Home</span>
@@ -981,29 +1000,10 @@
     </nav>
 
     <!-- iOS Home Indicator Pill Bar -->
-    <div class="w-full h-4 bg-surface-card flex items-center justify-center pointer-events-none pb-1 z-30">
-      <div class="w-32 h-1 bg-slate-300 rounded-full"></div>
+    <div id="phoneBottomHomeIndicator" class="w-full h-4 bg-slate-canvas flex items-center justify-center pointer-events-none pb-1 z-30 transition-colors">
+      <div class="w-32 h-1 bg-slate-400/50 rounded-full"></div>
     </div>
   </div>
-
-  <!-- ==================================================== -->
-  <!-- FLOATING PRESENTATION BAR (Desktop Only, Elegant)    -->
-  <!-- ==================================================== -->
-  <aside class="desktop-only-controls fixed bottom-5 z-50 flex items-center gap-2 bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-2xl text-xs text-white">
-    <div class="flex items-center gap-2 pr-2 border-r border-slate-700">
-      <div class="w-2 h-2 rounded-full bg-emerald-safe animate-pulse"></div>
-      <span class="font-bold text-slate-200">CCC Assistant</span>
-    </div>
-    
-    <button onclick="toggleDeviceFrameView()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 tactile-btn">
-      <span class="material-symbols-outlined text-sm">devices</span>
-      <span id="viewModeText">Expanded View</span>
-    </button>
-
-    <button onclick="toggleSoundVolume()" class="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 tactile-btn" title="Toggle Audio Cues">
-      <span id="soundIconSymbol" class="material-symbols-outlined text-sm">volume_up</span>
-    </button>
-  </aside>
 
   <!-- ==================================================== -->
   <!-- MODAL: SOS DISPATCHED POPUP OVERLAY                  -->
@@ -1231,7 +1231,7 @@
       </div>
 
       <div class="space-y-2">
-        <button onclick="navigateTo('LOGIN'); closeProfileModal(); showToast('Signed out of student portal');"
+        <button onclick="handleSignOut()"
           class="w-full h-10 rounded-full bg-red-50 hover:bg-red-100 text-crimson-urgent font-bold text-xs flex items-center justify-center gap-1.5 tactile-btn">
           <span class="material-symbols-outlined text-base">logout</span>
           <span>Sign Out of Portal</span>
@@ -1254,6 +1254,7 @@
   <script>
     // State Store
     const AppState = {
+      isAuthenticated: false, // Smart Session: Default logged out!
       currentScreen: 'LOGIN',
       historyStack: [],
       soundMuted: false,
@@ -1370,15 +1371,52 @@
     }
 
     // ==========================================
-    // ROUTING ENGINE
+    // SMART ROUTING & SESSION ENGINE
     // ==========================================
     const SCREEN_CONFIGS = {
-      'LOGIN': { id: 'page-login', title: 'Sign In', showHeader: false },
-      'HOME': { id: 'page-home', title: 'Hi, Rayven', showHeader: true, isHome: true },
-      'EMERGENCY_DISPATCH': { id: 'page-emergency', title: 'Emergency Help', showHeader: true },
-      'REPORT_PROBLEM': { id: 'page-report', title: 'Report Campus Issue', showHeader: true },
-      'CAMPUS_SERVICES': { id: 'page-directory', title: 'Campus Directory', showHeader: true },
-      'MY_REQUESTS': { id: 'page-requests', title: 'Incident Tracker', showHeader: true }
+      'LOGIN': { 
+        id: 'page-login', 
+        title: 'Sign In', 
+        showHeader: false, 
+        showBottomNav: false,
+        statusTheme: 'light'
+      },
+      'HOME': { 
+        id: 'page-home', 
+        title: 'Hi, Rayven', 
+        showHeader: true, 
+        showBottomNav: true, 
+        isHome: true,
+        statusTheme: 'dark'
+      },
+      'EMERGENCY_DISPATCH': { 
+        id: 'page-emergency', 
+        title: 'Emergency Help', 
+        showHeader: true, 
+        showBottomNav: true, 
+        statusTheme: 'dark'
+      },
+      'REPORT_PROBLEM': { 
+        id: 'page-report', 
+        title: 'Report Campus Issue', 
+        showHeader: true, 
+        showBottomNav: true, 
+        statusTheme: 'dark'
+      },
+      'CAMPUS_SERVICES': { 
+        id: 'page-directory', 
+        title: 'Campus Directory', 
+        showHeader: true, 
+        showBottomNav: true, 
+        statusTheme: 'dark'
+      },
+      'MY_REQUESTS': { 
+        id: 'page-requests', 
+        title: 'Incident Tracker', 
+        showHeader: true, 
+        showBottomNav: true, 
+        statusTheme: 'dark'
+      }
     };
 
     function navigateTo(screenKey, params = {}) {
@@ -1400,13 +1438,13 @@
         document.getElementById('screenViewport').scrollTop = 0;
       }
 
-      // Header visibility
+      // SMART SESSION CONTROL 1: Top Header Bar
       const header = document.getElementById('mainAppHeader');
       const headerBackBtn = document.getElementById('headerBackBtn');
       const headerProfileBlock = document.getElementById('headerProfileBlock');
       const headerTitleText = document.getElementById('headerTitleText');
 
-      if (!config.showHeader) {
+      if (!config.showHeader || !AppState.isAuthenticated && screenKey === 'LOGIN') {
         header.classList.add('hidden');
       } else {
         header.classList.remove('hidden');
@@ -1419,6 +1457,26 @@
           headerProfileBlock.classList.add('hidden');
           headerTitleText.innerText = config.title;
         }
+      }
+
+      // SMART SESSION CONTROL 2: Bottom Navigation Bar
+      const bottomNav = document.getElementById('permanentBottomNav');
+      const homeIndicator = document.getElementById('phoneBottomHomeIndicator');
+      
+      if (!config.showBottomNav || !AppState.isAuthenticated) {
+        bottomNav.classList.add('hidden');
+        homeIndicator.className = 'w-full h-4 bg-slate-canvas flex items-center justify-center pointer-events-none pb-1 z-30 transition-colors';
+      } else {
+        bottomNav.classList.remove('hidden');
+        homeIndicator.className = 'w-full h-4 bg-surface-card flex items-center justify-center pointer-events-none pb-1 z-30 transition-colors';
+      }
+
+      // SMART SESSION CONTROL 3: iOS Status Bar Theme (seamless blend)
+      const statusBar = document.getElementById('topStatusBar');
+      if (config.statusTheme === 'light' || screenKey === 'LOGIN') {
+        statusBar.className = 'w-full h-11 px-7 pt-2 flex items-center justify-between text-xs font-semibold z-40 bg-slate-canvas text-navy-dark select-none transition-colors duration-200';
+      } else {
+        statusBar.className = 'w-full h-11 px-7 pt-2 flex items-center justify-between text-xs font-semibold z-40 bg-navy-dark text-white select-none transition-colors duration-200';
       }
 
       // Bottom nav active state
@@ -1449,7 +1507,11 @@
         const prev = AppState.historyStack.pop();
         navigateTo(prev);
       } else {
-        navigateTo('HOME');
+        if (AppState.isAuthenticated) {
+          navigateTo('HOME');
+        } else {
+          navigateTo('LOGIN');
+        }
       }
     }
 
@@ -1466,9 +1528,21 @@
         return;
       }
 
+      // AUTHENTICATE USER
+      AppState.isAuthenticated = true;
       playAudioTone('success');
       showToast('Welcome back, Rayven! Verified.');
+      
+      // Navigate to authenticated Home dashboard
       navigateTo('HOME');
+    }
+
+    function handleSignOut() {
+      AppState.isAuthenticated = false;
+      closeProfileModal();
+      playAudioTone('tap');
+      showToast('Signed out of student portal');
+      navigateTo('LOGIN');
     }
 
     function togglePasswordVisibility() {
@@ -1997,8 +2071,10 @@
     setInterval(tickClock, 1000);
     tickClock();
 
-    // Initialize
+    // Initialize - SMART SESSION DEFAULT
     document.addEventListener('DOMContentLoaded', () => {
+      // Ensure initial landing screen is clean unauthenticated LOGIN
+      navigateTo('LOGIN');
       renderRequestsList();
       selectReportCategory('lost-id');
     });
