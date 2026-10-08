@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>CCC Student Emergency Assistant | Campus Safety Portal</title>
+  <title>Student Emergency Assistance Portal | City College of Calamba</title>
   <meta name="description" content="City College of Calamba mobile emergency assistance, live security dispatch, and incident triage portal.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>">
 
@@ -30,9 +30,7 @@
             "crimson-urgent": "#A61C1C",
             "crimson-deep": "#821111",
             "crimson-light": "#FEE2E2",
-            "ocean-teal": "#1E73A8",
-            "teal-surface": "#E0F2FE",
-            "slate-canvas": "#F4F6F9",
+                        "slate-canvas": "#F4F6F9",
             "surface-card": "#FFFFFF",
             "border-subtle": "#E2E8F0",
             "emerald-safe": "#10B981",
@@ -235,7 +233,7 @@
         <div class="flex items-center gap-1">
           <div class="w-1.5 h-1.5 rounded-full bg-emerald-safe animate-pulse"></div>
           <div class="w-2.5 h-2.5 rounded-full bg-[#0a1628] flex items-center justify-center">
-            <div class="w-1 h-1 rounded-full bg-ocean-teal opacity-90"></div>
+            <div class="w-1 h-1 rounded-full bg-slate-400 opacity-90"></div>
           </div>
         </div>
       </div>
@@ -276,18 +274,17 @@
     <header id="mainAppHeader" class="hidden w-full bg-navy-dark text-white px-4 py-2.5 shadow-md flex items-center justify-between z-30 select-none">
       <div class="flex items-center gap-2.5 min-w-0">
         <!-- Back Button (shown on sub-screens) -->
-        <button id="headerBackBtn" onclick="navigateBack()" class="hidden w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 flex items-center justify-center text-white tactile-btn">
+        <button id="headerBackBtn" onclick="navigateBack()" aria-label="Go Back" class="hidden w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 flex items-center justify-center text-white tactile-btn flex-shrink-0">
           <span class="material-symbols-outlined text-lg">arrow_back</span>
         </button>
-        <!-- Avatar & Identity on Home Screen -->
-        <div id="headerProfileBlock" class="flex items-center gap-2.5 min-w-0">
-          <button onclick="openProfileModal()" aria-label="Student Profile" class="w-9 h-9 rounded-full overflow-hidden border border-white/40 ring-1 ring-white/30 tactile-btn flex-shrink-0 shadow-sm">
-            <img src="rayven_headshot.png" alt="Rayven" class="w-full h-full object-cover">
-          </button>
-          <div class="flex flex-col min-w-0">
-            <span class="text-[9px] font-extrabold uppercase tracking-widest text-teal-300 truncate">City College of Calamba</span>
-            <span id="headerTitleText" class="font-display font-bold text-xs sm:text-sm text-white leading-tight truncate">CCC Student Emergency Assistant</span>
-          </div>
+        <!-- Blank Avatar Button (photo removed, now blank as requested) -->
+        <button id="headerAvatarBtn" onclick="openProfileModal()" aria-label="Student Profile" class="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white tactile-btn flex-shrink-0 shadow-sm">
+          <span class="material-symbols-outlined text-lg text-white">person</span>
+        </button>
+        <!-- Unified Identity Block (Always displays City College of Calamba in white on all screens) -->
+        <div id="headerProfileBlock" class="flex flex-col min-w-0">
+          <span class="text-[9px] font-extrabold uppercase tracking-widest text-white truncate font-display">City College of Calamba</span>
+          <span id="headerTitleText" class="font-display font-bold text-xs sm:text-sm text-white leading-tight truncate">Student Emergency Assistance</span>
         </div>
       </div>
 
@@ -313,36 +310,15 @@
       <!-- ========================================== -->
       <section id="page-login" class="screen-page active-screen flex-col w-full min-h-full p-5 justify-between bg-slate-canvas">
         <div class="flex flex-col w-full pt-1">
-          <!-- Campus Grid Safety Status -->
-          <div class="w-full bg-surface-card rounded-xl p-3 flex items-center justify-between shadow-card border border-border-subtle mb-5">
-            <div class="flex items-center gap-2">
-              <span class="relative flex h-2.5 w-2.5">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-safe opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-safe"></span>
-              </span>
-              <span class="text-xs font-semibold text-slate-700">Safety Grid: Code Green Normal</span>
-            </div>
-            <div class="flex items-center gap-1 text-ocean-teal text-xs font-bold">
-              <span class="material-symbols-outlined text-[15px]">wifi</span>
-              <span>ONLINE</span>
-            </div>
-          </div>
-
           <!-- Collegiate Branding Seal -->
-          <div class="flex flex-col items-center text-center mb-5">
-            <div class="w-16 h-16 rounded-2xl bg-navy-dark text-white p-3 shadow-card flex items-center justify-center mb-2.5 border border-white/20">
-              <!-- Crisp CCC Shield Seal -->
-              <svg viewBox="0 0 100 100" class="w-full h-full text-white" fill="none">
-                <path d="M50 8L15 24V50C15 72 30 90 50 95C70 90 85 72 85 50V24L50 8Z" fill="#1E73A8"/>
-                <path d="M50 16L24 28V50C24 67 35 80 50 84C65 80 76 67 76 50V28L50 16Z" fill="#000B30"/>
-                <path d="M50 24L32 32V48C32 60 40 70 50 73C60 70 68 60 68 48V32L50 24Z" fill="#A61C1C"/>
-                <text x="50" y="53" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="900" fill="#FFFFFF">CCC</text>
-              </svg>
+          <div class="flex flex-col items-center text-center mb-5 pt-3">
+            <div class="w-20 h-20 rounded-2xl bg-white p-1.5 shadow-card flex items-center justify-center mb-3 border border-border-subtle">
+              <img src="ccc_logo/City_College_of_Calamba_Logo.png" alt="City College of Calamba Official Logo" class="w-full h-full object-contain">
             </div>
             <span class="text-xs font-extrabold text-navy-dark uppercase tracking-widest font-display">City College of Calamba</span>
-            <h1 class="text-base font-bold text-slate-800 mt-0.5 font-display">Student Emergency & Safety Portal</h1>
+            <h1 class="text-base font-bold text-slate-800 mt-0.5 font-display">Student Emergency Assistance Portal</h1>
             <div class="mt-1.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-200 text-slate-700 text-[11px] font-medium">
-              <span class="material-symbols-outlined text-[13px] text-ocean-teal">verified_user</span>
+              <span class="material-symbols-outlined text-[13px] text-slate-600">verified_user</span>
               <span>Identity Verification Gateway</span>
             </div>
           </div>
@@ -359,7 +335,7 @@
               <div class="space-y-1">
                 <label for="studentIdInput" class="text-xs font-semibold text-slate-700 flex items-center justify-between">
                   <span>Student ID Number</span>
-                  <span class="text-[11px] text-ocean-teal font-medium">Auto-filled</span>
+                  <span class="text-[11px] text-slate-500 font-medium">Auto-filled</span>
                 </label>
                 <div class="relative flex items-center">
                   <span class="material-symbols-outlined absolute left-3 text-slate-400 text-lg">person</span>
@@ -372,7 +348,7 @@
               <div class="space-y-1">
                 <label for="passwordInput" class="text-xs font-semibold text-slate-700 flex items-center justify-between">
                   <span>Password</span>
-                  <button type="button" onclick="togglePasswordVisibility()" class="text-[11px] text-ocean-teal hover:underline">Show / Hide</button>
+                  <button type="button" onclick="togglePasswordVisibility()" class="text-[11px] text-navy-dark font-semibold hover:underline">Show / Hide</button>
                 </label>
                 <div class="relative flex items-center">
                   <span class="material-symbols-outlined absolute left-3 text-slate-400 text-lg">lock</span>
@@ -401,7 +377,7 @@
             </form>
 
             <div class="mt-3.5 text-center">
-              <button onclick="handleResetPassword()" class="text-xs text-ocean-teal hover:underline font-medium">
+              <button onclick="handleResetPassword()" class="text-xs text-navy-dark font-semibold hover:underline">
                 Forgot Password / Reset Password
               </button>
             </div>
@@ -509,7 +485,7 @@
             <button onclick="navigateTo('REPORT_PROBLEM', { category: 'facility' })"
               class="flex flex-col text-left p-3.5 bg-surface-card rounded-2xl shadow-card hover:shadow-card-hover border border-border-subtle min-h-[105px] justify-between tactile-btn cursor-pointer">
               <div class="flex items-center justify-between w-full">
-                <div class="w-9 h-9 rounded-xl bg-ocean-teal text-white flex items-center justify-center shadow-sm">
+                <div class="w-9 h-9 rounded-xl bg-navy-dark text-white flex items-center justify-center shadow-sm">
                   <span class="material-symbols-outlined text-lg">handyman</span>
                 </div>
                 <span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
@@ -543,12 +519,12 @@
 
           <!-- Bulletin Card -->
           <div onclick="openBulletinModal()" class="bg-surface-card rounded-2xl p-3.5 shadow-card border border-border-subtle flex items-start gap-3 cursor-pointer tactile-btn">
-            <div class="w-9 h-9 rounded-xl bg-teal-50 text-ocean-teal flex items-center justify-center flex-shrink-0 mt-0.5">
+            <div class="w-9 h-9 rounded-xl bg-slate-100 text-navy-dark flex items-center justify-center flex-shrink-0 mt-0.5">
               <span class="material-symbols-outlined text-lg">campaign</span>
             </div>
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between">
-                <span class="text-[10px] font-extrabold text-ocean-teal uppercase">Campus Safety Notice</span>
+                <span class="text-[10px] font-extrabold text-navy-dark uppercase">Campus Safety Notice</span>
                 <span class="text-[10px] text-slate-400">Today 8:00 AM</span>
               </div>
               <h3 class="text-xs font-bold text-slate-800 mt-0.5 truncate font-display">Earthquake & Evacuation Drill Friday</h3>
@@ -578,15 +554,15 @@
           <span class="text-[11px] font-bold uppercase text-slate-400 tracking-wider">Quick Services</span>
           <div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 flex-shrink-0 min-h-[46px] w-full drag-scroll-container" style="flex-shrink: 0 !important; min-height: 46px !important;">
             <button onclick="navigateTo('CAMPUS_SERVICES')" class="flex items-center gap-1.5 px-3.5 h-9 min-h-[36px] rounded-full bg-surface-card border border-border-subtle text-xs font-semibold text-slate-800 shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn whitespace-nowrap" style="flex-shrink: 0 !important; min-height: 36px !important; height: 36px !important;">
-              <span class="material-symbols-outlined text-sm text-ocean-teal">business</span>
+              <span class="material-symbols-outlined text-sm text-navy-dark">business</span>
               <span>Campus Offices</span>
             </button>
             <button onclick="openShuttleScheduleModal()" class="flex items-center gap-1.5 px-3.5 h-9 min-h-[36px] rounded-full bg-surface-card border border-border-subtle text-xs font-semibold text-slate-800 shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn whitespace-nowrap" style="flex-shrink: 0 !important; min-height: 36px !important; height: 36px !important;">
-              <span class="material-symbols-outlined text-sm text-ocean-teal">directions_bus</span>
+              <span class="material-symbols-outlined text-sm text-navy-dark">directions_bus</span>
               <span>Campus Transport</span>
             </button>
             <button onclick="openSafetySeminarsModal()" class="flex items-center gap-1.5 px-3.5 h-9 min-h-[36px] rounded-full bg-surface-card border border-border-subtle text-xs font-semibold text-slate-800 shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn whitespace-nowrap" style="flex-shrink: 0 !important; min-height: 36px !important; height: 36px !important;">
-              <span class="material-symbols-outlined text-sm text-ocean-teal">event</span>
+              <span class="material-symbols-outlined text-sm text-navy-dark">event</span>
               <span>Safety Workshops</span>
             </button>
           </div>
@@ -624,7 +600,7 @@
           </div>
 
           <div class="flex items-center gap-2.5">
-            <div class="w-9 h-9 rounded-xl bg-teal-50 text-ocean-teal flex items-center justify-center flex-shrink-0">
+            <div class="w-9 h-9 rounded-xl bg-slate-100 text-navy-dark flex items-center justify-center flex-shrink-0">
               <span class="material-symbols-outlined text-xl">pin_drop</span>
             </div>
             <div class="min-w-0">
@@ -661,7 +637,7 @@
                 <span class="w-2 h-2 rounded-full bg-crimson-urgent animate-ping flex-shrink-0"></span>
                 <span class="truncate">Live GPS: City College of Calamba (14.2081° N, 121.1574° E)</span>
               </div>
-              <button type="button" onclick="centerEmergencyMap()" class="px-2.5 py-1 rounded bg-ocean-teal hover:bg-teal-500 text-white font-bold text-[10px] flex items-center gap-0.5 flex-shrink-0 tactile-btn">
+              <button type="button" onclick="centerEmergencyMap()" class="px-2.5 py-1 rounded bg-navy-dark hover:bg-slate-800 text-white font-bold text-[10px] flex items-center gap-0.5 flex-shrink-0 tactile-btn border border-white/20">
                 <span class="material-symbols-outlined text-[13px]">my_location</span>
                 <span>Recenter</span>
               </button>
@@ -693,11 +669,65 @@
             </div>
           </div>
 
-          <!-- Building & Room -->
+          <!-- Building & Room (IMAGE 3 Choosable Rooms) -->
           <div class="space-y-1">
-            <label for="sosRoomNumber" class="text-xs font-bold text-slate-700">Building & Room Number</label>
-            <input type="text" id="sosRoomNumber" value="CCC Main Building, Room 304"
-              class="w-full h-11 px-3 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-medium focus:outline-none focus:border-crimson-urgent focus:bg-white transition-all">
+            <label for="sosRoomNumber" class="text-xs font-bold text-slate-700 flex items-center justify-between">
+              <span>Building & Room Number <span class="text-crimson-urgent">*</span></span>
+              <span class="text-[11px] text-slate-400">Choose CCC Room</span>
+            </label>
+            <div class="relative">
+              <select id="sosRoomNumber" required
+                class="w-full h-11 px-3 pr-8 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-semibold focus:outline-none focus:border-crimson-urgent focus:bg-white transition-all appearance-none cursor-pointer">
+                <option value="" disabled selected>-- Select CCC Building & Room --</option>
+                <optgroup label="CCC MAIN BUILDING">
+                  <option value="CCC Main Building • AB 1">CCC Main Building • AB 1</option>
+                  <option value="CCC Main Building • AB 2">CCC Main Building • AB 2</option>
+                  <option value="CCC Main Building • AB 3">CCC Main Building • AB 3</option>
+                  <option value="CCC Main Building • AB 4">CCC Main Building • AB 4</option>
+                  <option value="CCC Main Building • AB 5">CCC Main Building • AB 5</option>
+                  <option value="CCC Main Building • AB 6">CCC Main Building • AB 6</option>
+                  <option value="CCC Main Building • AB 7">CCC Main Building • AB 7</option>
+                  <option value="CCC Main Building • AB 8">CCC Main Building • AB 8</option>
+                  <option value="CCC Main Building • AB 9">CCC Main Building • AB 9</option>
+                  <option value="CCC Main Building • AB 10">CCC Main Building • AB 10</option>
+                  <option value="CCC Main Building • AB 11">CCC Main Building • AB 11</option>
+                  <option value="CCC Main Building • AB 12">CCC Main Building • AB 12</option>
+                  <option value="CCC Main Building • AB 13">CCC Main Building • AB 13</option>
+                  <option value="CCC Main Building • AB 14">CCC Main Building • AB 14</option>
+                  <option value="CCC Main Building • AB 15">CCC Main Building • AB 15</option>
+                </optgroup>
+                <optgroup label="RIZAL BUILDING">
+                  <option value="Rizal Building • R1">Rizal Building • R1</option>
+                  <option value="Rizal Building • R2">Rizal Building • R2</option>
+                  <option value="Rizal Building • R3">Rizal Building • R3</option>
+                  <option value="Rizal Building • R4">Rizal Building • R4</option>
+                  <option value="Rizal Building • R5">Rizal Building • R5</option>
+                  <option value="Rizal Building • R6">Rizal Building • R6</option>
+                  <option value="Rizal Building • R7">Rizal Building • R7</option>
+                  <option value="Rizal Building • R8">Rizal Building • R8</option>
+                  <option value="Rizal Building • R9">Rizal Building • R9</option>
+                  <option value="Rizal Building • R10">Rizal Building • R10</option>
+                </optgroup>
+                <optgroup label="JMC BUILDING">
+                  <option value="JMC Building • 1JMC CL 1">JMC Building • 1JMC CL 1</option>
+                  <option value="JMC Building • 1JMC CL 2">JMC Building • 1JMC CL 2</option>
+                  <option value="JMC Building • 1JMC CL 3">JMC Building • 1JMC CL 3</option>
+                  <option value="JMC Building • 1JMC CL 4">JMC Building • 1JMC CL 4</option>
+                  <option value="JMC Building • 1JMC CL 5">JMC Building • 1JMC CL 5</option>
+                  <option value="JMC Building • 2JMC CL 1">JMC Building • 2JMC CL 1</option>
+                  <option value="JMC Building • 2JMC CL 2">JMC Building • 2JMC CL 2</option>
+                  <option value="JMC Building • 2JMC CL 3">JMC Building • 2JMC CL 3</option>
+                  <option value="JMC Building • 2JMC CL 4">JMC Building • 2JMC CL 4</option>
+                  <option value="JMC Building • 2JMC CL 5">JMC Building • 2JMC CL 5</option>
+                  <option value="JMC Building • 3JMC CL 1">JMC Building • 3JMC CL 1</option>
+                  <option value="JMC Building • 3JMC CL 2">JMC Building • 3JMC CL 2</option>
+                  <option value="JMC Building • 3JMC CL 3">JMC Building • 3JMC CL 3</option>
+                  <option value="JMC Building • 3JMC CL 4">JMC Building • 3JMC CL 4</option>
+                  <option value="JMC Building • 3JMC CL 5">JMC Building • 3JMC CL 5</option>
+                </optgroup>
+              </select>
+              <span class="material-symbols-outlined text-slate-400 absolute right-3 top-3 pointer-events-none text-base">expand_more</span>
+            </div>
           </div>
 
           <!-- Situation Details -->
@@ -758,7 +788,7 @@
             </button>
             <button type="button" onclick="selectReportCategory('facility')"
               class="report-chip-item h-9 min-h-[36px] px-3.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 bg-surface-card text-slate-700 border border-border-subtle shadow-sm flex-shrink-0 whitespace-nowrap hover:bg-slate-50 tactile-btn" data-category="facility" style="flex-shrink: 0 !important; min-height: 36px !important; height: 36px !important;">
-              <span class="material-symbols-outlined text-base text-ocean-teal">handyman</span>
+              <span class="material-symbols-outlined text-base text-slate-600">handyman</span>
               <span>Facility Damage</span>
             </button>
             <button type="button" onclick="selectReportCategory('hardware')"
@@ -777,27 +807,70 @@
         <!-- Form Card -->
         <form onsubmit="handleProblemReportSubmit(event)" class="bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-3.5">
           <!-- Location Details Input -->
+          <!-- Location Details Input (IMAGE 4 Choosable CCC Rooms) -->
           <div class="space-y-1">
             <label for="reportLocationField" class="text-xs font-bold text-slate-800 flex items-center justify-between">
               <span class="flex items-center gap-1 text-crimson-urgent">
                 <span class="material-symbols-outlined text-sm">pin_drop</span> Exact Location *
               </span>
-              <span class="text-[10px] text-slate-400">Required</span>
+              <span class="text-[10px] text-slate-400">Choose CCC Room</span>
             </label>
-            <input type="text" id="reportLocationField" value="Library 2nd Floor, Quiet Study Area, Desk 14" required
-              class="w-full h-11 px-3 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-medium focus:outline-none focus:border-navy-dark focus:bg-white transition-all">
-            
-            <!-- Quick preset chips -->
-            <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-1 flex-shrink-0 min-h-[32px] drag-scroll-container" id="reportQuickPickBar" style="flex-shrink: 0 !important; min-height: 32px !important;">
-              <span class="text-[10px] text-slate-400 flex-shrink-0">Quick-Pick:</span>
-              <button type="button" onclick="setPresetLocation('Main Library 2F')" class="px-2.5 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-700 flex-shrink-0 whitespace-nowrap tactile-btn">Library 2F</button>
-              <button type="button" onclick="setPresetLocation('Science Wing Rm 302')" class="px-2.5 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-700 flex-shrink-0 whitespace-nowrap tactile-btn">Science Rm 302</button>
-              <button type="button" onclick="setPresetLocation('Student Center Cafeteria')" class="px-2.5 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-700 flex-shrink-0 whitespace-nowrap tactile-btn">Cafeteria</button>
-              <button type="button" onclick="setPresetLocation('Gymnasium West Bleachers')" class="px-2.5 py-1 rounded-md bg-slate-100 hover:bg-slate-200 text-[10px] font-medium text-slate-700 flex-shrink-0 whitespace-nowrap tactile-btn">Gymnasium</button>
+            <div class="relative">
+              <select id="reportLocationField" required
+                class="w-full h-11 px-3 pr-8 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-semibold focus:outline-none focus:border-navy-dark focus:bg-white transition-all appearance-none cursor-pointer">
+                <option value="" disabled selected>-- Select CCC Building & Room --</option>
+                <optgroup label="CCC MAIN BUILDING">
+                  <option value="CCC Main Building • AB 1">CCC Main Building • AB 1</option>
+                  <option value="CCC Main Building • AB 2">CCC Main Building • AB 2</option>
+                  <option value="CCC Main Building • AB 3">CCC Main Building • AB 3</option>
+                  <option value="CCC Main Building • AB 4">CCC Main Building • AB 4</option>
+                  <option value="CCC Main Building • AB 5">CCC Main Building • AB 5</option>
+                  <option value="CCC Main Building • AB 6">CCC Main Building • AB 6</option>
+                  <option value="CCC Main Building • AB 7">CCC Main Building • AB 7</option>
+                  <option value="CCC Main Building • AB 8">CCC Main Building • AB 8</option>
+                  <option value="CCC Main Building • AB 9">CCC Main Building • AB 9</option>
+                  <option value="CCC Main Building • AB 10">CCC Main Building • AB 10</option>
+                  <option value="CCC Main Building • AB 11">CCC Main Building • AB 11</option>
+                  <option value="CCC Main Building • AB 12">CCC Main Building • AB 12</option>
+                  <option value="CCC Main Building • AB 13">CCC Main Building • AB 13</option>
+                  <option value="CCC Main Building • AB 14">CCC Main Building • AB 14</option>
+                  <option value="CCC Main Building • AB 15">CCC Main Building • AB 15</option>
+                </optgroup>
+                <optgroup label="RIZAL BUILDING">
+                  <option value="Rizal Building • R1">Rizal Building • R1</option>
+                  <option value="Rizal Building • R2">Rizal Building • R2</option>
+                  <option value="Rizal Building • R3">Rizal Building • R3</option>
+                  <option value="Rizal Building • R4">Rizal Building • R4</option>
+                  <option value="Rizal Building • R5">Rizal Building • R5</option>
+                  <option value="Rizal Building • R6">Rizal Building • R6</option>
+                  <option value="Rizal Building • R7">Rizal Building • R7</option>
+                  <option value="Rizal Building • R8">Rizal Building • R8</option>
+                  <option value="Rizal Building • R9">Rizal Building • R9</option>
+                  <option value="Rizal Building • R10">Rizal Building • R10</option>
+                </optgroup>
+                <optgroup label="JMC BUILDING">
+                  <option value="JMC Building • 1JMC CL 1">JMC Building • 1JMC CL 1</option>
+                  <option value="JMC Building • 1JMC CL 2">JMC Building • 1JMC CL 2</option>
+                  <option value="JMC Building • 1JMC CL 3">JMC Building • 1JMC CL 3</option>
+                  <option value="JMC Building • 1JMC CL 4">JMC Building • 1JMC CL 4</option>
+                  <option value="JMC Building • 1JMC CL 5">JMC Building • 1JMC CL 5</option>
+                  <option value="JMC Building • 2JMC CL 1">JMC Building • 2JMC CL 1</option>
+                  <option value="JMC Building • 2JMC CL 2">JMC Building • 2JMC CL 2</option>
+                  <option value="JMC Building • 2JMC CL 3">JMC Building • 2JMC CL 3</option>
+                  <option value="JMC Building • 2JMC CL 4">JMC Building • 2JMC CL 4</option>
+                  <option value="JMC Building • 2JMC CL 5">JMC Building • 2JMC CL 5</option>
+                  <option value="JMC Building • 3JMC CL 1">JMC Building • 3JMC CL 1</option>
+                  <option value="JMC Building • 3JMC CL 2">JMC Building • 3JMC CL 2</option>
+                  <option value="JMC Building • 3JMC CL 3">JMC Building • 3JMC CL 3</option>
+                  <option value="JMC Building • 3JMC CL 4">JMC Building • 3JMC CL 4</option>
+                  <option value="JMC Building • 3JMC CL 5">JMC Building • 3JMC CL 5</option>
+                </optgroup>
+              </select>
+              <span class="material-symbols-outlined text-slate-400 absolute right-3 top-3 pointer-events-none text-base">expand_more</span>
             </div>
           </div>
 
-          <!-- Description Textarea -->
+          <!-- Description Textarea (Blank by default) -->
           <div class="space-y-1">
             <label for="reportDescriptionField" class="text-xs font-bold text-slate-800 flex items-center justify-between">
               <span>Incident / Issue Description *</span>
@@ -805,7 +878,7 @@
             </label>
             <textarea id="reportDescriptionField" rows="3" required placeholder="Describe what happened, exact room, or missing items..."
               oninput="handleCharCounter(this)"
-              class="w-full p-3 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-medium focus:outline-none focus:border-navy-dark focus:bg-white transition-all resize-none">Lost physical student ID card near Desk 14 around 2:00 PM. Please notify security dispatch if returned.</textarea>
+              class="w-full p-3 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-medium focus:outline-none focus:border-navy-dark focus:bg-white transition-all resize-none"></textarea>
           </div>
 
           <!-- Clickable Photo / Evidence Upload Box -->
@@ -815,8 +888,8 @@
 
             <!-- Dashed Upload Container -->
             <div id="dropPhotoZone" onclick="document.getElementById('photoFileInput').click()"
-              class="w-full h-24 border-2 border-dashed border-border-subtle hover:border-ocean-teal rounded-2xl flex flex-col items-center justify-center p-2 cursor-pointer bg-slate-50 hover:bg-teal-50/40 transition-all text-center tactile-btn">
-              <span class="material-symbols-outlined text-2xl text-ocean-teal">add_photo_alternate</span>
+              class="w-full h-24 border-2 border-dashed border-border-subtle hover:border-navy-dark rounded-2xl flex flex-col items-center justify-center p-2 cursor-pointer bg-slate-50 hover:bg-slate-100 transition-all text-center tactile-btn">
+              <span class="material-symbols-outlined text-2xl text-navy-dark">add_photo_alternate</span>
               <span class="text-xs font-semibold text-slate-800 mt-1">Tap to browse or take photo</span>
               <span class="text-[10px] text-slate-400">PNG, JPG or HEIC format</span>
             </div>
@@ -840,11 +913,11 @@
           <div class="space-y-1 pt-1">
             <label class="text-xs font-bold text-slate-800">Priority Level</label>
             <div class="grid grid-cols-3 gap-2">
-              <label class="flex items-center justify-center p-2 rounded-xl border border-border-subtle text-xs font-medium cursor-pointer has-[:checked]:border-ocean-teal has-[:checked]:bg-teal-50 tactile-btn">
+              <label class="flex items-center justify-center p-2 rounded-xl border border-border-subtle text-xs font-medium cursor-pointer has-[:checked]:border-navy-dark has-[:checked]:bg-slate-100 tactile-btn">
                 <input type="radio" name="reportPriority" value="Low" class="hidden">
                 <span>Low</span>
               </label>
-              <label class="flex items-center justify-center p-2 rounded-xl border border-border-subtle text-xs font-medium cursor-pointer has-[:checked]:border-ocean-teal has-[:checked]:bg-teal-50 has-[:checked]:font-bold tactile-btn">
+              <label class="flex items-center justify-center p-2 rounded-xl border border-border-subtle text-xs font-medium cursor-pointer has-[:checked]:border-navy-dark has-[:checked]:bg-slate-100 has-[:checked]:font-bold tactile-btn">
                 <input type="radio" name="reportPriority" value="Medium" checked class="hidden">
                 <span>Standard</span>
               </label>
@@ -877,7 +950,7 @@
           <span class="material-symbols-outlined absolute left-3.5 top-3 text-slate-400 text-xl">search</span>
           <input type="search" id="directorySearchBox" oninput="filterDirectoryLive(this.value)"
             placeholder="Search offices, clinic, registrar..."
-            class="w-full h-11 pl-10 pr-9 text-xs bg-surface-card border border-border-subtle rounded-xl text-slate-900 shadow-card focus:outline-none focus:border-ocean-teal focus:ring-1 focus:ring-ocean-teal transition-all">
+            class="w-full h-11 pl-10 pr-9 text-xs bg-surface-card border border-border-subtle rounded-xl text-slate-900 shadow-card focus:outline-none focus:border-navy-dark focus:ring-1 focus:ring-navy-dark transition-all">
           <button id="clearSearchIconBtn" onclick="resetDirectorySearch()" class="hidden absolute right-3 top-2.5 text-slate-400 hover:text-slate-600">
             <span class="material-symbols-outlined text-lg">close</span>
           </button>
@@ -898,14 +971,14 @@
             <span class="w-2 h-2 rounded-full bg-emerald-safe animate-pulse"></span>
             <span class="text-[11px] font-semibold text-slate-700">Verified On-Campus Units</span>
           </div>
-          <span id="directoryUnitsCount" class="text-[11px] font-bold text-ocean-teal">5 Units Available</span>
+          <span id="directoryUnitsCount" class="text-[11px] font-bold text-navy-dark">5 Units Available</span>
         </div>
 
         <!-- Office Cards Stack -->
         <div id="directoryCardsWrapper" class="space-y-3 pb-2">
           
-          <!-- Card 1: Campus Security -->
-          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="emergency" data-keywords="Campus Security Office Main Gate Guardhouse Police Patrol">
+          <!-- Card 1: Campus Security (IMAGE 5: CCC MAIN BUILDING) -->
+          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="emergency" data-keywords="Campus Security Office Main Gate Guardhouse Police Patrol CCC Main Building">
             <div class="flex items-start justify-between">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-navy-dark text-white flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -922,7 +995,7 @@
             <div class="text-[11px] text-slate-600 space-y-0.5 border-t border-slate-100 pt-2">
               <div class="flex items-center justify-between">
                 <span class="text-slate-400">Location:</span>
-                <span class="font-medium text-slate-800">Gate 1 Main Guardhouse & Patrol Station</span>
+                <span class="font-bold text-slate-800">CCC Main Building</span>
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-slate-400">Direct Extension:</span>
@@ -936,8 +1009,8 @@
             </button>
           </div>
 
-          <!-- Card 2: Student Clinic -->
-          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="health" data-keywords="Student Health Clinic Doctor Nurse Medical First Aid">
+          <!-- Card 2: Student Clinic (IMAGE 5: CCC MAIN BUILDING) -->
+          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="health" data-keywords="Student Health Clinic Doctor Nurse Medical First Aid CCC Main Building">
             <div class="flex items-start justify-between">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-crimson-urgent text-white flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -954,7 +1027,7 @@
             <div class="text-[11px] text-slate-600 space-y-0.5 border-t border-slate-100 pt-2">
               <div class="flex items-center justify-between">
                 <span class="text-slate-400">Location:</span>
-                <span class="font-medium text-slate-800">Health Services Building, Room 102</span>
+                <span class="font-bold text-slate-800">CCC Main Building</span>
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-slate-400">Duty Nurse:</span>
@@ -968,8 +1041,8 @@
             </button>
           </div>
 
-          <!-- Card 3: Registrar -->
-          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="admin" data-keywords="Office of the Registrar Enrollment Records Grades Transcripts">
+          <!-- Card 3: Registrar (IMAGE 5: 1JMC BUILDING) -->
+          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="admin" data-keywords="Office of the Registrar Enrollment Records Grades Transcripts 1JMC Building">
             <div class="flex items-start justify-between">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-xl bg-navy-surface text-white flex items-center justify-center flex-shrink-0 shadow-sm">
@@ -986,7 +1059,7 @@
             <div class="text-[11px] text-slate-600 space-y-0.5 border-t border-slate-100 pt-2">
               <div class="flex items-center justify-between">
                 <span class="text-slate-400">Location:</span>
-                <span class="font-medium text-slate-800">Administration Wing, Room 108</span>
+                <span class="font-bold text-slate-800">1JMC Building</span>
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-slate-400">Desk Lines:</span>
@@ -1000,16 +1073,16 @@
             </button>
           </div>
 
-          <!-- Card 4: Guidance Office -->
-          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="guidance" data-keywords="Guidance Counseling Mental Health Psychological Support Student Center">
+          <!-- Card 4: Guidance Office (IMAGE 5: CCC MAIN BUILDING) -->
+          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="guidance" data-keywords="Guidance Counseling Mental Health Psychological Support CCC Main Building">
             <div class="flex items-start justify-between">
               <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-teal-50 text-ocean-teal flex items-center justify-center flex-shrink-0 shadow-sm">
+                <div class="w-10 h-10 rounded-xl bg-navy-dark text-white flex items-center justify-center flex-shrink-0 shadow-sm">
                   <span class="material-symbols-outlined text-xl">psychology</span>
                 </div>
                 <div>
                   <h3 class="text-xs font-bold text-slate-800 font-display">Guidance & Counseling</h3>
-                  <span class="inline-flex mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold bg-teal-100 text-ocean-teal">
+                  <span class="inline-flex mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold bg-slate-200 text-slate-800">
                     Confidential Support
                   </span>
                 </div>
@@ -1018,7 +1091,7 @@
             <div class="text-[11px] text-slate-600 space-y-0.5 border-t border-slate-100 pt-2">
               <div class="flex items-center justify-between">
                 <span class="text-slate-400">Location:</span>
-                <span class="font-medium text-slate-800">Student Center, 3rd Floor Room 305</span>
+                <span class="font-bold text-slate-800">CCC Main Building</span>
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-slate-400">Helpline:</span>
@@ -1085,7 +1158,7 @@
     <!-- DOCKED BOTTOM TAB BAR (Hidden on Login!)             -->
     <!-- ==================================================== -->
     <nav id="permanentBottomNav" class="hidden w-full bg-surface-card border-t border-border-subtle px-3 py-2 flex items-center justify-around z-30 shadow-tab select-none">
-      <button onclick="navigateTo('HOME')" class="tab-item-btn flex flex-col items-center gap-0.5 text-ocean-teal tactile-btn" data-screen="HOME">
+      <button onclick="navigateTo('HOME')" class="tab-item-btn flex flex-col items-center gap-0.5 text-navy-dark font-bold tactile-btn" data-screen="HOME">
         <span class="material-symbols-outlined text-xl">home</span>
         <span class="text-[10px] font-bold">Home</span>
       </button>
@@ -1141,7 +1214,7 @@
         </div>
         <div class="flex items-center justify-between">
           <span class="text-slate-500">Locked Coordinate:</span>
-          <span id="dispatchedLocationTag" class="font-semibold text-slate-800 truncate max-w-[170px]">Science Complex Rm 304</span>
+          <span id="dispatchedLocationTag" class="font-semibold text-slate-800 truncate max-w-[170px]">CCC Main Building • AB 1</span>
         </div>
       </div>
 
@@ -1183,17 +1256,17 @@
       </div>
 
       <div class="space-y-2 pt-1">
-        <div onclick="closeSecurityDialerModal(); startOfficeCall('Gate 1 Main Guardhouse', 'Ext. 101');" class="p-3 rounded-2xl bg-slate-50 hover:bg-teal-50/50 border border-border-subtle flex items-center justify-between cursor-pointer tactile-btn">
+        <div onclick="closeSecurityDialerModal(); startOfficeCall('Gate 1 Main Guardhouse', 'Ext. 101');" class="p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-border-subtle flex items-center justify-between cursor-pointer tactile-btn">
           <div>
             <span class="text-xs font-bold text-navy-dark block font-display">Main Gate 1 Emergency Desk</span>
-            <span class="text-[11px] text-slate-500">Gate 1 • 24/7 Central Dispatch</span>
+            <span class="text-[11px] text-slate-500">CCC Main Building • Guardhouse</span>
           </div>
           <div class="w-8 h-8 rounded-full bg-emerald-safe text-white flex items-center justify-center">
             <span class="material-symbols-outlined text-sm">call</span>
           </div>
         </div>
 
-        <div onclick="closeSecurityDialerModal(); startOfficeCall('Roving Security Patrol Unit', 'Ext. 102');" class="p-3 rounded-2xl bg-slate-50 hover:bg-teal-50/50 border border-border-subtle flex items-center justify-between cursor-pointer tactile-btn">
+        <div onclick="closeSecurityDialerModal(); startOfficeCall('Roving Security Patrol Unit', 'Ext. 102');" class="p-3 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-border-subtle flex items-center justify-between cursor-pointer tactile-btn">
           <div>
             <span class="text-xs font-bold text-navy-dark block font-display">Roving Patrol Mobile Unit</span>
             <span class="text-[11px] text-slate-500">On-grounds Escort & Perimeter</span>
@@ -1206,7 +1279,7 @@
         <div onclick="closeSecurityDialerModal(); startOfficeCall('Student Clinic Emergency', 'Ext. 204');" class="p-3 rounded-2xl bg-slate-50 hover:bg-red-50/50 border border-border-subtle flex items-center justify-between cursor-pointer tactile-btn">
           <div>
             <span class="text-xs font-bold text-crimson-urgent block font-display">Medical Clinic Desk</span>
-            <span class="text-[11px] text-slate-500">First Aid & Ambulance Coordination</span>
+            <span class="text-[11px] text-slate-500">CCC Main Building • Clinic Station</span>
           </div>
           <div class="w-8 h-8 rounded-full bg-crimson-urgent text-white flex items-center justify-center">
             <span class="material-symbols-outlined text-sm">medical_services</span>
@@ -1229,7 +1302,7 @@
     <div class="bg-surface-card rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-border-subtle space-y-3">
       <div class="flex items-center justify-between pb-2 border-b border-slate-100">
         <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-ocean-teal text-xl">notifications_active</span>
+          <span class="material-symbols-outlined text-navy-dark text-xl">notifications_active</span>
           <h3 class="text-xs font-bold text-slate-800 font-display">Campus Safety Bulletins</h3>
         </div>
         <button onclick="closeNotificationsModal()" class="p-1 text-slate-400 hover:text-slate-600 tactile-btn">
@@ -1243,13 +1316,13 @@
             <span class="font-extrabold text-crimson-urgent uppercase">Urgent Alert</span>
             <span class="text-slate-400">10 mins ago</span>
           </div>
-          <p class="text-xs font-bold text-slate-800">Science Complex Elevator #2 Maintenance</p>
+          <p class="text-xs font-bold text-slate-800">CCC Main Building Elevator #2 Maintenance</p>
           <p class="text-[11px] text-slate-600">Elevator undergoing hydraulic test. Use stairwell B.</p>
         </div>
 
         <div class="p-3 rounded-2xl bg-slate-50 border border-border-subtle space-y-1">
           <div class="flex items-center justify-between text-[10px]">
-            <span class="font-extrabold text-ocean-teal uppercase">Weather Bulletin</span>
+            <span class="font-extrabold text-navy-dark uppercase">Weather Bulletin</span>
             <span class="text-slate-400">2 hrs ago</span>
           </div>
           <p class="text-xs font-bold text-slate-800">Thunderstorm Advisory this Afternoon</p>
@@ -1279,7 +1352,7 @@
     <div class="bg-surface-card rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-border-subtle space-y-4">
       <div class="flex items-center justify-between pb-2 border-b border-slate-100">
         <div class="flex items-center gap-1.5">
-          <span class="material-symbols-outlined text-ocean-teal text-lg">badge</span>
+          <span class="material-symbols-outlined text-navy-dark text-lg">badge</span>
           <h3 class="text-xs font-bold text-slate-800 font-display">Student Emergency ID Card</h3>
         </div>
         <button onclick="closeProfileModal()" aria-label="Close" class="p-1 text-slate-400 hover:text-slate-600 tactile-btn cursor-pointer">
@@ -1288,9 +1361,9 @@
       </div>
 
       <!-- Modern Collegiate Student ID Card (Inspired by Image 4 & Official CCC Credentials) -->
-      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-white via-slate-50 to-blue-50/50 border border-slate-200/90 shadow-md">
+      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-white via-slate-50 to-slate-100 border border-slate-200/90 shadow-md">
         <!-- Top Institutional Header Banner with Security Wave Accent -->
-        <div class="relative bg-gradient-to-r from-navy-dark via-navy-surface to-ocean-teal px-4 py-3 text-white">
+        <div class="relative bg-gradient-to-r from-navy-dark to-navy-surface px-4 py-3 text-white">
           <!-- Subtle Security Wave Background -->
           <svg class="absolute inset-0 w-full h-full opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 200 60">
             <path d="M0 20 Q 50 40 100 20 T 200 20 V 60 H 0 Z" fill="white" />
@@ -1299,15 +1372,11 @@
 
           <div class="relative z-10 flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <div class="w-6 h-6 rounded-lg bg-white/20 p-1 flex items-center justify-center">
-                <svg viewBox="0 0 100 100" class="w-full h-full" fill="none">
-                  <path d="M50 8L15 24V50C15 72 30 90 50 95C70 90 85 72 85 50V24L50 8Z" fill="#1E73A8"/>
-                  <path d="M50 16L24 28V50C24 67 35 80 50 84C65 80 76 67 76 50V28L50 16Z" fill="#FFFFFF"/>
-                  <text x="50" y="55" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="16" font-weight="900" fill="#000B30">CCC</text>
-                </svg>
+              <div class="w-7 h-7 rounded-lg bg-white p-0.5 flex items-center justify-center shadow-sm">
+                <img src="ccc_logo/City_College_of_Calamba_Logo.png" alt="City College of Calamba Official Logo" class="w-full h-full object-contain">
               </div>
               <div class="leading-tight">
-                <span class="text-[9px] font-extrabold uppercase tracking-widest text-teal-300 block">Republic of the Philippines</span>
+                <span class="text-[9px] font-extrabold uppercase tracking-widest text-slate-300 block">Republic of the Philippines</span>
                 <span class="text-[11px] font-black uppercase tracking-wider text-white font-display">City College of Calamba</span>
               </div>
             </div>
@@ -1327,8 +1396,10 @@
 
           <!-- Centered Student Portrait with Dual Ring Frame -->
           <div class="relative z-10">
-            <div class="w-20 h-20 rounded-full p-1 bg-gradient-to-tr from-ocean-teal to-blue-400 shadow-md">
-              <img src="rayven_headshot.png" alt="Rayven BURATO" class="w-full h-full rounded-full object-cover bg-white">
+            <div class="w-20 h-20 rounded-full p-1 bg-navy-dark shadow-md flex items-center justify-center">
+              <div class="w-full h-full rounded-full bg-slate-100 text-navy-dark flex items-center justify-center">
+                <span class="material-symbols-outlined text-4xl">person</span>
+              </div>
             </div>
             <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center border-2 border-white shadow">
               <span class="material-symbols-outlined text-xs font-bold">verified</span>
@@ -1337,7 +1408,7 @@
 
           <!-- Student ID Number & Full Name (Clean format as shown in Image 4) -->
           <div class="relative z-10 space-y-0.5">
-            <div class="text-sm font-black font-mono tracking-wider text-ocean-teal">2024-02013</div>
+            <div class="text-sm font-black font-mono tracking-wider text-navy-dark">2024-02013</div>
             <h4 class="text-base font-extrabold text-slate-800 font-display tracking-tight">Rayven BURATO</h4>
             <span class="text-[11px] font-medium text-slate-500 block">Undergraduate Student • Active Enrolled</span>
           </div>
@@ -1346,7 +1417,7 @@
           <div class="relative z-10 w-full pt-2 pb-1 border-t border-slate-200/80">
             <div class="bg-white rounded-xl p-2.5 border border-slate-200/70 shadow-sm flex items-center justify-between text-left">
               <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-lg bg-teal-50 text-ocean-teal flex items-center justify-center flex-shrink-0">
+                <div class="w-7 h-7 rounded-lg bg-slate-100 text-navy-dark flex items-center justify-center flex-shrink-0">
                   <span class="material-symbols-outlined text-base">contact_phone</span>
                 </div>
                 <div>
@@ -1354,7 +1425,7 @@
                   <span class="text-xs font-bold text-slate-800">Parent / Guardian</span>
                 </div>
               </div>
-              <a href="tel:0917882192" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-ocean-teal font-mono font-bold text-xs flex items-center gap-1 tactile-btn">
+              <a href="tel:0917882192" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-navy-dark font-mono font-bold text-xs flex items-center gap-1 tactile-btn">
                 <span class="material-symbols-outlined text-xs">call</span>
                 <span>0917-882-192</span>
               </a>
@@ -1400,8 +1471,8 @@
   <!-- ==================================================== -->
   <!-- FLOATING QUICK TOAST NOTIFICATION                    -->
   <!-- ==================================================== -->
-  <div id="quickToastElement" class="fixed top-6 z-50 hidden items-center gap-2 px-4 py-2.5 rounded-2xl bg-navy-dark text-white text-xs font-semibold shadow-2xl border border-teal-500/30 transition-all transform -translate-y-4 opacity-0">
-    <span id="quickToastIcon" class="material-symbols-outlined text-base text-teal-300">info</span>
+  <div id="quickToastElement" class="fixed top-6 z-50 hidden items-center gap-2 px-4 py-2.5 rounded-2xl bg-navy-dark text-white text-xs font-semibold shadow-2xl border border-white/20 transition-all transform -translate-y-4 opacity-0">
+    <span id="quickToastIcon" class="material-symbols-outlined text-base text-white">info</span>
     <span id="quickToastText">Toast message</span>
   </div>
 
@@ -1424,8 +1495,8 @@
           category: 'lost-id',
           status: 'SUBMITTED', // SUBMITTED, UNDER REVIEW, RESOLVED
           date: 'Today, 2:45 PM',
-          location: 'Library Desk 14',
-          description: 'Lost student physical ID card near Desk 14 around 2:00 PM. Temporary pass issued.',
+          location: 'CCC Main Building • AB 3',
+          description: 'Lost student physical ID card near AB 3. Temporary pass requested.',
           step: 1,
           totalSteps: 3
         },
@@ -1435,7 +1506,7 @@
           category: 'facility',
           status: 'UNDER REVIEW',
           date: 'Yesterday, 11:20 AM',
-          location: 'Science Complex, Rm 302',
+          location: 'CCC Main Building • AB 8',
           description: 'A/C unit leaking water onto laboratory table near station 4.',
           step: 2,
           totalSteps: 3
@@ -1446,7 +1517,7 @@
           category: 'medical',
           status: 'RESOLVED',
           date: 'Oct 04, 3:15 PM',
-          location: 'Gymnasium Court B',
+          location: 'Rizal Building • R5',
           description: 'Sprained ankle during PE scrimmage. Splinted and transported to Student Clinic Station 102.',
           step: 3,
           totalSteps: 3
@@ -1540,7 +1611,7 @@
       },
       'HOME': { 
         id: 'page-home', 
-        title: 'CCC Student Emergency Assistant', 
+        title: 'Student Emergency Assistance', 
         showHeader: true, 
         showBottomNav: true, 
         isHome: true,
@@ -1605,14 +1676,12 @@
         header.classList.add('hidden');
       } else {
         header.classList.remove('hidden');
+        headerProfileBlock.classList.remove('hidden');
+        headerTitleText.innerText = 'Student Emergency Assistance';
         if (config.isHome) {
           headerBackBtn.classList.add('hidden');
-          headerProfileBlock.classList.remove('hidden');
-          headerTitleText.innerText = 'CCC Student Emergency Assistant';
         } else {
           headerBackBtn.classList.remove('hidden');
-          headerProfileBlock.classList.add('hidden');
-          headerTitleText.innerText = config.title;
         }
       }
 
@@ -1639,10 +1708,10 @@
       // Bottom nav active state
       document.querySelectorAll('.tab-item-btn').forEach(btn => {
         if (btn.dataset.screen === screenKey) {
-          btn.classList.add('text-ocean-teal');
+          btn.classList.add('text-navy-dark', 'font-bold');
           btn.classList.remove('text-slate-400');
         } else {
-          btn.classList.remove('text-ocean-teal');
+          btn.classList.remove('text-navy-dark', 'font-bold');
           btn.classList.add('text-slate-400');
         }
       });
@@ -1784,7 +1853,7 @@
     function executeEmergencyDispatch() {
       playAudioTone('alarm');
 
-      const room = document.getElementById('sosRoomNumber').value.trim() || 'Science Complex, Room 304';
+      const room = document.getElementById('sosRoomNumber').value.trim() || 'CCC Main Building • AB 1';
       const details = document.getElementById('sosDetailsText').value.trim() || 'Immediate emergency response requested via mobile portal.';
 
       const newTicket = {
@@ -1850,22 +1919,7 @@
         }
       });
 
-      const locField = document.getElementById('reportLocationField');
-      const descField = document.getElementById('reportDescriptionField');
-      if (cat === 'lost-id') {
-        locField.value = 'Library 2nd Floor, Quiet Study Area, Desk 14';
-        descField.value = 'Lost student physical ID card near Desk 14 around 2:00 PM. Please notify security if found.';
-      } else if (cat === 'facility') {
-        locField.value = 'East Academic Wing, 3rd Floor Restroom';
-        descField.value = 'Water pipe leakage and non-functional flush valve causing standing water.';
-      } else if (cat === 'hardware') {
-        locField.value = 'Computer Lab 3, Workstation #12';
-        descField.value = 'Monitor exhibits backlight flicker and USB ports are unresponsive.';
-      } else if (cat === 'lighting') {
-        locField.value = 'North Walkway between Quad & Parking Lot B';
-        descField.value = 'Overhead pathway lamp fixture is out; dark zone after sunset.';
-      }
-      handleCharCounter(descField);
+      playAudioTone('tap');
     }
 
     function setPresetLocation(loc) {
@@ -1929,6 +1983,9 @@
       persistRequests();
 
       showToast('Incident ticket submitted! Code #' + newTicket.id);
+      document.getElementById('reportLocationField').value = '';
+      document.getElementById('reportDescriptionField').value = '';
+      document.getElementById('charCountLabel').innerText = '0/300';
       clearEvidencePhoto();
       navigateTo('MY_REQUESTS');
     }
@@ -2244,7 +2301,7 @@
         let badgeStyle = 'bg-amber-100 text-amber-800 border-amber-200';
         let badgeIcon = 'schedule';
         if (req.status === 'UNDER REVIEW') {
-          badgeStyle = 'bg-teal-100 text-ocean-teal border-teal-200';
+          badgeStyle = 'bg-blue-100 text-navy-dark border-blue-200';
           badgeIcon = 'pending';
         } else if (req.status === 'RESOLVED') {
           badgeStyle = 'bg-emerald-100 text-emerald-800 border-emerald-200';
@@ -2259,7 +2316,7 @@
           <div class="flex items-start justify-between gap-2">
             <div class="min-w-0">
               <div class="flex items-center gap-1.5">
-                <span class="material-symbols-outlined text-ocean-teal text-lg">flag</span>
+                <span class="material-symbols-outlined text-navy-dark text-lg">flag</span>
                 <h3 class="text-xs font-bold text-slate-800 truncate font-display">${req.title}</h3>
               </div>
               <span class="text-[10px] text-slate-400 mt-0.5 block">#${req.id} • ${req.date}</span>
@@ -2276,10 +2333,10 @@
           <div class="bg-slate-50 rounded-xl p-2.5 space-y-1.5 border border-border-subtle">
             <div class="flex items-center justify-between text-[11px]">
               <span class="font-bold text-slate-700">Dispatch Progress</span>
-              <span class="font-semibold text-ocean-teal">Step ${req.step} of ${req.totalSteps}</span>
+              <span class="font-semibold text-navy-dark">Step ${req.step} of ${req.totalSteps}</span>
             </div>
             <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
-              <div class="h-full bg-ocean-teal rounded-full transition-all duration-500" style="width: ${pct}%;"></div>
+              <div class="h-full bg-navy-dark rounded-full transition-all duration-500" style="width: ${pct}%;"></div>
             </div>
             <div class="flex items-center justify-between text-[10px] text-slate-400 pt-0.5">
               <span>Submitted</span>
@@ -2292,7 +2349,7 @@
             <span class="flex items-center gap-1">
               <span class="material-symbols-outlined text-xs text-slate-400">pin_drop</span> ${req.location}
             </span>
-            <button onclick="showToast('Officer assigned: Patrol Unit Alpha-2. ETA 5m.')" class="text-ocean-teal font-bold hover:underline tactile-btn">
+            <button onclick="showToast('Officer assigned: Patrol Unit Alpha-2. ETA 5m.')" class="text-navy-dark font-bold hover:underline tactile-btn">
               Track Unit
             </button>
           </div>
