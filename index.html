@@ -391,7 +391,7 @@
               <span class="material-symbols-outlined text-base animate-pulse">emergency</span>
               <span>Immediate Life Threat?</span>
             </div>
-            <button onclick="navigateTo('EMERGENCY_DISPATCH')" class="font-extrabold uppercase tracking-wider text-[11px] underline hover:text-crimson-deep tactile-btn">
+            <button onclick="navigateTo('PUBLIC_SOS')" class="font-extrabold uppercase tracking-wider text-[11px] underline hover:text-crimson-deep tactile-btn">
               Bypass To SOS
             </button>
           </div>
@@ -1152,6 +1152,183 @@
 
       </section>
 
+      <!-- ========================================== -->
+      <!-- 7. PURE EMERGENCY BYPASS (NO ACCOUNT!)     -->
+      <!-- ========================================== -->
+      <section id="page-public-sos" class="screen-page flex-col w-full min-h-full pb-8 bg-slate-canvas">
+        
+        <!-- Urgent Crimson Header (No student account!) -->
+        <div class="sticky top-0 z-30 w-full bg-crimson-urgent text-white px-4 py-3 flex items-center justify-between shadow-md select-none">
+          <div class="flex items-center gap-2 min-w-0">
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 animate-pulse">
+              <span class="material-symbols-outlined text-lg text-white">emergency</span>
+            </div>
+            <div class="min-w-0">
+              <span class="text-[9px] font-extrabold uppercase tracking-widest text-white/90 block truncate">City College of Calamba</span>
+              <h1 class="text-xs font-black uppercase text-white font-display truncate">Campus Emergency SOS</h1>
+            </div>
+          </div>
+          <button onclick="navigateTo('LOGIN')" class="px-3 py-1.5 rounded-full bg-white/20 hover:bg-white/30 text-white font-bold text-xs flex items-center gap-1 tactile-btn flex-shrink-0 cursor-pointer">
+            <span class="material-symbols-outlined text-sm">arrow_back</span>
+            <span>Back to Login</span>
+          </button>
+        </div>
+
+        <div class="p-4 space-y-4">
+          <!-- Critical Life-Threat Warning Banner -->
+          <div class="p-3.5 rounded-2xl bg-red-50 border-2 border-red-300 text-crimson-urgent space-y-1">
+            <div class="flex items-center gap-2 font-black text-xs uppercase tracking-wide">
+              <span class="material-symbols-outlined text-lg animate-bounce">warning</span>
+              <span>PURE EMERGENCY DISPATCH • NO ACCOUNT REQUIRED</span>
+            </div>
+            <p class="text-[11px] text-slate-700 leading-snug">
+              Direct emergency line to Campus Security & City Responders. Use for active threats, severe injuries, fire, or immediate hazards.
+            </p>
+          </div>
+
+          <!-- Instant Central Panic Button -->
+          <div class="bg-surface-card rounded-2xl p-5 shadow-card border border-border-subtle flex flex-col items-center text-center space-y-3">
+            <div class="space-y-0.5">
+              <h2 class="text-sm font-black text-slate-900 font-display uppercase tracking-wider">Instant SOS Alarm</h2>
+              <p class="text-[11px] text-slate-500">Press and hold for 2 seconds to summon emergency officers</p>
+            </div>
+
+            <!-- Hold-to-SOS Circular Trigger -->
+            <div class="relative flex items-center justify-center my-2">
+              <svg class="w-48 h-48 transform -rotate-90 pointer-events-none" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="44" stroke="#F1F5F9" stroke-width="8" fill="none" />
+                <circle id="publicSosCountdownCircle" cx="50" cy="50" r="44" stroke="#A61C1C" stroke-width="8" fill="none"
+                  stroke-linecap="round" stroke-dasharray="276.46" stroke-dashoffset="276.46" class="transition-all duration-75" />
+              </svg>
+              <button id="publicSosButton"
+                onmousedown="startPublicSosCountdown()" onmouseup="abortPublicSosCountdown()" onmouseleave="abortPublicSosCountdown()"
+                ontouchstart="startPublicSosCountdown()" ontouchend="abortPublicSosCountdown()"
+                class="absolute w-36 h-36 rounded-full bg-crimson-urgent hover:bg-crimson-deep active:scale-95 text-white flex flex-col items-center justify-center shadow-sos-glow cursor-pointer select-none transition-all duration-150">
+                <span class="material-symbols-outlined text-4xl mb-0.5 animate-pulse">sos</span>
+                <span id="publicSosCountdownLabel" class="text-[11px] font-black tracking-widest uppercase">HOLD 2S</span>
+              </button>
+            </div>
+
+            <span id="publicSosStatusInstruction" class="text-xs font-semibold text-slate-500">Hold button down for 2 seconds</span>
+          </div>
+
+          <!-- Fast Room Picker (The Official CCC Rooms) -->
+          <div class="bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2">
+            <label for="publicSosRoomSelect" class="text-xs font-bold text-slate-800 flex items-center justify-between">
+              <span>Your Exact Campus Location <span class="text-crimson-urgent">*</span></span>
+              <span class="text-[10px] text-slate-400">Select Room</span>
+            </label>
+            <div class="relative">
+              <select id="publicSosRoomSelect" class="w-full h-11 px-3 pr-8 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-semibold focus:outline-none focus:border-crimson-urgent focus:bg-white transition-all appearance-none cursor-pointer">
+                <option value="" disabled selected>-- Select CCC Building & Room --</option>
+                <optgroup label="CCC MAIN BUILDING">
+                  <option value="CCC Main Building • AB 1">CCC Main Building • AB 1</option>
+                  <option value="CCC Main Building • AB 2">CCC Main Building • AB 2</option>
+                  <option value="CCC Main Building • AB 3">CCC Main Building • AB 3</option>
+                  <option value="CCC Main Building • AB 4">CCC Main Building • AB 4</option>
+                  <option value="CCC Main Building • AB 5">CCC Main Building • AB 5</option>
+                  <option value="CCC Main Building • AB 6">CCC Main Building • AB 6</option>
+                  <option value="CCC Main Building • AB 7">CCC Main Building • AB 7</option>
+                  <option value="CCC Main Building • AB 8">CCC Main Building • AB 8</option>
+                  <option value="CCC Main Building • AB 9">CCC Main Building • AB 9</option>
+                  <option value="CCC Main Building • AB 10">CCC Main Building • AB 10</option>
+                  <option value="CCC Main Building • AB 11">CCC Main Building • AB 11</option>
+                  <option value="CCC Main Building • AB 12">CCC Main Building • AB 12</option>
+                  <option value="CCC Main Building • AB 13">CCC Main Building • AB 13</option>
+                  <option value="CCC Main Building • AB 14">CCC Main Building • AB 14</option>
+                  <option value="CCC Main Building • AB 15">CCC Main Building • AB 15</option>
+                </optgroup>
+                <optgroup label="RIZAL BUILDING">
+                  <option value="Rizal Building • R1">Rizal Building • R1</option>
+                  <option value="Rizal Building • R2">Rizal Building • R2</option>
+                  <option value="Rizal Building • R3">Rizal Building • R3</option>
+                  <option value="Rizal Building • R4">Rizal Building • R4</option>
+                  <option value="Rizal Building • R5">Rizal Building • R5</option>
+                  <option value="Rizal Building • R6">Rizal Building • R6</option>
+                  <option value="Rizal Building • R7">Rizal Building • R7</option>
+                  <option value="Rizal Building • R8">Rizal Building • R8</option>
+                  <option value="Rizal Building • R9">Rizal Building • R9</option>
+                  <option value="Rizal Building • R10">Rizal Building • R10</option>
+                </optgroup>
+                <optgroup label="JMC BUILDING">
+                  <option value="JMC Building • 1JMC CL 1">JMC Building • 1JMC CL 1</option>
+                  <option value="JMC Building • 1JMC CL 2">JMC Building • 1JMC CL 2</option>
+                  <option value="JMC Building • 1JMC CL 3">JMC Building • 1JMC CL 3</option>
+                  <option value="JMC Building • 1JMC CL 4">JMC Building • 1JMC CL 4</option>
+                  <option value="JMC Building • 1JMC CL 5">JMC Building • 1JMC CL 5</option>
+                  <option value="JMC Building • 2JMC CL 1">JMC Building • 2JMC CL 1</option>
+                  <option value="JMC Building • 2JMC CL 2">JMC Building • 2JMC CL 2</option>
+                  <option value="JMC Building • 2JMC CL 3">JMC Building • 2JMC CL 3</option>
+                  <option value="JMC Building • 2JMC CL 4">JMC Building • 2JMC CL 4</option>
+                  <option value="JMC Building • 2JMC CL 5">JMC Building • 2JMC CL 5</option>
+                  <option value="JMC Building • 3JMC CL 1">JMC Building • 3JMC CL 1</option>
+                  <option value="JMC Building • 3JMC CL 2">JMC Building • 3JMC CL 2</option>
+                  <option value="JMC Building • 3JMC CL 3">JMC Building • 3JMC CL 3</option>
+                  <option value="JMC Building • 3JMC CL 4">JMC Building • 3JMC CL 4</option>
+                  <option value="JMC Building • 3JMC CL 5">JMC Building • 3JMC CL 5</option>
+                </optgroup>
+              </select>
+              <span class="material-symbols-outlined text-slate-400 absolute right-3 top-3 pointer-events-none text-base">expand_more</span>
+            </div>
+          </div>
+
+          <!-- Direct One-Tap Emergency Calling Hotlines -->
+          <div class="bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5">
+            <h3 class="text-xs font-bold text-slate-800 uppercase tracking-wide">Direct Emergency Call Lines</h3>
+            <div class="space-y-2">
+              <button onclick="startOfficeCall('Campus Security Guardhouse', 'Ext. 101')"
+                class="w-full p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-border-subtle flex items-center justify-between text-left tactile-btn">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-navy-dark text-white flex items-center justify-center">
+                    <span class="material-symbols-outlined text-sm">security</span>
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-slate-900 block">Gate 1 Security Guardhouse</span>
+                    <span class="text-[10px] text-slate-500">CCC Main Building • Ext. 101</span>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 rounded-full bg-navy-dark text-white text-[11px] font-bold flex items-center gap-1">
+                  <span class="material-symbols-outlined text-xs">call</span> Call
+                </span>
+              </button>
+
+              <button onclick="startOfficeCall('Student Health Clinic', 'Ext. 204')"
+                class="w-full p-2.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-border-subtle flex items-center justify-between text-left tactile-btn">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-crimson-urgent text-white flex items-center justify-center">
+                    <span class="material-symbols-outlined text-sm">medical_services</span>
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-slate-900 block">Student Health Clinic</span>
+                    <span class="text-[10px] text-slate-500">CCC Main Building • Ext. 204</span>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 rounded-full bg-crimson-urgent text-white text-[11px] font-bold flex items-center gap-1">
+                  <span class="material-symbols-outlined text-xs">call</span> Call
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Campus GPS Map -->
+          <div class="bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-800">Campus GPS Fix: City College of Calamba</span>
+              <span class="text-[10px] font-bold text-emerald-600 flex items-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> Live
+              </span>
+            </div>
+            <div class="w-full h-36 rounded-xl overflow-hidden border border-border-subtle relative bg-slate-100">
+              <iframe
+                title="City College of Calamba Map"
+                src="https://maps.google.com/maps?q=City+College+of+Calamba,+Old+Municipal+Site,+Burgos+St,+Calamba,+Laguna&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                class="w-full h-full border-0"
+                loading="lazy">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- ==================================================== -->
@@ -1296,7 +1473,7 @@
 
 
   <!-- ==================================================== -->
-  <!-- MODAL: NOTIFICATIONS DRAWER                          -->
+  <!-- MODAL: NOTIFICATIONS DRAWER (WITH DELETION)          -->
   <!-- ==================================================== -->
   <div id="notificationsDrawerModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
     <div class="bg-surface-card rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-border-subtle space-y-3">
@@ -1305,41 +1482,22 @@
           <span class="material-symbols-outlined text-navy-dark text-xl">notifications_active</span>
           <h3 class="text-xs font-bold text-slate-800 font-display">Campus Safety Bulletins</h3>
         </div>
-        <button onclick="closeNotificationsModal()" class="p-1 text-slate-400 hover:text-slate-600 tactile-btn">
-          <span class="material-symbols-outlined text-lg">close</span>
-        </button>
-      </div>
-
-      <div class="space-y-2.5 max-h-72 overflow-y-auto pt-1">
-        <div class="p-3 rounded-2xl bg-red-50 border border-red-100 space-y-1">
-          <div class="flex items-center justify-between text-[10px]">
-            <span class="font-extrabold text-crimson-urgent uppercase">Urgent Alert</span>
-            <span class="text-slate-400">10 mins ago</span>
-          </div>
-          <p class="text-xs font-bold text-slate-800">CCC Main Building Elevator #2 Maintenance</p>
-          <p class="text-[11px] text-slate-600">Elevator undergoing hydraulic test. Use stairwell B.</p>
-        </div>
-
-        <div class="p-3 rounded-2xl bg-slate-50 border border-border-subtle space-y-1">
-          <div class="flex items-center justify-between text-[10px]">
-            <span class="font-extrabold text-navy-dark uppercase">Weather Bulletin</span>
-            <span class="text-slate-400">2 hrs ago</span>
-          </div>
-          <p class="text-xs font-bold text-slate-800">Thunderstorm Advisory this Afternoon</p>
-          <p class="text-[11px] text-slate-600">Free campus umbrella lending available at Gate 1 Guardhouse.</p>
-        </div>
-
-        <div class="p-3 rounded-2xl bg-slate-50 border border-border-subtle space-y-1">
-          <div class="flex items-center justify-between text-[10px]">
-            <span class="font-extrabold text-emerald-600 uppercase">Service Update</span>
-            <span class="text-slate-400">Yesterday</span>
-          </div>
-          <p class="text-xs font-bold text-slate-800">Night Escort Roster Expanded</p>
-          <p class="text-[11px] text-slate-600">Campus escort available 7:00 PM to 4:00 AM daily.</p>
+        <div class="flex items-center gap-2">
+          <button id="clearAllNotifsBtn" onclick="clearAllNotifications()" class="text-[11px] text-crimson-urgent font-bold hover:underline tactile-btn">
+            Clear All
+          </button>
+          <button onclick="closeNotificationsModal()" class="p-1 text-slate-400 hover:text-slate-600 tactile-btn">
+            <span class="material-symbols-outlined text-lg">close</span>
+          </button>
         </div>
       </div>
 
-      <button onclick="closeNotificationsModal()" class="w-full py-2 rounded-full bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 tactile-btn">
+      <!-- Dynamic Bulletins Container with Delete Buttons -->
+      <div id="notificationsListContainer" class="space-y-2.5 max-h-72 overflow-y-auto pt-1">
+        <!-- Rendered via renderNotificationsList() -->
+      </div>
+
+      <button onclick="closeNotificationsModal()" class="w-full py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 tactile-btn">
         Close
       </button>
     </div>
@@ -1360,101 +1518,168 @@
         </button>
       </div>
 
-      <!-- Modern Collegiate Student ID Card (Inspired by Image 4 & Official CCC Credentials) -->
-      <div class="relative overflow-hidden rounded-2xl bg-gradient-to-b from-white via-slate-50 to-slate-100 border border-slate-200/90 shadow-md">
-        <!-- Top Institutional Header Banner with Security Wave Accent -->
-        <div class="relative bg-gradient-to-r from-navy-dark to-navy-surface px-4 py-3 text-white">
-          <!-- Subtle Security Wave Background -->
-          <svg class="absolute inset-0 w-full h-full opacity-20 pointer-events-none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 200 60">
-            <path d="M0 20 Q 50 40 100 20 T 200 20 V 60 H 0 Z" fill="white" />
-            <path d="M0 35 Q 50 10 100 35 T 200 35" stroke="white" stroke-width="0.75" fill="none" />
-          </svg>
-
-          <div class="relative z-10 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <div class="w-7 h-7 rounded-lg bg-white p-0.5 flex items-center justify-center shadow-sm">
-                <img src="ccc_logo/City_College_of_Calamba_Logo.png" alt="City College of Calamba Official Logo" class="w-full h-full object-contain">
-              </div>
-              <div class="leading-tight">
-                <span class="text-[9px] font-extrabold uppercase tracking-widest text-slate-300 block">Republic of the Philippines</span>
-                <span class="text-[11px] font-black uppercase tracking-wider text-white font-display">City College of Calamba</span>
-              </div>
-            </div>
-            <span class="inline-flex items-center gap-1 text-[9px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span>ACTIVE</span>
-            </span>
-          </div>
+      <!-- Authentic City College of Calamba Official Student ID Card (Replicated from Image 2) -->
+      <div class="relative overflow-hidden rounded-2xl bg-white border-2 border-slate-900 shadow-2xl flex flex-row w-full min-h-[480px]">
+        
+        <!-- Left Vertical Royal Blue Stripe (Exact replica from Image 2) -->
+        <div class="w-11 sm:w-12 bg-[#0048BA] flex-shrink-0 flex items-center justify-center p-1.5 relative select-none">
+          <span class="text-white font-black text-xs sm:text-[13px] tracking-wider uppercase font-sans whitespace-nowrap [writing-mode:vertical-rl] rotate-180">
+            Bachelor of Science in Computer Science
+          </span>
         </div>
 
-        <!-- Student Photo & Credentials Body (Centered Style matching Image 4) -->
-        <div class="p-4 pt-5 flex flex-col items-center text-center space-y-3 relative">
-          <!-- Light Watermark Seal in Background -->
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
-            <span class="material-symbols-outlined text-[180px]">school</span>
-          </div>
-
-          <!-- Centered Student Portrait with Dual Ring Frame -->
-          <div class="relative z-10">
-            <div class="w-20 h-20 rounded-full p-1 bg-navy-dark shadow-md flex items-center justify-center">
-              <div class="w-full h-full rounded-full bg-slate-100 text-navy-dark flex items-center justify-center">
-                <span class="material-symbols-outlined text-4xl">person</span>
-              </div>
+        <!-- Right Main Body (White Background matching Image 2) -->
+        <div class="flex-1 bg-white px-3 py-2.5 flex flex-col items-center justify-between text-center min-w-0">
+          
+          <!-- Top Header: Logo + College Name -->
+          <div class="flex flex-col items-center w-full pt-1">
+            <div class="w-10 h-10 mb-1 flex items-center justify-center">
+              <img src="ccc_logo/City_College_of_Calamba_Logo.png" alt="City College of Calamba Official Logo" class="w-full h-full object-contain">
             </div>
-            <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center border-2 border-white shadow">
-              <span class="material-symbols-outlined text-xs font-bold">verified</span>
-            </div>
+            <h3 class="font-sans font-black text-slate-900 text-[11px] sm:text-xs tracking-wider uppercase">
+              CITY COLLEGE OF CALAMBA
+            </h3>
           </div>
 
-          <!-- Student ID Number & Full Name (Clean format as shown in Image 4) -->
-          <div class="relative z-10 space-y-0.5">
-            <div class="text-sm font-black font-mono tracking-wider text-navy-dark">2024-02013</div>
-            <h4 class="text-base font-extrabold text-slate-800 font-display tracking-tight">Rayven BURATO</h4>
-            <span class="text-[11px] font-medium text-slate-500 block">Undergraduate Student • Active Enrolled</span>
-          </div>
-
-          <!-- Emergency ICE Details (Blood type is completely removed as requested!) -->
-          <div class="relative z-10 w-full pt-2 pb-1 border-t border-slate-200/80">
-            <div class="bg-white rounded-xl p-2.5 border border-slate-200/70 shadow-sm flex items-center justify-between text-left">
-              <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-lg bg-slate-100 text-navy-dark flex items-center justify-center flex-shrink-0">
-                  <span class="material-symbols-outlined text-base">contact_phone</span>
-                </div>
-                <div>
-                  <span class="text-[10px] uppercase font-bold text-slate-400 block">Emergency Contact (ICE)</span>
-                  <span class="text-xs font-bold text-slate-800">Parent / Guardian</span>
-                </div>
-              </div>
-              <a href="tel:0917882192" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-navy-dark font-mono font-bold text-xs flex items-center gap-1 tactile-btn">
-                <span class="material-symbols-outlined text-xs">call</span>
-                <span>0917-882-192</span>
-              </a>
+          <!-- Student Label & Framed Photo Box (Clean neutral avatar inside black-bordered box) -->
+          <div class="flex flex-col items-center w-full my-1">
+            <span class="text-[11px] font-semibold text-slate-800 tracking-wide mb-1 font-sans">Student</span>
+            <!-- Black-bordered Photo Frame (Exact frame from Image 2) -->
+            <div class="w-24 h-28 border-2 border-slate-900 bg-slate-100 flex items-center justify-center relative overflow-hidden shadow-inner">
+              <span class="material-symbols-outlined text-6xl text-slate-400 select-none">person</span>
             </div>
           </div>
 
-          <!-- Institutional Barcode Accent -->
-          <div class="relative z-10 w-full pt-1 flex flex-col items-center opacity-70">
-            <div class="flex items-center gap-[3px] h-6 overflow-hidden">
-              <div class="w-1 h-full bg-slate-800"></div>
-              <div class="w-0.5 h-full bg-slate-800"></div>
-              <div class="w-1.5 h-full bg-slate-800"></div>
-              <div class="w-0.5 h-full bg-slate-800"></div>
-              <div class="w-2 h-full bg-slate-800"></div>
-              <div class="w-0.5 h-full bg-slate-800"></div>
-              <div class="w-1 h-full bg-slate-800"></div>
-              <div class="w-1.5 h-full bg-slate-800"></div>
-              <div class="w-0.5 h-full bg-slate-800"></div>
-              <div class="w-2 h-full bg-slate-800"></div>
-              <div class="w-1 h-full bg-slate-800"></div>
-              <div class="w-0.5 h-full bg-slate-800"></div>
-              <div class="w-1.5 h-full bg-slate-800"></div>
-              <div class="w-0.5 h-full bg-slate-800"></div>
-              <div class="w-2 h-full bg-slate-800"></div>
-              <div class="w-1 h-full bg-slate-800"></div>
-              <div class="w-0.5 h-full bg-slate-800"></div>
+          <!-- Student ID Number & Name Details -->
+          <div class="flex flex-col items-center w-full space-y-0.5">
+            <div class="font-mono font-bold text-xs tracking-wider text-slate-900">
+              2024-02013
             </div>
-            <span class="text-[9px] font-mono text-slate-400 tracking-widest mt-0.5">VALID SY 2024-2025 • CCC-CALAMBA</span>
+            <div class="text-xs font-black uppercase text-slate-900 tracking-wider">
+              BURATO
+            </div>
+            <div class="text-[11px] font-semibold text-slate-700">
+              Rayven M.
+            </div>
           </div>
+
+          <!-- Signature Line with Digital Stroke & Label -->
+          <div class="w-36 flex flex-col items-center relative my-1">
+            <div class="relative w-full h-7 flex items-center justify-center">
+              <svg class="absolute w-28 h-8 text-slate-900 pointer-events-none" viewBox="0 0 140 40" fill="none" stroke="currentColor">
+                <path d="M 15 28 C 30 8, 48 4, 52 22 C 55 32, 60 10, 72 24 C 82 32, 100 12, 118 26" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M 42 16 Q 70 34 105 24" stroke-width="1.4" stroke-linecap="round"/>
+                <ellipse cx="106" cy="22" rx="10" ry="7" stroke-width="1.2" fill="none" opacity="0.7"/>
+              </svg>
+              <div class="w-full border-b border-black"></div>
+            </div>
+            <span class="text-[9px] text-slate-700 font-serif italic mt-0.5">Signature</span>
+          </div>
+
+          <!-- Iconic CCC Campus Building Facade Elevation Drawing -->
+          <div class="w-full px-1 my-1">
+            <svg class="w-full h-12 text-slate-900" viewBox="0 0 320 80" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Ground Base Step -->
+              <rect x="10" y="72" width="300" height="4" fill="currentColor"/>
+              <rect x="16" y="68" width="288" height="4" fill="white" stroke="currentColor"/>
+
+              <!-- Central Classical Pediment & Portico -->
+              <polygon points="160,8 115,28 205,28" fill="white" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="160" cy="20" r="4.5" fill="white" stroke="currentColor"/>
+              
+              <!-- Pediment Architrave with Building Name -->
+              <rect x="110" y="28" width="100" height="9" fill="white" stroke="currentColor"/>
+              <text x="160" y="34.5" font-size="4.2" font-family="'Plus Jakarta Sans', sans-serif" font-weight="900" text-anchor="middle" fill="currentColor" stroke="none">CITY COLLEGE OF CALAMBA</text>
+
+              <!-- Central Columns & Doorway -->
+              <rect x="120" y="37" width="80" height="31" fill="white" stroke="currentColor"/>
+              <line x1="126" y1="37" x2="126" y2="68"/>
+              <line x1="134" y1="37" x2="134" y2="68"/>
+              <line x1="186" y1="37" x2="186" y2="68"/>
+              <line x1="194" y1="37" x2="194" y2="68"/>
+              <path d="M 150 68 V 48 A 10 10 0 0 1 170 48 V 68 Z" fill="white" stroke="currentColor"/>
+              <line x1="160" y1="44" x2="160" y2="68"/>
+              <line x1="150" y1="56" x2="170" y2="56"/>
+
+              <!-- Left Academic Wing -->
+              <rect x="20" y="30" width="90" height="38" fill="white" stroke="currentColor"/>
+              <rect x="26" y="42" width="10" height="18" fill="white" stroke="currentColor"/>
+              <line x1="31" y1="42" x2="31" y2="60"/>
+              <line x1="26" y1="51" x2="36" y2="51"/>
+              <rect x="42" y="42" width="10" height="18" fill="white" stroke="currentColor"/>
+              <line x1="47" y1="42" x2="47" y2="60"/>
+              <line x1="42" y1="51" x2="52" y2="51"/>
+              <rect x="58" y="42" width="10" height="18" fill="white" stroke="currentColor"/>
+              <line x1="63" y1="42" x2="63" y2="60"/>
+              <line x1="58" y1="51" x2="68" y2="51"/>
+              <rect x="74" y="42" width="10" height="18" fill="white" stroke="currentColor"/>
+              <line x1="79" y1="42" x2="79" y2="60"/>
+              <line x1="74" y1="51" x2="84" y2="51"/>
+              <rect x="90" y="42" width="10" height="18" fill="white" stroke="currentColor"/>
+              <line x1="95" y1="42" x2="95" y2="60"/>
+              <line x1="90" y1="51" x2="100" y2="51"/>
+
+              <!-- Right Academic Wing -->
+              <rect x="210" y="30" width="90" height="38" fill="white" stroke="currentColor"/>
+              <rect x="220" y="42" width="10" height="18" fill="white" stroke="currentColor"/>
+              <line x1="225" y1="42" x2="225" y2="60"/>
+              <line x1="220" y1="51" x2="230" y2="51"/>
+              <rect x="236" y="42" width="10" height="18" fill="white" stroke="currentColor"/>
+              <line x1="241" y1="42" x2="241" y2="60"/>
+              <line x1="236" y1="51" x2="246" y2="51"/>
+              <rect x="252" y="42" width="10" height="18" fill="white" stroke="currentColor"/>
+              <line x1="257" y1="42" x2="257" y2="60"/>
+              <line x1="252" y1="51" x2="262" y2="51"/>
+              <rect x="268" y="42" width="10" height="18" fill="white" stroke="currentColor"/>
+              <line x1="273" y1="42" x2="273" y2="60"/>
+              <line x1="268" y1="51" x2="278" y2="51"/>
+              <rect x="284" y="42" width="10" height="18" fill="white" stroke="currentColor"/>
+              <line x1="289" y1="42" x2="289" y2="60"/>
+              <line x1="284" y1="51" x2="294" y2="51"/>
+
+              <!-- Roofline Cornice -->
+              <line x1="16" y1="30" x2="304" y2="30" stroke-width="1.8"/>
+            </svg>
+          </div>
+
+          <!-- Bottom High-Density Barcode (Exact replica from Image 2) -->
+          <div class="w-full pt-1 px-1">
+            <div class="flex items-center justify-between w-full h-10 bg-white border-t border-black pt-1 px-1 overflow-hidden">
+              <div class="w-[3px] h-full bg-black"></div>
+              <div class="w-[1px] h-full bg-black"></div>
+              <div class="w-[4px] h-full bg-black"></div>
+              <div class="w-[1.5px] h-full bg-black"></div>
+              <div class="w-[2.5px] h-full bg-black"></div>
+              <div class="w-[1px] h-full bg-black"></div>
+              <div class="w-[3px] h-full bg-black"></div>
+              <div class="w-[1.5px] h-full bg-black"></div>
+              <div class="w-[4.5px] h-full bg-black"></div>
+              <div class="w-[1px] h-full bg-black"></div>
+              <div class="w-[2px] h-full bg-black"></div>
+              <div class="w-[3.5px] h-full bg-black"></div>
+              <div class="w-[1px] h-full bg-black"></div>
+              <div class="w-[2.5px] h-full bg-black"></div>
+              <div class="w-[4px] h-full bg-black"></div>
+              <div class="w-[1.5px] h-full bg-black"></div>
+              <div class="w-[2px] h-full bg-black"></div>
+              <div class="w-[3px] h-full bg-black"></div>
+              <div class="w-[1px] h-full bg-black"></div>
+              <div class="w-[4.5px] h-full bg-black"></div>
+              <div class="w-[2.5px] h-full bg-black"></div>
+              <div class="w-[1px] h-full bg-black"></div>
+              <div class="w-[3px] h-full bg-black"></div>
+              <div class="w-[1.5px] h-full bg-black"></div>
+              <div class="w-[4px] h-full bg-black"></div>
+              <div class="w-[2px] h-full bg-black"></div>
+              <div class="w-[3.5px] h-full bg-black"></div>
+              <div class="w-[1px] h-full bg-black"></div>
+              <div class="w-[2.5px] h-full bg-black"></div>
+              <div class="w-[4px] h-full bg-black"></div>
+              <div class="w-[1.5px] h-full bg-black"></div>
+              <div class="w-[3px] h-full bg-black"></div>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -1488,6 +1713,35 @@
       soundMuted: false,
       loginAttempts: 0,
       requestsFilter: 'all',
+      notifications: [
+        {
+          id: 'notif-1',
+          type: 'urgent',
+          badgeText: 'Urgent Alert',
+          badgeClass: 'text-crimson-urgent bg-red-50 border-red-100',
+          title: 'CCC Main Building Elevator #2 Maintenance',
+          time: '10 mins ago',
+          desc: 'Elevator undergoing hydraulic test. Use stairwell B.'
+        },
+        {
+          id: 'notif-2',
+          type: 'weather',
+          badgeText: 'Weather Bulletin',
+          badgeClass: 'text-navy-dark bg-slate-100 border-border-subtle',
+          title: 'Thunderstorm Advisory this Afternoon',
+          time: '2 hrs ago',
+          desc: 'Free campus umbrella lending available at Gate 1 Guardhouse.'
+        },
+        {
+          id: 'notif-3',
+          type: 'service',
+          badgeText: 'Service Update',
+          badgeClass: 'text-emerald-600 bg-emerald-50 border-emerald-100',
+          title: 'Night Escort Roster Expanded',
+          time: 'Yesterday',
+          desc: 'Campus escort available 7:00 PM to 4:00 AM daily.'
+        }
+      ],
       requests: [
         {
           id: 'TKT-2024-0982',
@@ -1608,6 +1862,13 @@
         showHeader: false, 
         showBottomNav: false,
         statusTheme: 'light'
+      },
+      'PUBLIC_SOS': {
+        id: 'page-public-sos',
+        title: 'Campus Emergency SOS',
+        showHeader: false, // Standalone pure emergency mode!
+        showBottomNav: false, // NO ACCOUNT TABS!
+        statusTheme: 'dark'
       },
       'HOME': { 
         id: 'page-home', 
@@ -2321,9 +2582,14 @@
               </div>
               <span class="text-[10px] text-slate-400 mt-0.5 block">#${req.id} • ${req.date}</span>
             </div>
-            <div class="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase border ${badgeStyle} flex-shrink-0">
-              <span class="material-symbols-outlined text-[12px]">${badgeIcon}</span>
-              <span>${req.status}</span>
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <div class="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase border ${badgeStyle}">
+                <span class="material-symbols-outlined text-[12px]">${badgeIcon}</span>
+                <span>${req.status}</span>
+              </div>
+              <button onclick="deleteRequest('${req.id}', event)" title="Delete Request" class="w-6 h-6 rounded-lg text-slate-400 hover:text-crimson-urgent hover:bg-red-50 flex items-center justify-center tactile-btn transition-colors cursor-pointer">
+                <span class="material-symbols-outlined text-sm">delete</span>
+              </button>
             </div>
           </div>
 
@@ -2375,7 +2641,141 @@
     // ==========================================
     // DIALOGS & OVERLAYS
     // ==========================================
+
+    // ==========================================
+    // NOTIFICATIONS ENGINE (IMAGE 3)
+    // ==========================================
+    function renderNotificationsList() {
+      const container = document.getElementById('notificationsListContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (AppState.notifications.length === 0) {
+        container.innerHTML = `
+          <div class="py-8 px-4 text-center space-y-1.5">
+            <span class="material-symbols-outlined text-3xl text-slate-300">notifications_off</span>
+            <p class="text-xs font-bold text-slate-700">No Active Bulletins</p>
+            <p class="text-[11px] text-slate-400">All campus safety notifications have been cleared.</p>
+          </div>
+        `;
+        const dot = document.getElementById('headerNotifDot');
+        if (dot) dot.classList.add('hidden');
+        const clearBtn = document.getElementById('clearAllNotifsBtn');
+        if (clearBtn) clearBtn.classList.add('hidden');
+        return;
+      }
+
+      const dot = document.getElementById('headerNotifDot');
+      if (dot) dot.classList.remove('hidden');
+      const clearBtn = document.getElementById('clearAllNotifsBtn');
+      if (clearBtn) clearBtn.classList.remove('hidden');
+
+      AppState.notifications.forEach(item => {
+        const div = document.createElement('div');
+        div.className = `p-3 rounded-2xl border space-y-1 relative ${item.badgeClass.includes('red') ? 'bg-red-50 border-red-100' : 'bg-slate-50 border-border-subtle'}`;
+        div.innerHTML = `
+          <div class="flex items-center justify-between text-[10px]">
+            <span class="font-extrabold uppercase ${item.badgeClass.includes('red') ? 'text-crimson-urgent' : item.badgeClass.includes('emerald') ? 'text-emerald-600' : 'text-navy-dark'}">${item.badgeText}</span>
+            <div class="flex items-center gap-1.5">
+              <span class="text-slate-400">${item.time}</span>
+              <button onclick="deleteNotification('${item.id}', event)" class="p-1 rounded-md text-slate-400 hover:text-crimson-urgent hover:bg-white/80 tactile-btn transition-colors" title="Delete notification">
+                <span class="material-symbols-outlined text-sm">delete</span>
+              </button>
+            </div>
+          </div>
+          <p class="text-xs font-bold text-slate-800 pr-5">${item.title}</p>
+          <p class="text-[11px] text-slate-600 leading-snug">${item.desc}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function deleteNotification(id, e) {
+      if (e) e.stopPropagation();
+      playAudioTone('tap');
+      AppState.notifications = AppState.notifications.filter(n => n.id !== id);
+      renderNotificationsList();
+      showToast('Notification deleted');
+    }
+
+    function clearAllNotifications() {
+      playAudioTone('tap');
+      AppState.notifications = [];
+      renderNotificationsList();
+      showToast('All notifications cleared');
+    }
+
+    // ==========================================
+    // DELETE INCIDENT REQUESTS (IMAGE 4)
+    // ==========================================
+    function deleteRequest(id, e) {
+      if (e) e.stopPropagation();
+      playAudioTone('tap');
+      AppState.requests = AppState.requests.filter(r => r.id !== id);
+      persistRequests();
+      renderRequestsList();
+      showToast(`Incident ticket #${id} deleted`);
+    }
+
+    // ==========================================
+    // PUBLIC PURE EMERGENCY SOS LOGIC (IMAGE 5)
+    // ==========================================
+    let publicSosTimerInterval = null;
+    const PUBLIC_SOS_TOTAL_MS = 2000;
+    const PUBLIC_SOS_CIRCUMFERENCE = 2 * Math.PI * 44; // 276.46
+
+    function startPublicSosCountdown() {
+      playAudioTone('alarm');
+      const ring = document.getElementById('publicSosCountdownCircle');
+      const label = document.getElementById('publicSosCountdownLabel');
+      const statusText = document.getElementById('publicSosStatusInstruction');
+
+      if (label) label.innerText = 'DISPATCHING';
+      if (statusText) statusText.innerText = 'Hold down... dispatching live!';
+
+      const startTime = Date.now();
+      publicSosTimerInterval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(1, elapsed / PUBLIC_SOS_TOTAL_MS);
+        const offset = PUBLIC_SOS_CIRCUMFERENCE - (progress * PUBLIC_SOS_CIRCUMFERENCE);
+        if (ring) ring.style.strokeDashoffset = offset;
+
+        if (progress >= 1) {
+          abortPublicSosCountdown();
+          executePublicEmergencyDispatch();
+        }
+      }, 25);
+    }
+
+    function abortPublicSosCountdown() {
+      if (publicSosTimerInterval) {
+        clearInterval(publicSosTimerInterval);
+        publicSosTimerInterval = null;
+      }
+      const ring = document.getElementById('publicSosCountdownCircle');
+      if (ring) ring.style.strokeDashoffset = PUBLIC_SOS_CIRCUMFERENCE;
+      const label = document.getElementById('publicSosCountdownLabel');
+      if (label) label.innerText = 'HOLD 2S';
+      const statusText = document.getElementById('publicSosStatusInstruction');
+      if (statusText) statusText.innerText = 'Hold button down for 2 seconds';
+    }
+
+    function executePublicEmergencyDispatch() {
+      playAudioTone('alarm');
+      const roomSelect = document.getElementById('publicSosRoomSelect');
+      const room = roomSelect && roomSelect.value ? roomSelect.value : 'CCC Main Building • AB 1';
+
+      // Open emergency dispatched modal
+      document.getElementById('dispatchedCodeTag').innerText = '#PUBLIC-SOS-' + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById('dispatchedLocationTag').innerText = room;
+      document.getElementById('sosDispatchedModal').classList.remove('hidden');
+      document.getElementById('sosDispatchedModal').classList.add('flex');
+
+      showToast('EMERGENCY DISPATCH TRANSMITTED TO CAMPUS SECURITY!');
+    }
+
     function openNotificationsModal() {
+      renderNotificationsList();
       playAudioTone('tap');
       document.getElementById('notificationsDrawerModal').classList.remove('hidden');
       document.getElementById('notificationsDrawerModal').classList.add('flex');
