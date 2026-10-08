@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>CCC Student Emergency Assistant | Campus Safety Portal</title>
+  <meta name="description" content="City College Central mobile emergency assistance, live security dispatch, and incident triage portal.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "navy-dark": "#000B30",
+            "navy-surface": "#06133B",
+            "navy-light": "#0F2052",
+            "crimson-urgent": "#A61C1C",
+            "crimson-deep": "#821111",
+            "crimson-light": "#FEE2E2",
+            "ocean-teal": "#1E73A8",
+            "teal-surface": "#E0F2FE",
+            "slate-canvas": "#F4F6F9",
+            "surface-card": "#FFFFFF",
+            "border-subtle": "#E2E8F0",
+            "emerald-safe": "#10B981",
+            "amber-warning": "#F59E0B",
+          },
+          fontFamily: {
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif'],
+          },
+          boxShadow: {
+            'card': '0 4px 16px -2px rgba(0, 11, 48, 0.06), 0 2px 6px -1px rgba(0, 11, 48, 0.04)',
+            'card-hover': '0 10px 25px -3px rgba(0, 11, 48, 0.1), 0 4px 10px -2px rgba(0, 11, 48, 0.06)',
+            'sos-glow': '0 0 35px rgba(166, 28, 28, 0.55)',
+            'phone': '0 25px 60px -15px rgba(0, 5, 20, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.12)',
+            'tab': '0 -4px 16px rgba(0, 11, 48, 0.06)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    /* Prevent default tap highlight & custom scrollbars */
+    * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+    ::-webkit-scrollbar { display: none; width: 0; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 50% 20%, #0f1c3f 0%, #060b1c 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Device chassis layout */
+    .device-chassis {
+      width: 100%;
+      max-width: 414px;
+      height: 875px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    /* Responsiveness: Stretch seamlessly to full screen on real mobile phones */
+    @media (max-width: 640px) {
+      body {
+        background: #F4F6F9 !important;
+      }
+      .device-chassis {
+        max-width: 100% !important;
+        height: 100dvh !important;
+        border-radius: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+      }
+      .desktop-only-controls {
+        display: none !important;
+      }
+      .device-notch {
+        display: none !important;
+      }
+    }
+
+    /* Screen transitions */
+    .screen-page {
+      display: none;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .screen-page.active-screen {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Tactile button active depression */
+    .tactile-btn {
+      transition: transform 0.12s ease, filter 0.12s ease;
+    }
+    .tactile-btn:active {
+      transform: scale(0.96);
+      filter: brightness(0.95);
+    }
+
+    /* Circular SVG countdown ring */
+    .sos-ring {
+      transition: stroke-dashoffset 0.08s linear;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+    }
+  </style>
+</head>
+<body class="flex flex-col items-center justify-center p-0 sm:p-4 antialiased select-none overflow-x-hidden">
+
+  <!-- ==================================================== -->
+  <!-- PHONE CHASSIS (Centered iPhone Viewport on Desktop) -->
+  <!-- ==================================================== -->
+  <div id="phoneChassis" class="device-chassis bg-slate-canvas sm:rounded-[48px] sm:border-[9px] sm:border-[#1e2333] sm:shadow-phone flex flex-col overflow-hidden sm:ring-1 sm:ring-white/20">
+
+    <!-- iPhone Top Dynamic Island Notch (Desktop Only) -->
+    <div class="device-notch absolute top-0 left-0 right-0 z-50 flex items-center justify-center pt-2.5 pointer-events-none">
+      <div class="w-28 h-6 bg-black rounded-full flex items-center justify-between px-3 shadow-md">
+        <div class="w-2 h-2 rounded-full bg-[#151515] ring-1 ring-white/10"></div>
+        <div class="flex items-center gap-1">
+          <div class="w-1.5 h-1.5 rounded-full bg-emerald-safe animate-pulse"></div>
+          <div class="w-2.5 h-2.5 rounded-full bg-[#0a1628] flex items-center justify-center">
+            <div class="w-1 h-1 rounded-full bg-ocean-teal opacity-90"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- iOS Status Bar (Always aligned, never clips or collides) -->
+    <div id="topStatusBar" class="w-full h-11 px-7 pt-2 flex items-center justify-between text-xs font-semibold z-40 bg-navy-dark text-white select-none transition-colors duration-200">
+      <div id="liveClockDisplay" class="font-display font-bold text-[13px] tracking-tight">09:41</div>
+      <div class="flex items-center gap-1.5">
+        <span class="material-symbols-outlined text-[15px]">signal_cellular_alt</span>
+        <span class="material-symbols-outlined text-[15px]">wifi</span>
+        <div class="flex items-center border border-current rounded px-1 py-0.2 text-[9px] font-bold leading-none">
+          <span>100%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================================================== -->
+    <!-- DOCKED UNIFIED APP HEADER (Except on Login)          -->
+    <!-- ==================================================== -->
+    <header id="mainAppHeader" class="w-full bg-navy-dark text-white px-4 py-2.5 shadow-md flex items-center justify-between z-30 select-none">
+      <div class="flex items-center gap-2.5 min-w-0">
+        <!-- Back Button (shown on sub-screens) -->
+        <button id="headerBackBtn" onclick="navigateBack()" class="hidden w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 flex items-center justify-center text-white tactile-btn">
+          <span class="material-symbols-outlined text-lg">arrow_back</span>
+        </button>
+        <!-- Avatar & Identity on Home Screen -->
+        <div id="headerProfileBlock" class="flex items-center gap-2.5 min-w-0">
+          <button onclick="openProfileModal()" class="w-9 h-9 rounded-full bg-gradient-to-tr from-ocean-teal to-blue-400 text-white font-display font-bold text-xs flex items-center justify-center ring-2 ring-white/30 tactile-btn flex-shrink-0">
+            <span>RV</span>
+          </button>
+          <div class="flex flex-col min-w-0">
+            <span class="text-[10px] font-extrabold uppercase tracking-widest text-teal-300 truncate">CCC Emergency Assistant</span>
+            <span id="headerTitleText" class="font-display font-bold text-sm text-white leading-tight truncate">Hi, Rayven</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Icons: Notifications & Menu -->
+      <div class="flex items-center gap-1">
+        <button onclick="openNotificationsModal()" aria-label="Notifications" class="relative w-9 h-9 rounded-lg hover:bg-white/10 active:bg-white/20 flex items-center justify-center text-white tactile-btn">
+          <span class="material-symbols-outlined text-xl">notifications</span>
+          <span id="headerNotifDot" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-crimson-urgent ring-2 ring-navy-dark"></span>
+        </button>
+        <button onclick="openMenuModal()" aria-label="Menu" class="w-9 h-9 rounded-lg hover:bg-white/10 active:bg-white/20 flex items-center justify-center text-white tactile-btn">
+          <span class="material-symbols-outlined text-xl">menu</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==================================================== -->
+    <!-- SCROLLABLE SCREEN CONTAINER (Pages Mount Here)       -->
+    <!-- ==================================================== -->
+    <main id="screenViewport" class="flex-1 w-full relative overflow-y-auto overflow-x-hidden bg-slate-canvas flex flex-col overscroll-contain">
+
+      <!-- ========================================== -->
+      <!-- 1. LOGIN / SIGN-IN SCREEN                  -->
+      <!-- ========================================== -->
+      <section id="page-login" class="screen-page active-screen flex-col w-full min-h-full p-5 justify-between bg-slate-canvas">
+        <div class="flex flex-col w-full pt-1">
+          <!-- Campus Grid Safety Status -->
+          <div class="w-full bg-surface-card rounded-xl p-3 flex items-center justify-between shadow-card border border-border-subtle mb-5">
+            <div class="flex items-center gap-2">
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-safe opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-safe"></span>
+              </span>
+              <span class="text-xs font-semibold text-slate-700">Safety Grid: Code Green Normal</span>
+            </div>
+            <div class="flex items-center gap-1 text-ocean-teal text-xs font-bold">
+              <span class="material-symbols-outlined text-[15px]">wifi</span>
+              <span>ONLINE</span>
+            </div>
+          </div>
+
+          <!-- Collegiate Branding Seal -->
+          <div class="flex flex-col items-center text-center mb-5">
+            <div class="w-16 h-16 rounded-2xl bg-navy-dark text-white p-3 shadow-card flex items-center justify-center mb-2.5 border border-white/20">
+              <!-- Crisp CCC Shield Seal -->
+              <svg viewBox="0 0 100 100" class="w-full h-full text-white" fill="none">
+                <path d="M50 8L15 24V50C15 72 30 90 50 95C70 90 85 72 85 50V24L50 8Z" fill="#1E73A8"/>
+                <path d="M50 16L24 28V50C24 67 35 80 50 84C65 80 76 67 76 50V28L50 16Z" fill="#000B30"/>
+                <path d="M50 24L32 32V48C32 60 40 70 50 73C60 70 68 60 68 48V32L50 24Z" fill="#A61C1C"/>
+                <text x="50" y="53" text-anchor="middle" font-family="'Plus Jakarta Sans', sans-serif" font-size="14" font-weight="900" fill="#FFFFFF">CCC</text>
+              </svg>
+            </div>
+            <span class="text-xs font-extrabold text-navy-dark uppercase tracking-widest font-display">City College Central</span>
+            <h1 class="text-base font-bold text-slate-800 mt-0.5 font-display">Student Emergency & Safety Portal</h1>
+            <div class="mt-1.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-200 text-slate-700 text-[11px] font-medium">
+              <span class="material-symbols-outlined text-[13px] text-ocean-teal">verified_user</span>
+              <span>Identity Verification Gateway</span>
+            </div>
+          </div>
+
+          <!-- Sign-In White Card Container -->
+          <div class="w-full bg-surface-card rounded-2xl p-5 shadow-card border border-border-subtle">
+            <div class="text-center mb-4">
+              <h2 class="text-base font-extrabold text-navy-dark uppercase tracking-wider font-display">SIGN-IN</h2>
+              <p class="text-xs text-slate-500 mt-0.5">Secure student credentials authentication</p>
+            </div>
+
+            <form onsubmit="handleLoginSubmit(event)" class="space-y-3.5">
+              <!-- Field 1: Student ID Number -->
+              <div class="space-y-1">
+                <label for="studentIdInput" class="text-xs font-semibold text-slate-700 flex items-center justify-between">
+                  <span>Student ID Number</span>
+                  <span class="text-[11px] text-ocean-teal font-medium">Auto-filled</span>
+                </label>
+                <div class="relative flex items-center">
+                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-lg">person</span>
+                  <input type="text" id="studentIdInput" value="2024-02013" required
+                    class="w-full h-11 pl-10 pr-3 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-medium focus:outline-none focus:border-navy-dark focus:bg-white transition-all">
+                </div>
+              </div>
+
+              <!-- Field 2: Password -->
+              <div class="space-y-1">
+                <label for="passwordInput" class="text-xs font-semibold text-slate-700 flex items-center justify-between">
+                  <span>Password</span>
+                  <button type="button" onclick="togglePasswordVisibility()" class="text-[11px] text-ocean-teal hover:underline">Show / Hide</button>
+                </label>
+                <div class="relative flex items-center">
+                  <span class="material-symbols-outlined absolute left-3 text-slate-400 text-lg">lock</span>
+                  <input type="password" id="passwordInput" value="Student@CCC2024" required
+                    class="w-full h-11 pl-10 pr-10 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-medium focus:outline-none focus:border-navy-dark focus:bg-white transition-all">
+                  <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3 text-slate-400 hover:text-slate-600">
+                    <span id="pwdEyeIcon" class="material-symbols-outlined text-lg">visibility</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Attempts Counter -->
+              <div class="flex items-center justify-between text-[11px] text-slate-500 pt-0.5">
+                <span id="loginAttemptsLabel">Login Attempts: 0</span>
+                <span class="text-emerald-600 font-semibold flex items-center gap-0.5">
+                  <span class="material-symbols-outlined text-[13px]">shield</span> SSL Encrypted
+                </span>
+              </div>
+
+              <!-- Primary Deep Navy Blue (#000B30) Button -->
+              <button type="submit"
+                class="w-full h-12 bg-navy-dark hover:bg-navy-surface text-white font-bold rounded-full text-xs uppercase tracking-wider shadow-md tactile-btn flex items-center justify-center gap-2 cursor-pointer mt-2 font-display">
+                <span>LOGIN</span>
+                <span class="material-symbols-outlined text-lg">arrow_forward</span>
+              </button>
+            </form>
+
+            <div class="mt-3.5 text-center">
+              <button onclick="handleResetPassword()" class="text-xs text-ocean-teal hover:underline font-medium">
+                Forgot Password / Reset Password
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Life Safety SOS Bypass Banner -->
+        <div class="w-full text-center pt-4 pb-2">
+          <div class="inline-flex items-center justify-between w-full p-2.5 px-3.5 rounded-xl bg-red-50 border border-red-200 text-crimson-urgent text-xs">
+            <div class="flex items-center gap-1.5 font-bold">
+              <span class="material-symbols-outlined text-base animate-pulse">emergency</span>
+              <span>Immediate Life Threat?</span>
+            </div>
+            <button onclick="navigateTo('EMERGENCY_DISPATCH')" class="font-extrabold uppercase tracking-wider text-[11px] underline hover:text-crimson-deep tactile-btn">
+              Bypass To SOS
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 2. HOME SCREEN                             -->
+      <!-- ========================================== -->
+      <section id="page-home" class="screen-page flex-col w-full min-h-full p-4 space-y-4 bg-slate-canvas">
+        
+        <!-- Live Campus Safety Status Ticker (Clean two-column, NO truncation) -->
+        <div class="w-full bg-surface-card rounded-2xl px-3.5 py-2.5 shadow-card border border-border-subtle flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="relative flex h-2.5 w-2.5 flex-shrink-0">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-safe opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-safe"></span>
+            </span>
+            <span class="text-xs font-bold text-slate-800 font-display">Campus Status: Code Green Normal</span>
+          </div>
+          <span class="text-[11px] font-semibold text-ocean-teal flex items-center gap-0.5 bg-teal-50 px-2 py-0.5 rounded-md">
+            <span class="material-symbols-outlined text-xs">gps_fixed</span> GPS Active
+          </span>
+        </div>
+
+        <!-- High Priority Banner: Urgent Crimson Red (#A61C1C) Hero Card -->
+        <section class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-crimson-urgent to-crimson-deep text-white shadow-sos-glow p-4.5 space-y-3">
+          <!-- Background SVG Watermark -->
+          <svg class="absolute -right-8 -top-8 w-40 h-40 text-white opacity-10 pointer-events-none" fill="currentColor" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" fill="none" r="45" stroke="currentColor" stroke-dasharray="8 6" stroke-width="4"></circle>
+            <circle cx="50" cy="50" fill="currentColor" r="26"></circle>
+          </svg>
+
+          <div class="relative z-10 space-y-1.5">
+            <div class="flex items-center gap-1.5">
+              <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                <span class="material-symbols-outlined text-sm">notification_important</span>
+              </div>
+              <span class="text-xs font-extrabold uppercase tracking-widest text-white/90 font-display">EMERGENCY ASSISTANCE</span>
+            </div>
+            <p class="text-sm font-bold text-white leading-snug font-display">
+              Immediate danger or medical emergency on campus grounds?
+            </p>
+          </div>
+
+          <!-- Prominent "REQUEST HELP NOW" Button -->
+          <div class="relative z-10 pt-0.5">
+            <button onclick="navigateTo('EMERGENCY_DISPATCH')"
+              class="w-full h-12 rounded-full bg-white text-crimson-urgent font-display font-extrabold text-xs tracking-wider uppercase shadow-md flex items-center justify-center gap-2 tactile-btn cursor-pointer">
+              <span class="material-symbols-outlined text-xl animate-pulse">e911_emergency</span>
+              <span>REQUEST HELP NOW</span>
+            </button>
+          </div>
+
+          <div class="relative z-10 flex items-center gap-1.5 text-white/80 text-[11px]">
+            <span class="material-symbols-outlined text-[14px]">speed</span>
+            <span>Direct Campus Police & Medic Unit (Avg. response: 2 mins)</span>
+          </div>
+        </section>
+
+        <!-- 2x2 Quick Action Grid -->
+        <section class="space-y-2">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-navy-dark font-display">Quick Dispatch & Support</h2>
+            <span class="text-[11px] text-slate-400">Tap to trigger</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5">
+            <!-- 1. Contact Security -->
+            <button onclick="openSecurityDialerModal()"
+              class="flex flex-col text-left p-3.5 bg-surface-card rounded-2xl shadow-card hover:shadow-card-hover border border-border-subtle min-h-[105px] justify-between tactile-btn cursor-pointer">
+              <div class="flex items-center justify-between w-full">
+                <div class="w-9 h-9 rounded-xl bg-navy-dark text-white flex items-center justify-center shadow-sm">
+                  <span class="material-symbols-outlined text-lg">local_police</span>
+                </div>
+                <span class="material-symbols-outlined text-slate-400 text-sm">call</span>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block truncate font-display">Contact Security</span>
+                <span class="text-[11px] text-slate-500 block truncate">Gate 1 & Roving Patrol</span>
+              </div>
+            </button>
+
+            <!-- 2. Medical Assistance -->
+            <button onclick="navigateTo('EMERGENCY_DISPATCH', { category: 'Medical' })"
+              class="flex flex-col text-left p-3.5 bg-surface-card rounded-2xl shadow-card hover:shadow-card-hover border border-border-subtle min-h-[105px] justify-between tactile-btn cursor-pointer">
+              <div class="flex items-center justify-between w-full">
+                <div class="w-9 h-9 rounded-xl bg-crimson-urgent text-white flex items-center justify-center shadow-sm">
+                  <span class="material-symbols-outlined text-lg">medical_services</span>
+                </div>
+                <span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block truncate font-display">Medical Clinic</span>
+                <span class="text-[11px] text-slate-500 block truncate">First Aid Station 102</span>
+              </div>
+            </button>
+
+            <!-- 3. Report Facility Problem -->
+            <button onclick="navigateTo('REPORT_PROBLEM', { category: 'facility' })"
+              class="flex flex-col text-left p-3.5 bg-surface-card rounded-2xl shadow-card hover:shadow-card-hover border border-border-subtle min-h-[105px] justify-between tactile-btn cursor-pointer">
+              <div class="flex items-center justify-between w-full">
+                <div class="w-9 h-9 rounded-xl bg-ocean-teal text-white flex items-center justify-center shadow-sm">
+                  <span class="material-symbols-outlined text-lg">handyman</span>
+                </div>
+                <span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block truncate font-display">Facility Problem</span>
+                <span class="text-[11px] text-slate-500 block truncate">Elevators, Power, Water</span>
+              </div>
+            </button>
+
+            <!-- 4. Report Lost ID -->
+            <button onclick="navigateTo('REPORT_PROBLEM', { category: 'lost-id' })"
+              class="flex flex-col text-left p-3.5 bg-surface-card rounded-2xl shadow-card hover:shadow-card-hover border border-border-subtle min-h-[105px] justify-between tactile-btn cursor-pointer">
+              <div class="flex items-center justify-between w-full">
+                <div class="w-9 h-9 rounded-xl bg-navy-surface text-teal-200 flex items-center justify-center shadow-sm">
+                  <span class="material-symbols-outlined text-lg">badge</span>
+                </div>
+                <span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-800 block truncate font-display">Report Lost ID</span>
+                <span class="text-[11px] text-slate-500 block truncate">Issue Temp Pass</span>
+              </div>
+            </button>
+          </div>
+        </section>
+
+        <!-- Secondary Section: Announcements & Help Desk -->
+        <section class="space-y-2">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-navy-dark font-display">Campus Advisory & Guidance</h2>
+
+          <!-- Bulletin Card -->
+          <div onclick="openBulletinModal()" class="bg-surface-card rounded-2xl p-3.5 shadow-card border border-border-subtle flex items-start gap-3 cursor-pointer tactile-btn">
+            <div class="w-9 h-9 rounded-xl bg-teal-50 text-ocean-teal flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="material-symbols-outlined text-lg">campaign</span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-extrabold text-ocean-teal uppercase">Campus Safety Notice</span>
+                <span class="text-[10px] text-slate-400">Today 8:00 AM</span>
+              </div>
+              <h3 class="text-xs font-bold text-slate-800 mt-0.5 truncate font-display">Earthquake & Evacuation Drill Friday</h3>
+              <p class="text-[11px] text-slate-500 mt-0.5 line-clamp-1">Mandatory drill scheduled 10:30 AM across all academic buildings.</p>
+            </div>
+          </div>
+
+          <!-- Help Desk Card -->
+          <div class="bg-surface-card rounded-2xl p-3.5 shadow-card border border-border-subtle flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 rounded-xl bg-slate-100 text-navy-dark flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-lg">support_agent</span>
+              </div>
+              <div>
+                <h3 class="text-xs font-bold text-slate-800 font-display">Student Safety Help Desk</h3>
+                <p class="text-[11px] text-slate-500">Night escort & counseling hotline</p>
+              </div>
+            </div>
+            <button onclick="navigateTo('CAMPUS_SERVICES')" class="px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-navy-dark text-xs font-bold tactile-btn">
+              View
+            </button>
+          </div>
+        </section>
+
+        <!-- Oval Action Pills Horizontal Tray -->
+        <section class="space-y-1.5 pb-2">
+          <span class="text-[11px] font-bold uppercase text-slate-400 tracking-wider">Quick Services</span>
+          <div class="flex gap-2 overflow-x-auto pb-1">
+            <button onclick="navigateTo('CAMPUS_SERVICES')" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-surface-card border border-border-subtle text-xs font-semibold text-slate-800 shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn">
+              <span class="material-symbols-outlined text-sm text-ocean-teal">business</span>
+              <span>Campus Offices</span>
+            </button>
+            <button onclick="openShuttleScheduleModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-surface-card border border-border-subtle text-xs font-semibold text-slate-800 shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn">
+              <span class="material-symbols-outlined text-sm text-ocean-teal">directions_bus</span>
+              <span>Campus Transport</span>
+            </button>
+            <button onclick="openSafetySeminarsModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-surface-card border border-border-subtle text-xs font-semibold text-slate-800 shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn">
+              <span class="material-symbols-outlined text-sm text-ocean-teal">event</span>
+              <span>Safety Workshops</span>
+            </button>
+          </div>
+        </section>
+
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 3. EMERGENCY DISPATCH (SOS)                -->
+      <!-- ========================================== -->
+      <section id="page-emergency" class="screen-page flex-col w-full min-h-full p-4 space-y-4 bg-slate-canvas">
+        
+        <!-- Urgent Warning Alert Banner -->
+        <div class="rounded-2xl bg-red-100 border border-red-200 text-crimson-urgent p-3.5 shadow-sm flex items-start gap-3">
+          <span class="material-symbols-outlined text-2xl text-crimson-urgent flex-shrink-0 mt-0.5 animate-pulse">warning</span>
+          <div>
+            <span class="text-xs font-extrabold uppercase tracking-wider block font-display">High Priority Safety Protocol</span>
+            <p class="text-xs text-red-950 mt-0.5 leading-snug">
+              Hold the button for 2 seconds to broadcast instant dispatch. Security squad will engage GPS location tracking immediately.
+            </p>
+          </div>
+        </div>
+
+        <!-- Live GPS Telemetry Card -->
+        <div class="bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="relative flex h-2.5 w-2.5">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-crimson-urgent opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-crimson-urgent"></span>
+              </span>
+              <span class="text-xs font-extrabold uppercase text-crimson-urgent tracking-wider font-display">Live Coordinate Fix</span>
+            </div>
+            <span class="text-[10px] font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded">Accuracy: ±3m</span>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-teal-50 text-ocean-teal flex items-center justify-center flex-shrink-0">
+              <span class="material-symbols-outlined text-xl">my_location</span>
+            </div>
+            <div class="min-w-0">
+              <span class="text-[10px] uppercase font-bold text-slate-400 block">Triangulated Indoor Location</span>
+              <span class="text-xs font-bold text-slate-800 block truncate font-display">Science Complex, 3rd Floor East Wing</span>
+            </div>
+          </div>
+
+          <!-- Radar Visual Strip -->
+          <div class="w-full h-16 rounded-xl bg-navy-dark relative overflow-hidden flex items-center justify-center border border-slate-700">
+            <div class="absolute inset-0 bg-[radial-gradient(#1e73a8_1px,transparent_1px)] [background-size:12px_12px] opacity-40"></div>
+            <div class="w-14 h-14 rounded-full border border-teal-400/40 animate-ping absolute"></div>
+            <div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-navy-dark text-xs font-bold z-10 shadow">
+              <span class="material-symbols-outlined text-crimson-urgent text-sm">fmd_bad</span>
+              <span>Coordinates Locked (14.5995° N, 120.9842° E)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Details -->
+        <div class="bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-3">
+          <!-- Emergency Category -->
+          <div class="space-y-1">
+            <label class="text-xs font-bold text-slate-700 flex items-center justify-between">
+              <span>Emergency Category <span class="text-crimson-urgent">*</span></span>
+              <span class="text-[11px] text-slate-400">Select Threat</span>
+            </label>
+            <div class="grid grid-cols-3 gap-2 pt-0.5">
+              <button type="button" onclick="selectSosCategory('Medical')" class="sos-category-btn py-2.5 px-2 rounded-xl border text-xs font-semibold flex flex-col items-center gap-1 transition-all border-crimson-urgent bg-crimson-urgent text-white tactile-btn" data-category="Medical">
+                <span class="material-symbols-outlined text-lg">medical_services</span>
+                <span>Medical</span>
+              </button>
+              <button type="button" onclick="selectSosCategory('Security')" class="sos-category-btn py-2.5 px-2 rounded-xl border text-xs font-semibold flex flex-col items-center gap-1 transition-all border-border-subtle bg-slate-50 text-slate-700 hover:bg-slate-100 tactile-btn" data-category="Security">
+                <span class="material-symbols-outlined text-lg">security</span>
+                <span>Security</span>
+              </button>
+              <button type="button" onclick="selectSosCategory('Fire')" class="sos-category-btn py-2.5 px-2 rounded-xl border text-xs font-semibold flex flex-col items-center gap-1 transition-all border-border-subtle bg-slate-50 text-slate-700 hover:bg-slate-100 tactile-btn" data-category="Fire">
+                <span class="material-symbols-outlined text-lg">local_fire_department</span>
+                <span>Fire</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Building & Room -->
+          <div class="space-y-1">
+            <label for="sosRoomNumber" class="text-xs font-bold text-slate-700">Building & Room Number</label>
+            <input type="text" id="sosRoomNumber" value="Science Complex, Room 304"
+              class="w-full h-11 px-3 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-medium focus:outline-none focus:border-crimson-urgent focus:bg-white transition-all">
+          </div>
+
+          <!-- Situation Details -->
+          <div class="space-y-1">
+            <label for="sosDetailsText" class="text-xs font-bold text-slate-700">Situation Details (Optional)</label>
+            <textarea id="sosDetailsText" rows="2" placeholder="Describe injuries, hazards, or immediate danger..."
+              class="w-full p-3 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-medium focus:outline-none focus:border-crimson-urgent focus:bg-white transition-all resize-none"></textarea>
+          </div>
+        </div>
+
+        <!-- HOLD-TO-CONFIRM SOS BUTTON -->
+        <div class="flex flex-col items-center justify-center pt-2 pb-2 space-y-2.5">
+          <div class="relative w-36 h-36 flex items-center justify-center">
+            <!-- Radial SVG Countdown Ring (402 circumference) -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 144 144">
+              <circle cx="72" cy="72" r="64" stroke="#FEE2E2" stroke-width="8" fill="none"/>
+              <circle id="sosCountdownCircle" cx="72" cy="72" r="64" stroke="#A61C1C" stroke-width="8" fill="none"
+                stroke-dasharray="402" stroke-dashoffset="402" stroke-linecap="round" class="sos-ring"/>
+            </svg>
+
+            <!-- Circular Hold Button -->
+            <button id="sosCentralButton"
+              onmousedown="startSosCountdown(event)" onmouseup="abortSosCountdown()" onmouseleave="abortSosCountdown()"
+              ontouchstart="startSosCountdown(event)" ontouchend="abortSosCountdown()" ontouchcancel="abortSosCountdown()"
+              class="w-28 h-28 rounded-full bg-gradient-to-tr from-crimson-deep to-crimson-urgent text-white shadow-sos-glow flex flex-col items-center justify-center select-none active:scale-95 transition-transform cursor-pointer relative z-10 focus:outline-none tactile-btn">
+              <span class="material-symbols-outlined text-3xl animate-pulse">sos</span>
+              <span id="sosCountdownLabel" class="text-[11px] font-black uppercase tracking-wider mt-0.5 font-display">HOLD 2S</span>
+            </button>
+          </div>
+
+          <div class="text-center">
+            <span id="sosStatusInstruction" class="text-xs font-bold text-slate-800 block">Press & Hold for 2 seconds</span>
+            <span class="text-[11px] text-slate-500">Hold firmly until radial ring completes</span>
+          </div>
+
+          <!-- Instant 1-Tap Quick Dispatch fallback -->
+          <button onclick="executeEmergencyDispatch()" class="px-4 py-1.5 rounded-full bg-slate-200 hover:bg-slate-300 text-navy-dark font-bold text-xs flex items-center gap-1 tactile-btn">
+            <span class="material-symbols-outlined text-sm text-crimson-urgent">flash_on</span>
+            <span>Instant Dispatch (1-Tap)</span>
+          </button>
+        </div>
+
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 4. REPORT A PROBLEM SCREEN                 -->
+      <!-- ========================================== -->
+      <section id="page-report" class="screen-page flex-col w-full min-h-full p-4 space-y-4 bg-slate-canvas">
+        
+        <!-- Category Chips -->
+        <div class="space-y-1.5">
+          <span class="text-xs font-bold uppercase text-navy-dark tracking-wider font-display">Select Problem Category</span>
+          <div class="flex gap-2 overflow-x-auto pb-1" id="reportChipsBar">
+            <button type="button" onclick="selectReportCategory('lost-id')"
+              class="report-chip-item px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 bg-navy-dark text-white shadow-sm flex-shrink-0 tactile-btn" data-category="lost-id">
+              <span class="material-symbols-outlined text-base">badge</span>
+              <span>Lost Student ID</span>
+            </button>
+            <button type="button" onclick="selectReportCategory('facility')"
+              class="report-chip-item px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 bg-surface-card text-slate-700 border border-border-subtle shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn" data-category="facility">
+              <span class="material-symbols-outlined text-base text-ocean-teal">handyman</span>
+              <span>Facility Damage</span>
+            </button>
+            <button type="button" onclick="selectReportCategory('hardware')"
+              class="report-chip-item px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 bg-surface-card text-slate-700 border border-border-subtle shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn" data-category="hardware">
+              <span class="material-symbols-outlined text-base text-slate-500">devices</span>
+              <span>Classroom Tech</span>
+            </button>
+            <button type="button" onclick="selectReportCategory('lighting')"
+              class="report-chip-item px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 bg-surface-card text-slate-700 border border-border-subtle shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn" data-category="lighting">
+              <span class="material-symbols-outlined text-base text-amber-500">lightbulb</span>
+              <span>Lighting & Grounds</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Form Card -->
+        <form onsubmit="handleProblemReportSubmit(event)" class="bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-3.5">
+          <!-- Location Details Input -->
+          <div class="space-y-1">
+            <label for="reportLocationField" class="text-xs font-bold text-slate-800 flex items-center justify-between">
+              <span class="flex items-center gap-1 text-crimson-urgent">
+                <span class="material-symbols-outlined text-sm">pin_drop</span> Exact Location *
+              </span>
+              <span class="text-[10px] text-slate-400">Required</span>
+            </label>
+            <input type="text" id="reportLocationField" value="Library 2nd Floor, Quiet Study Area, Desk 14" required
+              class="w-full h-11 px-3 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-medium focus:outline-none focus:border-navy-dark focus:bg-white transition-all">
+            
+            <!-- Quick preset chips -->
+            <div class="flex items-center gap-1.5 overflow-x-auto pt-1">
+              <span class="text-[10px] text-slate-400 flex-shrink-0">Quick-Pick:</span>
+              <button type="button" onclick="setPresetLocation('Main Library 2F')" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-[10px] text-slate-700 flex-shrink-0">Library 2F</button>
+              <button type="button" onclick="setPresetLocation('Science Wing Rm 302')" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-[10px] text-slate-700 flex-shrink-0">Science Rm 302</button>
+              <button type="button" onclick="setPresetLocation('Student Center Cafeteria')" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-[10px] text-slate-700 flex-shrink-0">Cafeteria</button>
+              <button type="button" onclick="setPresetLocation('Gymnasium West Bleachers')" class="px-2 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-[10px] text-slate-700 flex-shrink-0">Gymnasium</button>
+            </div>
+          </div>
+
+          <!-- Description Textarea -->
+          <div class="space-y-1">
+            <label for="reportDescriptionField" class="text-xs font-bold text-slate-800 flex items-center justify-between">
+              <span>Incident / Issue Description *</span>
+              <span id="charCountLabel" class="text-[10px] text-slate-400">0/300</span>
+            </label>
+            <textarea id="reportDescriptionField" rows="3" required placeholder="Describe what happened, exact room, or missing items..."
+              oninput="handleCharCounter(this)"
+              class="w-full p-3 text-xs bg-slate-50 border border-border-subtle rounded-xl text-slate-900 font-medium focus:outline-none focus:border-navy-dark focus:bg-white transition-all resize-none">Lost physical student ID card near Desk 14 around 2:00 PM. Please notify security dispatch if returned.</textarea>
+          </div>
+
+          <!-- Clickable Photo / Evidence Upload Box -->
+          <div class="space-y-1">
+            <label class="text-xs font-bold text-slate-800">Attach Photo / Evidence</label>
+            <input type="file" id="photoFileInput" accept="image/*" class="hidden" onchange="previewEvidencePhoto(this)">
+
+            <!-- Dashed Upload Container -->
+            <div id="dropPhotoZone" onclick="document.getElementById('photoFileInput').click()"
+              class="w-full h-24 border-2 border-dashed border-border-subtle hover:border-ocean-teal rounded-2xl flex flex-col items-center justify-center p-2 cursor-pointer bg-slate-50 hover:bg-teal-50/40 transition-all text-center tactile-btn">
+              <span class="material-symbols-outlined text-2xl text-ocean-teal">add_photo_alternate</span>
+              <span class="text-xs font-semibold text-slate-800 mt-1">Tap to browse or take photo</span>
+              <span class="text-[10px] text-slate-400">PNG, JPG or HEIC format</span>
+            </div>
+
+            <!-- Upload Preview Box -->
+            <div id="evidencePreviewBox" class="hidden items-center justify-between p-2 rounded-xl bg-slate-100 border border-border-subtle mt-1.5">
+              <div class="flex items-center gap-2 min-w-0">
+                <img id="evidenceThumbnailImg" class="w-10 h-10 rounded-lg object-cover border border-slate-300" src="" alt="Thumbnail">
+                <div class="min-w-0">
+                  <span id="evidenceFileName" class="text-xs font-semibold text-slate-800 block truncate">evidence_photo.jpg</span>
+                  <span class="text-[10px] text-emerald-600 font-bold">Image ready</span>
+                </div>
+              </div>
+              <button type="button" onclick="clearEvidencePhoto()" class="p-1 text-slate-400 hover:text-crimson-urgent">
+                <span class="material-symbols-outlined text-lg">close</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Urgency Radio Options -->
+          <div class="space-y-1 pt-1">
+            <label class="text-xs font-bold text-slate-800">Priority Level</label>
+            <div class="grid grid-cols-3 gap-2">
+              <label class="flex items-center justify-center p-2 rounded-xl border border-border-subtle text-xs font-medium cursor-pointer has-[:checked]:border-ocean-teal has-[:checked]:bg-teal-50 tactile-btn">
+                <input type="radio" name="reportPriority" value="Low" class="hidden">
+                <span>Low</span>
+              </label>
+              <label class="flex items-center justify-center p-2 rounded-xl border border-border-subtle text-xs font-medium cursor-pointer has-[:checked]:border-ocean-teal has-[:checked]:bg-teal-50 has-[:checked]:font-bold tactile-btn">
+                <input type="radio" name="reportPriority" value="Medium" checked class="hidden">
+                <span>Standard</span>
+              </label>
+              <label class="flex items-center justify-center p-2 rounded-xl border border-border-subtle text-xs font-medium cursor-pointer has-[:checked]:border-crimson-urgent has-[:checked]:bg-red-50 has-[:checked]:text-crimson-urgent has-[:checked]:font-bold tactile-btn">
+                <input type="radio" name="reportPriority" value="Urgent" class="hidden">
+                <span>Urgent</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-2">
+            <button type="submit"
+              class="w-full h-12 bg-navy-dark hover:bg-navy-surface text-white font-bold rounded-full text-xs uppercase tracking-wider shadow-md tactile-btn flex items-center justify-center gap-2 cursor-pointer font-display">
+              <span class="material-symbols-outlined text-lg">send</span>
+              <span>SUBMIT REPORT</span>
+            </button>
+          </div>
+        </form>
+
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 5. CAMPUS SERVICES DIRECTORY               -->
+      <!-- ========================================== -->
+      <section id="page-directory" class="screen-page flex-col w-full min-h-full p-4 space-y-3.5 bg-slate-canvas">
+        
+        <!-- Live Search Bar -->
+        <div class="relative w-full">
+          <span class="material-symbols-outlined absolute left-3.5 top-3 text-slate-400 text-xl">search</span>
+          <input type="search" id="directorySearchBox" oninput="filterDirectoryLive(this.value)"
+            placeholder="Search offices, clinic, registrar..."
+            class="w-full h-11 pl-10 pr-9 text-xs bg-surface-card border border-border-subtle rounded-xl text-slate-900 shadow-card focus:outline-none focus:border-ocean-teal focus:ring-1 focus:ring-ocean-teal transition-all">
+          <button id="clearSearchIconBtn" onclick="resetDirectorySearch()" class="hidden absolute right-3 top-2.5 text-slate-400 hover:text-slate-600">
+            <span class="material-symbols-outlined text-lg">close</span>
+          </button>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="flex gap-2 overflow-x-auto pb-1" id="directoryChipsContainer">
+          <button onclick="filterDirectoryCategory('all')" class="dir-chip-btn px-3 py-1.5 rounded-full text-xs font-bold bg-navy-dark text-white shadow-sm flex-shrink-0 tactile-btn" data-category="all">All</button>
+          <button onclick="filterDirectoryCategory('emergency')" class="dir-chip-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-surface-card text-slate-700 border border-border-subtle shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn" data-category="emergency">Emergency</button>
+          <button onclick="filterDirectoryCategory('health')" class="dir-chip-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-surface-card text-slate-700 border border-border-subtle shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn" data-category="health">Health & Clinic</button>
+          <button onclick="filterDirectoryCategory('admin')" class="dir-chip-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-surface-card text-slate-700 border border-border-subtle shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn" data-category="admin">Administrative</button>
+          <button onclick="filterDirectoryCategory('guidance')" class="dir-chip-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-surface-card text-slate-700 border border-border-subtle shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn" data-category="guidance">Guidance & Support</button>
+        </div>
+
+        <!-- Live Count Indicator -->
+        <div class="flex items-center justify-between bg-surface-card px-3.5 py-2 rounded-xl border border-border-subtle shadow-sm">
+          <div class="flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-safe animate-pulse"></span>
+            <span class="text-[11px] font-semibold text-slate-700">Verified On-Campus Units</span>
+          </div>
+          <span id="directoryUnitsCount" class="text-[11px] font-bold text-ocean-teal">5 Units Available</span>
+        </div>
+
+        <!-- Office Cards Stack -->
+        <div id="directoryCardsWrapper" class="space-y-3 pb-2">
+          
+          <!-- Card 1: Campus Security -->
+          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="emergency" data-keywords="Campus Security Office Main Gate Guardhouse Police Patrol">
+            <div class="flex items-start justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-navy-dark text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <span class="material-symbols-outlined text-xl">shield</span>
+                </div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-800 font-display">Campus Security Office</h3>
+                  <span class="inline-flex mt-0.5 px-2 py-0.5 rounded text-[10px] font-extrabold bg-red-100 text-crimson-urgent">
+                    24/7 Response
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="text-[11px] text-slate-600 space-y-0.5 border-t border-slate-100 pt-2">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Location:</span>
+                <span class="font-medium text-slate-800">Gate 1 Main Guardhouse & Patrol Station</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Direct Extension:</span>
+                <span class="font-mono font-bold text-navy-dark">Ext. 101 / 102</span>
+              </div>
+            </div>
+            <button onclick="startSimulatedCall('Campus Security Office', 'Ext. 101')"
+              class="w-full h-9 rounded-xl bg-navy-dark text-white font-display font-bold text-xs flex items-center justify-center gap-1.5 tactile-btn">
+              <span class="material-symbols-outlined text-sm">call</span>
+              <span>Call Office</span>
+            </button>
+          </div>
+
+          <!-- Card 2: Student Clinic -->
+          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="health" data-keywords="Student Health Clinic Doctor Nurse Medical First Aid">
+            <div class="flex items-start justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-crimson-urgent text-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <span class="material-symbols-outlined text-xl">medical_services</span>
+                </div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-800 font-display">Student Health Clinic</h3>
+                  <span class="inline-flex mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-emerald-700">
+                    7:00 AM - 9:00 PM
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="text-[11px] text-slate-600 space-y-0.5 border-t border-slate-100 pt-2">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Location:</span>
+                <span class="font-medium text-slate-800">Health Services Building, Room 102</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Duty Nurse:</span>
+                <span class="font-mono font-bold text-navy-dark">Ext. 204</span>
+              </div>
+            </div>
+            <button onclick="startSimulatedCall('Student Health Clinic', 'Ext. 204')"
+              class="w-full h-9 rounded-xl bg-ocean-teal text-white font-display font-bold text-xs flex items-center justify-center gap-1.5 tactile-btn">
+              <span class="material-symbols-outlined text-sm">call</span>
+              <span>Call Office</span>
+            </button>
+          </div>
+
+          <!-- Card 3: Registrar -->
+          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="admin" data-keywords="Office of the Registrar Enrollment Records Grades Transcripts">
+            <div class="flex items-start justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-navy-surface text-teal-200 flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <span class="material-symbols-outlined text-xl">badge</span>
+                </div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-800 font-display">Office of the Registrar</h3>
+                  <span class="inline-flex mt-0.5 px-2 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600">
+                    Mon - Fri: 8:00 AM - 5:00 PM
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="text-[11px] text-slate-600 space-y-0.5 border-t border-slate-100 pt-2">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Location:</span>
+                <span class="font-medium text-slate-800">Administration Wing, Room 108</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Desk Lines:</span>
+                <span class="font-mono font-bold text-navy-dark">Ext. 301 / 302</span>
+              </div>
+            </div>
+            <button onclick="startSimulatedCall('Office of the Registrar', 'Ext. 301')"
+              class="w-full h-9 rounded-xl bg-navy-dark text-white font-display font-bold text-xs flex items-center justify-center gap-1.5 tactile-btn">
+              <span class="material-symbols-outlined text-sm">call</span>
+              <span>Call Office</span>
+            </button>
+          </div>
+
+          <!-- Card 4: Guidance Office -->
+          <div class="office-item-card bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5" data-category="guidance" data-keywords="Guidance Counseling Mental Health Psychological Support Student Center">
+            <div class="flex items-start justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-teal-50 text-ocean-teal flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <span class="material-symbols-outlined text-xl">psychology</span>
+                </div>
+                <div>
+                  <h3 class="text-xs font-bold text-slate-800 font-display">Guidance & Counseling</h3>
+                  <span class="inline-flex mt-0.5 px-2 py-0.5 rounded text-[10px] font-bold bg-teal-100 text-ocean-teal">
+                    Confidential Support
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="text-[11px] text-slate-600 space-y-0.5 border-t border-slate-100 pt-2">
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Location:</span>
+                <span class="font-medium text-slate-800">Student Center, 3rd Floor Room 305</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-slate-400">Helpline:</span>
+                <span class="font-mono font-bold text-navy-dark">Ext. 412</span>
+              </div>
+            </div>
+            <button onclick="startSimulatedCall('Guidance & Counseling Office', 'Ext. 412')"
+              class="w-full h-9 rounded-xl bg-ocean-teal text-white font-display font-bold text-xs flex items-center justify-center gap-1.5 tactile-btn">
+              <span class="material-symbols-outlined text-sm">call</span>
+              <span>Call Office</span>
+            </button>
+          </div>
+
+        </div>
+
+      </section>
+
+      <!-- ========================================== -->
+      <!-- 6. MY REQUESTS & TRACKER                   -->
+      <!-- ========================================== -->
+      <section id="page-requests" class="screen-page flex-col w-full min-h-full p-4 space-y-4 bg-slate-canvas">
+        
+        <!-- Header Row -->
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-xs font-bold text-navy-dark uppercase tracking-wider font-display">Incident Dispatch Board</h2>
+            <span class="text-[11px] text-slate-500">Live response tracker & ticket progress</span>
+          </div>
+          <div class="flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-card border border-border-subtle shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-crimson-urgent animate-pulse"></span>
+            <span id="requestsTotalCountTag" class="text-[11px] font-bold text-slate-800 font-display">3 Total</span>
+          </div>
+        </div>
+
+        <!-- Segmented Filter Tabs -->
+        <div class="flex items-center p-1 rounded-2xl bg-slate-200 shadow-inner" role="tablist">
+          <button onclick="filterRequestsTab('all')" id="reqFilterAllBtn"
+            class="filter-tab-pill flex-1 py-1.5 px-2 rounded-xl text-xs font-bold transition-all bg-navy-dark text-white shadow-sm flex items-center justify-center gap-1.5 tactile-btn">
+            <span>All</span>
+            <span id="tabCountAll" class="px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">3</span>
+          </button>
+          <button onclick="filterRequestsTab('active')" id="reqFilterActiveBtn"
+            class="filter-tab-pill flex-1 py-1.5 px-2 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-navy-dark flex items-center justify-center gap-1.5 tactile-btn">
+            <span>Active</span>
+            <span id="tabCountActive" class="px-1.5 py-0.2 rounded-full bg-slate-300 text-[10px]">2</span>
+          </button>
+          <button onclick="filterRequestsTab('resolved')" id="reqFilterResolvedBtn"
+            class="filter-tab-pill flex-1 py-1.5 px-2 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-navy-dark flex items-center justify-center gap-1.5 tactile-btn">
+            <span>Resolved</span>
+            <span id="tabCountResolved" class="px-1.5 py-0.2 rounded-full bg-slate-300 text-[10px]">1</span>
+          </button>
+        </div>
+
+        <!-- Dynamic Requests Container -->
+        <div id="requestsListContainer" class="space-y-3.5 pb-2">
+          <!-- Injected via JavaScript -->
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- ==================================================== -->
+    <!-- PERMANENTLY DOCKED BOTTOM TAB BAR                    -->
+    <!-- ==================================================== -->
+    <nav id="permanentBottomNav" class="w-full bg-surface-card border-t border-border-subtle px-3 py-2 flex items-center justify-around z-30 shadow-tab select-none">
+      <button onclick="navigateTo('HOME')" class="tab-item-btn flex flex-col items-center gap-0.5 text-ocean-teal tactile-btn" data-screen="HOME">
+        <span class="material-symbols-outlined text-xl">home</span>
+        <span class="text-[10px] font-bold">Home</span>
+      </button>
+      <button onclick="navigateTo('EMERGENCY_DISPATCH')" class="tab-item-btn flex flex-col items-center gap-0.5 text-slate-400 hover:text-crimson-urgent tactile-btn" data-screen="EMERGENCY_DISPATCH">
+        <span class="material-symbols-outlined text-xl">e911_emergency</span>
+        <span class="text-[10px] font-medium">SOS</span>
+      </button>
+      <button onclick="navigateTo('REPORT_PROBLEM')" class="tab-item-btn flex flex-col items-center gap-0.5 text-slate-400 hover:text-navy-dark tactile-btn" data-screen="REPORT_PROBLEM">
+        <span class="material-symbols-outlined text-xl">report_problem</span>
+        <span class="text-[10px] font-medium">Report</span>
+      </button>
+      <button onclick="navigateTo('CAMPUS_SERVICES')" class="tab-item-btn flex flex-col items-center gap-0.5 text-slate-400 hover:text-navy-dark tactile-btn" data-screen="CAMPUS_SERVICES">
+        <span class="material-symbols-outlined text-xl">contacts</span>
+        <span class="text-[10px] font-medium">Directory</span>
+      </button>
+      <button onclick="navigateTo('MY_REQUESTS')" class="tab-item-btn relative flex flex-col items-center gap-0.5 text-slate-400 hover:text-navy-dark tactile-btn" data-screen="MY_REQUESTS">
+        <span class="material-symbols-outlined text-xl">fact_check</span>
+        <span class="text-[10px] font-medium">Requests</span>
+        <span id="requestsActiveBadge" class="absolute -top-1 right-2 w-4 h-4 rounded-full bg-crimson-urgent text-white text-[9px] font-bold flex items-center justify-center">2</span>
+      </button>
+    </nav>
+
+    <!-- iOS Home Indicator Pill Bar -->
+    <div class="w-full h-4 bg-surface-card flex items-center justify-center pointer-events-none pb-1 z-30">
+      <div class="w-32 h-1 bg-slate-300 rounded-full"></div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- FLOATING PRESENTATION BAR (Desktop Only, Elegant)    -->
+  <!-- ==================================================== -->
+  <aside class="desktop-only-controls fixed bottom-5 z-50 flex items-center gap-2 bg-slate-900/90 backdrop-blur-md px-4 py-2 rounded-full border border-white/10 shadow-2xl text-xs text-white">
+    <div class="flex items-center gap-2 pr-2 border-r border-slate-700">
+      <div class="w-2 h-2 rounded-full bg-emerald-safe animate-pulse"></div>
+      <span class="font-bold text-slate-200">CCC Assistant</span>
+    </div>
+    
+    <button onclick="toggleDeviceFrameView()" class="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 tactile-btn">
+      <span class="material-symbols-outlined text-sm">devices</span>
+      <span id="viewModeText">Expanded View</span>
+    </button>
+
+    <button onclick="toggleSoundVolume()" class="p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 tactile-btn" title="Toggle Audio Cues">
+      <span id="soundIconSymbol" class="material-symbols-outlined text-sm">volume_up</span>
+    </button>
+  </aside>
+
+  <!-- ==================================================== -->
+  <!-- MODAL: SOS DISPATCHED POPUP OVERLAY                  -->
+  <!-- ==================================================== -->
+  <div id="sosDispatchedModal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-surface-card rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-red-200 text-center relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div class="w-16 h-16 rounded-full bg-red-100 text-crimson-urgent mx-auto flex items-center justify-center mb-3 shadow-inner">
+        <span class="material-symbols-outlined text-3xl animate-bounce">e911_emergency</span>
+      </div>
+
+      <span class="text-xs font-extrabold text-crimson-urgent tracking-wider uppercase block font-display">EMERGENCY BROADCAST LIVE</span>
+      <h3 class="text-lg font-black text-navy-dark mt-1 font-display">SOS Alert Dispatched!</h3>
+      <div class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-red-50 text-crimson-urgent text-xs font-bold mt-1.5">
+        <span class="w-2 h-2 rounded-full bg-crimson-urgent animate-ping"></span>
+        <span>Security En Route • ETA: <span id="sosCountdownTimer">02:59</span></span>
+      </div>
+
+      <div class="bg-slate-50 rounded-2xl p-3.5 my-3.5 text-left border border-border-subtle space-y-1.5 text-xs">
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500">Dispatch Code:</span>
+          <span id="dispatchedCodeTag" class="font-mono font-bold text-navy-dark">#SOS-2024-9182</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500">First Responders:</span>
+          <span class="font-semibold text-slate-800">Patrol Alpha-2 & Medic Unit</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-slate-500">Locked Coordinate:</span>
+          <span id="dispatchedLocationTag" class="font-semibold text-slate-800 truncate max-w-[170px]">Science Complex Rm 304</span>
+        </div>
+      </div>
+
+      <p class="text-[11px] text-slate-500 leading-tight mb-4">
+        Remain in a safe location. Your live coordinates are broadcasting to Campus Police dispatch.
+      </p>
+
+      <div class="space-y-2">
+        <button onclick="handleViewSosInRequests()"
+          class="w-full h-11 bg-navy-dark hover:bg-navy-surface text-white font-bold rounded-full text-xs tracking-wider uppercase shadow-md tactile-btn flex items-center justify-center gap-1.5 font-display">
+          <span class="material-symbols-outlined text-sm">fact_check</span>
+          <span>View Status in My Requests</span>
+        </button>
+        <button onclick="closeSosDispatchedModal()" class="w-full py-2 text-xs font-semibold text-slate-500 hover:text-slate-700 tactile-btn">
+          Dismiss / False Alarm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL: SECURITY HOTLINE DIALER                       -->
+  <!-- ==================================================== -->
+  <div id="securityHotlineModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-surface-card rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-border-subtle space-y-3">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-navy-dark text-white flex items-center justify-center">
+            <span class="material-symbols-outlined text-lg">local_police</span>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold text-slate-800 font-display">Campus Police Hotlines</h3>
+            <span class="text-[10px] text-slate-400">24/7 Rapid Response</span>
+          </div>
+        </div>
+        <button onclick="closeSecurityDialerModal()" class="p-1 text-slate-400 hover:text-slate-600 tactile-btn">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-2 pt-1">
+        <div onclick="startSimulatedCall('Gate 1 Main Guardhouse', 'Ext. 101')" class="p-3 rounded-2xl bg-slate-50 hover:bg-teal-50/50 border border-border-subtle flex items-center justify-between cursor-pointer tactile-btn">
+          <div>
+            <span class="text-xs font-bold text-navy-dark block font-display">Main Gate 1 Emergency Desk</span>
+            <span class="text-[11px] text-slate-500">Gate 1 • 24/7 Central Dispatch</span>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-emerald-safe text-white flex items-center justify-center">
+            <span class="material-symbols-outlined text-sm">call</span>
+          </div>
+        </div>
+
+        <div onclick="startSimulatedCall('Roving Security Patrol Unit', 'Ext. 102')" class="p-3 rounded-2xl bg-slate-50 hover:bg-teal-50/50 border border-border-subtle flex items-center justify-between cursor-pointer tactile-btn">
+          <div>
+            <span class="text-xs font-bold text-navy-dark block font-display">Roving Patrol Mobile Unit</span>
+            <span class="text-[11px] text-slate-500">On-grounds Escort & Perimeter</span>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-emerald-safe text-white flex items-center justify-center">
+            <span class="material-symbols-outlined text-sm">call</span>
+          </div>
+        </div>
+
+        <div onclick="startSimulatedCall('Student Clinic Emergency', 'Ext. 204')" class="p-3 rounded-2xl bg-slate-50 hover:bg-red-50/50 border border-border-subtle flex items-center justify-between cursor-pointer tactile-btn">
+          <div>
+            <span class="text-xs font-bold text-crimson-urgent block font-display">Medical Clinic Desk</span>
+            <span class="text-[11px] text-slate-500">First Aid & Ambulance Coordination</span>
+          </div>
+          <div class="w-8 h-8 rounded-full bg-crimson-urgent text-white flex items-center justify-center">
+            <span class="material-symbols-outlined text-sm">medical_services</span>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="closeSecurityDialerModal()" class="w-full py-2.5 rounded-full bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 tactile-btn">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL: IN-APP VOIP CALL SIMULATOR                    -->
+  <!-- ==================================================== -->
+  <div id="voipCallScreenModal" class="fixed inset-0 bg-navy-dark/98 z-50 hidden flex-col items-center justify-between p-8 text-white">
+    <div class="flex flex-col items-center pt-8 text-center space-y-2">
+      <div class="w-20 h-20 rounded-full bg-ocean-teal/20 ring-4 ring-ocean-teal/50 flex items-center justify-center mb-2">
+        <span class="material-symbols-outlined text-4xl text-teal-300">call</span>
+      </div>
+      <h3 id="voipCallerName" class="text-base font-bold text-white font-display">Campus Security Desk</h3>
+      <p id="voipCallerExt" class="text-xs text-teal-300 font-mono">Ext. 101</p>
+      <span id="voipCallTimerTag" class="text-xs text-slate-300 font-medium px-3 py-1 rounded-full bg-white/10 mt-2">Connecting...</span>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6 w-full max-w-xs text-center my-6">
+      <button class="flex flex-col items-center gap-1 text-slate-300 hover:text-white tactile-btn">
+        <div class="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center"><span class="material-symbols-outlined">mic_off</span></div>
+        <span class="text-[10px]">Mute</span>
+      </button>
+      <button class="flex flex-col items-center gap-1 text-slate-300 hover:text-white tactile-btn">
+        <div class="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center"><span class="material-symbols-outlined">dialpad</span></div>
+        <span class="text-[10px]">Keypad</span>
+      </button>
+      <button class="flex flex-col items-center gap-1 text-slate-300 hover:text-white tactile-btn">
+        <div class="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center"><span class="material-symbols-outlined">volume_up</span></div>
+        <span class="text-[10px]">Speaker</span>
+      </button>
+    </div>
+
+    <div class="pb-8">
+      <button onclick="terminateVoipCall()" class="w-16 h-16 rounded-full bg-crimson-urgent text-white flex items-center justify-center shadow-lg active:scale-95 transition-transform cursor-pointer tactile-btn">
+        <span class="material-symbols-outlined text-3xl">call_end</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL: NOTIFICATIONS DRAWER                          -->
+  <!-- ==================================================== -->
+  <div id="notificationsDrawerModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-surface-card rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-border-subtle space-y-3">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-ocean-teal text-xl">notifications_active</span>
+          <h3 class="text-xs font-bold text-slate-800 font-display">Campus Safety Bulletins</h3>
+        </div>
+        <button onclick="closeNotificationsModal()" class="p-1 text-slate-400 hover:text-slate-600 tactile-btn">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-2.5 max-h-72 overflow-y-auto pt-1">
+        <div class="p-3 rounded-2xl bg-red-50 border border-red-100 space-y-1">
+          <div class="flex items-center justify-between text-[10px]">
+            <span class="font-extrabold text-crimson-urgent uppercase">Urgent Alert</span>
+            <span class="text-slate-400">10 mins ago</span>
+          </div>
+          <p class="text-xs font-bold text-slate-800">Science Complex Elevator #2 Maintenance</p>
+          <p class="text-[11px] text-slate-600">Elevator undergoing hydraulic test. Use stairwell B.</p>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-slate-50 border border-border-subtle space-y-1">
+          <div class="flex items-center justify-between text-[10px]">
+            <span class="font-extrabold text-ocean-teal uppercase">Weather Bulletin</span>
+            <span class="text-slate-400">2 hrs ago</span>
+          </div>
+          <p class="text-xs font-bold text-slate-800">Thunderstorm Advisory this Afternoon</p>
+          <p class="text-[11px] text-slate-600">Free campus umbrella lending available at Gate 1 Guardhouse.</p>
+        </div>
+
+        <div class="p-3 rounded-2xl bg-slate-50 border border-border-subtle space-y-1">
+          <div class="flex items-center justify-between text-[10px]">
+            <span class="font-extrabold text-emerald-600 uppercase">Service Update</span>
+            <span class="text-slate-400">Yesterday</span>
+          </div>
+          <p class="text-xs font-bold text-slate-800">Night Escort Roster Expanded</p>
+          <p class="text-[11px] text-slate-600">Campus escort available 7:00 PM to 4:00 AM daily.</p>
+        </div>
+      </div>
+
+      <button onclick="closeNotificationsModal()" class="w-full py-2 rounded-full bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-700 tactile-btn">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL: STUDENT PROFILE & SETTINGS                    -->
+  <!-- ==================================================== -->
+  <div id="studentProfileModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-surface-card rounded-3xl max-w-sm w-full p-5 shadow-2xl border border-border-subtle space-y-4">
+      <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+        <h3 class="text-xs font-bold text-slate-800 font-display">Student Emergency ID Card</h3>
+        <button onclick="closeProfileModal()" class="p-1 text-slate-400 hover:text-slate-600 tactile-btn">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <!-- Digital Student Card -->
+      <div class="rounded-2xl bg-gradient-to-br from-navy-dark to-navy-surface text-white p-4 shadow-md space-y-3 relative overflow-hidden">
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-2.5">
+            <div class="w-12 h-12 rounded-xl bg-white/20 border border-white/30 flex items-center justify-center font-display font-black text-lg">
+              RV
+            </div>
+            <div>
+              <span class="text-[10px] text-teal-300 uppercase tracking-widest block font-bold">City College Central</span>
+              <h4 class="text-sm font-bold text-white font-display">Rayven (Student)</h4>
+              <span class="text-[11px] text-slate-300 font-mono">ID: 2024-02013</span>
+            </div>
+          </div>
+          <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Active</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-[11px] pt-1 border-t border-white/10 text-slate-300">
+          <div><span class="text-slate-400 block text-[10px]">Blood Type:</span> <strong class="text-white">O+ Positive</strong></div>
+          <div><span class="text-slate-400 block text-[10px]">Emergency ICE:</span> <strong class="text-white">Parent (0917-882-192)</strong></div>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <button onclick="navigateTo('LOGIN'); closeProfileModal(); showToast('Signed out of student portal');"
+          class="w-full h-10 rounded-full bg-red-50 hover:bg-red-100 text-crimson-urgent font-bold text-xs flex items-center justify-center gap-1.5 tactile-btn">
+          <span class="material-symbols-outlined text-base">logout</span>
+          <span>Sign Out of Portal</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- FLOATING QUICK TOAST NOTIFICATION                    -->
+  <!-- ==================================================== -->
+  <div id="quickToastElement" class="fixed top-6 z-50 hidden items-center gap-2 px-4 py-2.5 rounded-2xl bg-navy-dark text-white text-xs font-semibold shadow-2xl border border-teal-500/30 transition-all transform -translate-y-4 opacity-0">
+    <span id="quickToastIcon" class="material-symbols-outlined text-base text-teal-300">info</span>
+    <span id="quickToastText">Toast message</span>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- CORE JAVASCRIPT CONTROLLER & STATE STORE             -->
+  <!-- ==================================================== -->
+  <script>
+    // State Store
+    const AppState = {
+      currentScreen: 'LOGIN',
+      historyStack: [],
+      soundMuted: false,
+      loginAttempts: 0,
+      requestsFilter: 'all',
+      requests: [
+        {
+          id: 'TKT-2024-0982',
+          title: 'Lost Student ID Report',
+          category: 'lost-id',
+          status: 'SUBMITTED', // SUBMITTED, UNDER REVIEW, RESOLVED
+          date: 'Today, 2:45 PM',
+          location: 'Library Desk 14',
+          description: 'Lost student physical ID card near Desk 14 around 2:00 PM. Temporary pass issued.',
+          step: 1,
+          totalSteps: 3
+        },
+        {
+          id: 'TKT-2024-0845',
+          title: 'Facility Damage (Room 302)',
+          category: 'facility',
+          status: 'UNDER REVIEW',
+          date: 'Yesterday, 11:20 AM',
+          location: 'Science Complex, Rm 302',
+          description: 'A/C unit leaking water onto laboratory table near station 4.',
+          step: 2,
+          totalSteps: 3
+        },
+        {
+          id: 'TKT-2024-0711',
+          title: 'Medical First Aid Call',
+          category: 'medical',
+          status: 'RESOLVED',
+          date: 'Oct 04, 3:15 PM',
+          location: 'Gymnasium Court B',
+          description: 'Sprained ankle during PE scrimmage. Splinted and transported to Student Clinic Station 102.',
+          step: 3,
+          totalSteps: 3
+        }
+      ]
+    };
+
+    // Load persisted state if exists
+    try {
+      const stored = localStorage.getItem('ccc_app_requests_v2');
+      if (stored) AppState.requests = JSON.parse(stored);
+    } catch(e) {}
+
+    function persistRequests() {
+      try {
+        localStorage.setItem('ccc_app_requests_v2', JSON.stringify(AppState.requests));
+      } catch(e) {}
+      renderRequestsList();
+    }
+
+    // Audio synthesizer
+    let webAudioContext = null;
+    function playAudioTone(kind) {
+      if (AppState.soundMuted) return;
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        if (!webAudioContext) webAudioContext = new AudioCtx();
+        if (webAudioContext.state === 'suspended') webAudioContext.resume();
+
+        const osc = webAudioContext.createOscillator();
+        const gain = webAudioContext.createGain();
+        osc.connect(gain);
+        gain.connect(webAudioContext.destination);
+
+        const now = webAudioContext.currentTime;
+        if (kind === 'tap') {
+          osc.frequency.setValueAtTime(650, now);
+          gain.gain.setValueAtTime(0.06, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+          osc.start(now);
+          osc.stop(now + 0.04);
+        } else if (kind === 'beep') {
+          osc.frequency.setValueAtTime(880, now);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        } else if (kind === 'alarm') {
+          osc.frequency.setValueAtTime(950, now);
+          osc.frequency.setValueAtTime(750, now + 0.1);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          osc.start(now);
+          osc.stop(now + 0.3);
+        } else if (kind === 'success') {
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.setValueAtTime(659.25, now + 0.07);
+          osc.frequency.setValueAtTime(783.99, now + 0.14);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          osc.start(now);
+          osc.stop(now + 0.3);
+        }
+      } catch(e) {}
+    }
+
+    function toggleSoundVolume() {
+      AppState.soundMuted = !AppState.soundMuted;
+      const icon = document.getElementById('soundIconSymbol');
+      if (AppState.soundMuted) {
+        icon.innerText = 'volume_off';
+        showToast('Sound effects muted');
+      } else {
+        icon.innerText = 'volume_up';
+        showToast('Sound effects enabled');
+        playAudioTone('tap');
+      }
+    }
+
+    // ==========================================
+    // ROUTING ENGINE
+    // ==========================================
+    const SCREEN_CONFIGS = {
+      'LOGIN': { id: 'page-login', title: 'Sign In', showHeader: false },
+      'HOME': { id: 'page-home', title: 'Hi, Rayven', showHeader: true, isHome: true },
+      'EMERGENCY_DISPATCH': { id: 'page-emergency', title: 'Emergency Help', showHeader: true },
+      'REPORT_PROBLEM': { id: 'page-report', title: 'Report Campus Issue', showHeader: true },
+      'CAMPUS_SERVICES': { id: 'page-directory', title: 'Campus Directory', showHeader: true },
+      'MY_REQUESTS': { id: 'page-requests', title: 'Incident Tracker', showHeader: true }
+    };
+
+    function navigateTo(screenKey, params = {}) {
+      playAudioTone('tap');
+      
+      const config = SCREEN_CONFIGS[screenKey];
+      if (!config) return;
+
+      if (AppState.currentScreen !== screenKey) {
+        AppState.historyStack.push(AppState.currentScreen);
+      }
+      AppState.currentScreen = screenKey;
+
+      // Update screen visibility
+      document.querySelectorAll('.screen-page').forEach(page => page.classList.remove('active-screen'));
+      const activeEl = document.getElementById(config.id);
+      if (activeEl) {
+        activeEl.classList.add('active-screen');
+        document.getElementById('screenViewport').scrollTop = 0;
+      }
+
+      // Header visibility
+      const header = document.getElementById('mainAppHeader');
+      const headerBackBtn = document.getElementById('headerBackBtn');
+      const headerProfileBlock = document.getElementById('headerProfileBlock');
+      const headerTitleText = document.getElementById('headerTitleText');
+
+      if (!config.showHeader) {
+        header.classList.add('hidden');
+      } else {
+        header.classList.remove('hidden');
+        if (config.isHome) {
+          headerBackBtn.classList.add('hidden');
+          headerProfileBlock.classList.remove('hidden');
+          headerTitleText.innerText = 'Hi, Rayven';
+        } else {
+          headerBackBtn.classList.remove('hidden');
+          headerProfileBlock.classList.add('hidden');
+          headerTitleText.innerText = config.title;
+        }
+      }
+
+      // Bottom nav active state
+      document.querySelectorAll('.tab-item-btn').forEach(btn => {
+        if (btn.dataset.screen === screenKey) {
+          btn.classList.add('text-ocean-teal');
+          btn.classList.remove('text-slate-400');
+        } else {
+          btn.classList.remove('text-ocean-teal');
+          btn.classList.add('text-slate-400');
+        }
+      });
+
+      // Special handling for screen parameters
+      if (screenKey === 'EMERGENCY_DISPATCH' && params.category) {
+        selectSosCategory(params.category);
+      }
+      if (screenKey === 'REPORT_PROBLEM' && params.category) {
+        selectReportCategory(params.category);
+      }
+      if (screenKey === 'MY_REQUESTS') {
+        renderRequestsList();
+      }
+    }
+
+    function navigateBack() {
+      if (AppState.historyStack.length > 0) {
+        const prev = AppState.historyStack.pop();
+        navigateTo(prev);
+      } else {
+        navigateTo('HOME');
+      }
+    }
+
+    // ==========================================
+    // SCREEN 1: LOGIN LOGIC
+    // ==========================================
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('studentIdInput').value.trim();
+      const pwd = document.getElementById('passwordInput').value.trim();
+
+      if (!id || !pwd) {
+        showToast('Please enter both Student ID and Password');
+        return;
+      }
+
+      playAudioTone('success');
+      showToast('Welcome back, Rayven! Verified.');
+      navigateTo('HOME');
+    }
+
+    function togglePasswordVisibility() {
+      const pwdField = document.getElementById('passwordInput');
+      const icon = document.getElementById('pwdEyeIcon');
+      if (pwdField.type === 'password') {
+        pwdField.type = 'text';
+        icon.innerText = 'visibility_off';
+      } else {
+        pwdField.type = 'password';
+        icon.innerText = 'visibility';
+      }
+    }
+
+    function handleResetPassword() {
+      AppState.loginAttempts++;
+      document.getElementById('loginAttemptsLabel').innerText = `Login Attempts: ${AppState.loginAttempts}`;
+      showToast('Temporary password reset code sent to student webmail.');
+    }
+
+    // ==========================================
+    // SCREEN 3: 2-SECOND HOLD SOS LOGIC
+    // ==========================================
+    let sosTimerInterval = null;
+    const SOS_TOTAL_MS = 2000;
+    const SOS_CIRCUMFERENCE = 402;
+
+    function startSosCountdown(e) {
+      if (e) e.preventDefault();
+      abortSosCountdown();
+
+      const label = document.getElementById('sosCountdownLabel');
+      const statusText = document.getElementById('sosStatusInstruction');
+      const ring = document.getElementById('sosCountdownCircle');
+
+      label.innerText = 'HOLDING...';
+      statusText.innerText = 'Hold firmly to broadcast!';
+      playAudioTone('beep');
+
+      const startTime = Date.now();
+      sosTimerInterval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(1, elapsed / SOS_TOTAL_MS);
+
+        const offset = SOS_CIRCUMFERENCE - (progress * SOS_CIRCUMFERENCE);
+        ring.style.strokeDashoffset = offset;
+
+        if (progress >= 1) {
+          abortSosCountdown();
+          executeEmergencyDispatch();
+        }
+      }, 25);
+    }
+
+    function abortSosCountdown() {
+      if (sosTimerInterval) {
+        clearInterval(sosTimerInterval);
+        sosTimerInterval = null;
+      }
+      const ring = document.getElementById('sosCountdownCircle');
+      if (ring) ring.style.strokeDashoffset = SOS_CIRCUMFERENCE;
+      const label = document.getElementById('sosCountdownLabel');
+      if (label) label.innerText = 'HOLD 2S';
+      const statusText = document.getElementById('sosStatusInstruction');
+      if (statusText) statusText.innerText = 'Press & Hold for 2 seconds';
+    }
+
+    function selectSosCategory(cat) {
+      document.querySelectorAll('.sos-category-btn').forEach(btn => {
+        if (btn.dataset.category === cat) {
+          btn.className = 'sos-category-btn py-2.5 px-2 rounded-xl border text-xs font-semibold flex flex-col items-center gap-1 transition-all border-crimson-urgent bg-crimson-urgent text-white tactile-btn';
+        } else {
+          btn.className = 'sos-category-btn py-2.5 px-2 rounded-xl border text-xs font-semibold flex flex-col items-center gap-1 transition-all border-border-subtle bg-slate-50 text-slate-700 hover:bg-slate-100 tactile-btn';
+        }
+      });
+    }
+
+    let countdownIntervalId = null;
+    function executeEmergencyDispatch() {
+      playAudioTone('alarm');
+
+      const room = document.getElementById('sosRoomNumber').value.trim() || 'Science Complex, Room 304';
+      const details = document.getElementById('sosDetailsText').value.trim() || 'Immediate emergency response requested via mobile portal.';
+
+      const newTicket = {
+        id: 'SOS-' + Math.floor(1000 + Math.random() * 9000),
+        title: 'Emergency SOS: Priority Medical/Security',
+        category: 'emergency',
+        status: 'SUBMITTED',
+        date: 'Just Now',
+        location: room,
+        description: details,
+        step: 1,
+        totalSteps: 3
+      };
+
+      AppState.requests.unshift(newTicket);
+      persistRequests();
+
+      // Show Popup Modal
+      document.getElementById('dispatchedCodeTag').innerText = '#' + newTicket.id;
+      document.getElementById('dispatchedLocationTag').innerText = room;
+      document.getElementById('sosDispatchedModal').classList.remove('hidden');
+      document.getElementById('sosDispatchedModal').classList.add('flex');
+
+      // Start ETA countdown
+      let remainingSeconds = 179; // 2:59
+      if (countdownIntervalId) clearInterval(countdownIntervalId);
+      countdownIntervalId = setInterval(() => {
+        remainingSeconds--;
+        if (remainingSeconds <= 0) {
+          clearInterval(countdownIntervalId);
+          document.getElementById('sosCountdownTimer').innerText = '00:00 (Arrived)';
+        } else {
+          const m = String(Math.floor(remainingSeconds / 60)).padStart(2, '0');
+          const s = String(remainingSeconds % 60).padStart(2, '0');
+          document.getElementById('sosCountdownTimer').innerText = `${m}:${s}`;
+        }
+      }, 1000);
+    }
+
+    function closeSosDispatchedModal() {
+      if (countdownIntervalId) clearInterval(countdownIntervalId);
+      document.getElementById('sosDispatchedModal').classList.add('hidden');
+      document.getElementById('sosDispatchedModal').classList.remove('flex');
+    }
+
+    function handleViewSosInRequests() {
+      closeSosDispatchedModal();
+      navigateTo('MY_REQUESTS');
+    }
+
+    // ==========================================
+    // SCREEN 4: REPORT CAMPUS ISSUE
+    // ==========================================
+    let activeReportCategory = 'lost-id';
+
+    function selectReportCategory(cat) {
+      activeReportCategory = cat;
+      document.querySelectorAll('.report-chip-item').forEach(btn => {
+        if (btn.dataset.category === cat) {
+          btn.className = 'report-chip-item px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 bg-navy-dark text-white shadow-sm flex-shrink-0 tactile-btn';
+        } else {
+          btn.className = 'report-chip-item px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 bg-surface-card text-slate-700 border border-border-subtle shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn';
+        }
+      });
+
+      const locField = document.getElementById('reportLocationField');
+      const descField = document.getElementById('reportDescriptionField');
+      if (cat === 'lost-id') {
+        locField.value = 'Library 2nd Floor, Quiet Study Area, Desk 14';
+        descField.value = 'Lost student physical ID card near Desk 14 around 2:00 PM. Please notify security if found.';
+      } else if (cat === 'facility') {
+        locField.value = 'East Academic Wing, 3rd Floor Restroom';
+        descField.value = 'Water pipe leakage and non-functional flush valve causing standing water.';
+      } else if (cat === 'hardware') {
+        locField.value = 'Computer Lab 3, Workstation #12';
+        descField.value = 'Monitor exhibits backlight flicker and USB ports are unresponsive.';
+      } else if (cat === 'lighting') {
+        locField.value = 'North Walkway between Quad & Parking Lot B';
+        descField.value = 'Overhead pathway lamp fixture is out; dark zone after sunset.';
+      }
+      handleCharCounter(descField);
+    }
+
+    function setPresetLocation(loc) {
+      document.getElementById('reportLocationField').value = loc;
+      playAudioTone('tap');
+    }
+
+    function handleCharCounter(el) {
+      document.getElementById('charCountLabel').innerText = `${el.value.length}/300`;
+    }
+
+    function previewEvidencePhoto(input) {
+      if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('evidenceThumbnailImg').src = e.target.result;
+          document.getElementById('evidenceFileName').innerText = file.name;
+          document.getElementById('evidencePreviewBox').classList.remove('hidden');
+          document.getElementById('evidencePreviewBox').classList.add('flex');
+          document.getElementById('dropPhotoZone').classList.add('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function clearEvidencePhoto() {
+      document.getElementById('photoFileInput').value = '';
+      document.getElementById('evidencePreviewBox').classList.add('hidden');
+      document.getElementById('evidencePreviewBox').classList.remove('flex');
+      document.getElementById('dropPhotoZone').classList.remove('hidden');
+    }
+
+    function handleProblemReportSubmit(e) {
+      e.preventDefault();
+      playAudioTone('success');
+
+      const loc = document.getElementById('reportLocationField').value.trim();
+      const desc = document.getElementById('reportDescriptionField').value.trim();
+
+      const names = {
+        'lost-id': 'Lost Student ID Report',
+        'facility': 'Facility Issue Report',
+        'hardware': 'Classroom Tech Report',
+        'lighting': 'Lighting & Safety Grounds'
+      };
+
+      const newTicket = {
+        id: 'TKT-' + Math.floor(1000 + Math.random() * 9000),
+        title: names[activeReportCategory] || 'Campus Issue Report',
+        category: activeReportCategory,
+        status: 'SUBMITTED',
+        date: 'Just Now',
+        location: loc,
+        description: desc,
+        step: 1,
+        totalSteps: 3
+      };
+
+      AppState.requests.unshift(newTicket);
+      persistRequests();
+
+      showToast('Incident ticket submitted! Code #' + newTicket.id);
+      clearEvidencePhoto();
+      navigateTo('MY_REQUESTS');
+    }
+
+    // ==========================================
+    // SCREEN 5: CAMPUS DIRECTORY
+    // ==========================================
+    function filterDirectoryLive(q) {
+      const term = q.toLowerCase().trim();
+      const clearBtn = document.getElementById('clearSearchIconBtn');
+      if (term.length > 0) clearBtn.classList.remove('hidden');
+      else clearBtn.classList.add('hidden');
+
+      let visible = 0;
+      document.querySelectorAll('.office-item-card').forEach(card => {
+        const text = (card.dataset.keywords || '').toLowerCase();
+        if (text.includes(term)) {
+          card.classList.remove('hidden');
+          visible++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      document.getElementById('directoryUnitsCount').innerText = `${visible} Units Found`;
+    }
+
+    function resetDirectorySearch() {
+      const box = document.getElementById('directorySearchBox');
+      box.value = '';
+      filterDirectoryLive('');
+    }
+
+    function filterDirectoryCategory(cat) {
+      document.querySelectorAll('.dir-chip-btn').forEach(b => {
+        if (b.dataset.category === cat) {
+          b.className = 'dir-chip-btn px-3 py-1.5 rounded-full text-xs font-bold bg-navy-dark text-white shadow-sm flex-shrink-0 tactile-btn';
+        } else {
+          b.className = 'dir-chip-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-surface-card text-slate-700 border border-border-subtle shadow-sm flex-shrink-0 hover:bg-slate-50 tactile-btn';
+        }
+      });
+
+      let visible = 0;
+      document.querySelectorAll('.office-item-card').forEach(card => {
+        if (cat === 'all' || card.dataset.category === cat) {
+          card.classList.remove('hidden');
+          visible++;
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+      document.getElementById('directoryUnitsCount').innerText = `${visible} Units Found`;
+    }
+
+    // VOIP Simulated Calling
+    let voipCallTimer = null;
+    function startSimulatedCall(name, ext) {
+      playAudioTone('beep');
+      document.getElementById('voipCallerName').innerText = name;
+      document.getElementById('voipCallerExt').innerText = ext;
+      const statusTag = document.getElementById('voipCallTimerTag');
+      statusTag.innerText = 'Calling...';
+
+      document.getElementById('voipCallScreenModal').classList.remove('hidden');
+      document.getElementById('voipCallScreenModal').classList.add('flex');
+
+      let seconds = 0;
+      setTimeout(() => {
+        statusTag.innerText = 'Connected 00:00';
+        voipCallTimer = setInterval(() => {
+          seconds++;
+          const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+          const s = String(seconds % 60).padStart(2, '0');
+          statusTag.innerText = `Connected ${m}:${s}`;
+        }, 1000);
+      }, 1400);
+    }
+
+    function terminateVoipCall() {
+      if (voipCallTimer) {
+        clearInterval(voipCallTimer);
+        voipCallTimer = null;
+      }
+      playAudioTone('tap');
+      document.getElementById('voipCallScreenModal').classList.add('hidden');
+      document.getElementById('voipCallScreenModal').classList.remove('flex');
+      showToast('Call ended.');
+    }
+
+    function openSecurityDialerModal() {
+      document.getElementById('securityHotlineModal').classList.remove('hidden');
+      document.getElementById('securityHotlineModal').classList.add('flex');
+    }
+
+    function closeSecurityDialerModal() {
+      document.getElementById('securityHotlineModal').classList.add('hidden');
+      document.getElementById('securityHotlineModal').classList.remove('flex');
+    }
+
+    // ==========================================
+    // SCREEN 6: MY REQUESTS & TRACKER
+    // ==========================================
+    function filterRequestsTab(tabKey) {
+      AppState.requestsFilter = tabKey;
+
+      const tabs = [
+        { id: 'all', btn: document.getElementById('reqFilterAllBtn') },
+        { id: 'active', btn: document.getElementById('reqFilterActiveBtn') },
+        { id: 'resolved', btn: document.getElementById('reqFilterResolvedBtn') }
+      ];
+
+      tabs.forEach(t => {
+        if (t.id === tabKey) {
+          t.btn.className = 'filter-tab-pill flex-1 py-1.5 px-2 rounded-xl text-xs font-bold transition-all bg-navy-dark text-white shadow-sm flex items-center justify-center gap-1.5 tactile-btn';
+        } else {
+          t.btn.className = 'filter-tab-pill flex-1 py-1.5 px-2 rounded-xl text-xs font-semibold transition-all text-slate-600 hover:text-navy-dark flex items-center justify-center gap-1.5 tactile-btn';
+        }
+      });
+
+      renderRequestsList();
+    }
+
+    function renderRequestsList() {
+      const container = document.getElementById('requestsListContainer');
+      container.innerHTML = '';
+
+      let list = AppState.requests;
+      if (AppState.requestsFilter === 'active') {
+        list = list.filter(r => r.status !== 'RESOLVED');
+      } else if (AppState.requestsFilter === 'resolved') {
+        list = list.filter(r => r.status === 'RESOLVED');
+      }
+
+      if (list.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center bg-surface-card rounded-2xl border border-border-subtle">
+            <span class="material-symbols-outlined text-4xl text-slate-300">inbox</span>
+            <p class="text-xs font-bold text-slate-700 mt-2 font-display">No reports in this category</p>
+            <p class="text-[11px] text-slate-400">All submitted campus tickets appear here in real-time.</p>
+          </div>
+        `;
+        refreshTabCounters();
+        return;
+      }
+
+      list.forEach(req => {
+        let badgeStyle = 'bg-amber-100 text-amber-800 border-amber-200';
+        let badgeIcon = 'schedule';
+        if (req.status === 'UNDER REVIEW') {
+          badgeStyle = 'bg-teal-100 text-ocean-teal border-teal-200';
+          badgeIcon = 'pending';
+        } else if (req.status === 'RESOLVED') {
+          badgeStyle = 'bg-emerald-100 text-emerald-800 border-emerald-200';
+          badgeIcon = 'check_circle';
+        }
+
+        const pct = (req.step / req.totalSteps) * 100;
+
+        const card = document.createElement('div');
+        card.className = 'bg-surface-card rounded-2xl p-4 shadow-card border border-border-subtle space-y-2.5 transition-all hover:shadow-card-hover';
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <div class="min-w-0">
+              <div class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-ocean-teal text-lg">flag</span>
+                <h3 class="text-xs font-bold text-slate-800 truncate font-display">${req.title}</h3>
+              </div>
+              <span class="text-[10px] text-slate-400 mt-0.5 block">#${req.id} • ${req.date}</span>
+            </div>
+            <div class="flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase border ${badgeStyle} flex-shrink-0">
+              <span class="material-symbols-outlined text-[12px]">${badgeIcon}</span>
+              <span>${req.status}</span>
+            </div>
+          </div>
+
+          <p class="text-xs text-slate-600 leading-relaxed">${req.description}</p>
+
+          <!-- Stepper Progress Bar -->
+          <div class="bg-slate-50 rounded-xl p-2.5 space-y-1.5 border border-border-subtle">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="font-bold text-slate-700">Dispatch Progress</span>
+              <span class="font-semibold text-ocean-teal">Step ${req.step} of ${req.totalSteps}</span>
+            </div>
+            <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+              <div class="h-full bg-ocean-teal rounded-full transition-all duration-500" style="width: ${pct}%;"></div>
+            </div>
+            <div class="flex items-center justify-between text-[10px] text-slate-400 pt-0.5">
+              <span>Submitted</span>
+              <span>Under Review</span>
+              <span>Resolved</span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-1 text-[11px] text-slate-500 border-t border-slate-100">
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-xs text-slate-400">pin_drop</span> ${req.location}
+            </span>
+            <button onclick="showToast('Officer assigned: Patrol Unit Alpha-2. ETA 5m.')" class="text-ocean-teal font-bold hover:underline tactile-btn">
+              Track Unit
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      refreshTabCounters();
+    }
+
+    function refreshTabCounters() {
+      const allCount = AppState.requests.length;
+      const activeCount = AppState.requests.filter(r => r.status !== 'RESOLVED').length;
+      const resCount = AppState.requests.filter(r => r.status === 'RESOLVED').length;
+
+      document.getElementById('tabCountAll').innerText = allCount;
+      document.getElementById('tabCountActive').innerText = activeCount;
+      document.getElementById('tabCountResolved').innerText = resCount;
+      document.getElementById('requestsTotalCountTag').innerText = `${allCount} Total`;
+      document.getElementById('requestsActiveBadge').innerText = activeCount;
+    }
+
+    // ==========================================
+    // DIALOGS & OVERLAYS
+    // ==========================================
+    function openNotificationsModal() {
+      playAudioTone('tap');
+      document.getElementById('notificationsDrawerModal').classList.remove('hidden');
+      document.getElementById('notificationsDrawerModal').classList.add('flex');
+    }
+    function closeNotificationsModal() {
+      document.getElementById('notificationsDrawerModal').classList.add('hidden');
+      document.getElementById('notificationsDrawerModal').classList.remove('flex');
+    }
+
+    function openProfileModal() {
+      playAudioTone('tap');
+      document.getElementById('studentProfileModal').classList.remove('hidden');
+      document.getElementById('studentProfileModal').classList.add('flex');
+    }
+    function closeProfileModal() {
+      document.getElementById('studentProfileModal').classList.add('hidden');
+      document.getElementById('studentProfileModal').classList.remove('flex');
+    }
+
+    function openMenuModal() {
+      openProfileModal();
+    }
+
+    function openBulletinModal() {
+      showToast('Earthquake drill: Evacuate towards Quad Assembly Point A.');
+    }
+
+    function openShuttleScheduleModal() {
+      showToast('Next Campus Shuttle departs Main Gate in 6 mins.');
+    }
+
+    function openSafetySeminarsModal() {
+      showToast('First Aid CPR Certification this Saturday 9 AM.');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('quickToastElement');
+      document.getElementById('quickToastText').innerText = msg;
+
+      toast.classList.remove('hidden', 'opacity-0', '-translate-y-4');
+      toast.classList.add('flex', 'opacity-100', 'translate-y-0');
+
+      setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', '-translate-y-4');
+        setTimeout(() => toast.classList.add('hidden'), 200);
+      }, 2500);
+    }
+
+    // Viewport Toggle for Desktop Presentation
+    let isDesktopExpanded = false;
+    function toggleDeviceFrameView() {
+      isDesktopExpanded = !isDesktopExpanded;
+      const chassis = document.getElementById('phoneChassis');
+      const label = document.getElementById('viewModeText');
+
+      if (isDesktopExpanded) {
+        chassis.classList.remove('max-w-[414px]', 'h-[875px]', 'sm:rounded-[48px]', 'sm:border-[9px]');
+        chassis.classList.add('max-w-2xl', 'h-[92vh]', 'sm:rounded-3xl', 'sm:border-2');
+        label.innerText = 'Phone Frame';
+        showToast('Expanded to full presentation canvas');
+      } else {
+        chassis.classList.add('max-w-[414px]', 'h-[875px]', 'sm:rounded-[48px]', 'sm:border-[9px]');
+        chassis.classList.remove('max-w-2xl', 'h-[92vh]', 'sm:rounded-3xl', 'sm:border-2');
+        label.innerText = 'Expanded View';
+        showToast('Switched to iPhone 15 Pro frame');
+      }
+    }
+
+    // Real-time Clock
+    function tickClock() {
+      const d = new Date();
+      const time = `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+      const el = document.getElementById('liveClockDisplay');
+      if (el) el.innerText = time;
+    }
+    setInterval(tickClock, 1000);
+    tickClock();
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderRequestsList();
+      selectReportCategory('lost-id');
+    });
+  </script>
+</body>
+</html>
