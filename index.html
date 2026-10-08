@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Student Emergency Assistance Portal | City College of Calamba</title>
   <meta name="description" content="City College of Calamba mobile emergency assistance, live security dispatch, and incident triage portal.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚨</text></svg>">
+  <link rel="icon" type="image/png" href="ccc_logo/City_College_of_Calamba_Logo.png">
+  <link rel="shortcut icon" type="image/png" href="ccc_logo/City_College_of_Calamba_Logo.png">
+  <link rel="apple-touch-icon" href="ccc_logo/City_College_of_Calamba_Logo.png">
 
   <!-- Google Fonts: Plus Jakarta Sans & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -134,10 +136,17 @@
     
     body {
       font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 50% 20%, #0f1c3f 0%, #060b1c 100%);
       min-height: 100vh;
       margin: 0;
       padding: 0;
+      background-color: #000B30;
+      background-image: 
+        linear-gradient(rgba(0, 11, 48, 0.40), rgba(0, 7, 28, 0.68)),
+        url('ccc_logo/City-College-of-Calamba-view.webp');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
 
     /* Device chassis layout */
@@ -492,7 +501,7 @@
               </div>
               <div>
                 <span class="text-xs font-bold text-slate-800 block truncate font-display">Facility Problem</span>
-                <span class="text-[11px] text-slate-500 block truncate">Elevators, Power, Water</span>
+                <span class="text-[11px] text-slate-500 block truncate">Classrooms, Power, Water</span>
               </div>
             </button>
 
@@ -1719,9 +1728,9 @@
           type: 'urgent',
           badgeText: 'Urgent Alert',
           badgeClass: 'text-crimson-urgent bg-red-50 border-red-100',
-          title: 'CCC Main Building Elevator #2 Maintenance',
+          title: 'CCC Main Building Power & Lighting Maintenance',
           time: '10 mins ago',
-          desc: 'Elevator undergoing hydraulic test. Use stairwell B.'
+          desc: 'Scheduled electrical grid inspection in progress. All stairwells open.'
         },
         {
           id: 'notif-2',
